@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     com_example_helloapp_Store
+ * Method:    initializeStore
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_helloapp_Store_initializeStore
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_helloapp_Store
+ * Method:    finalizeStore
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_helloapp_Store_finalizeStore
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_helloapp_Store
  * Method:    getInteger
  * Signature: (Ljava/lang/String;)I
  */

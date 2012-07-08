@@ -1,4 +1,5 @@
 obj/local/armeabi/objs/store/store.o: jni/store.c jni/store.h \
+ E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/stdio.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -14,11 +15,12 @@ obj/local/armeabi/objs/store/store.o: jni/store.c jni/store.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/types.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/kernel.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h \
- E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/string.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/malloc.h
 
 jni/store.h:
+
+E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/stdio.h:
 
@@ -49,8 +51,6 @@ E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/types.h:
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/kernel.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h:
-
-E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/string.h:
 

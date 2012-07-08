@@ -55,6 +55,38 @@ public class HelloApp extends Activity implements OnClickListener {
 
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		mStore.initializeStore();
+		try {
+			mStore.setInteger("watcherCounter", 0);
+		} catch (StoreFullException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		mStore.finalizeStore();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
 	private void onGetValue() {
 		String key = mKeyEdit.getText().toString();
 		String typename = (String) mTypeSpinner.getSelectedItem();

@@ -1,7 +1,6 @@
-obj/local/armeabi/objs/store/com_example_helloapp_Store.o: \
- jni/com_example_helloapp_Store.c jni/com_example_helloapp_Store.h \
+obj/local/armeabi/objs/store/store_watcher.o: jni/store_watcher.c \
+ jni/store_watcher.h jni/store.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h \
- jni/store.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/stdio.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -17,7 +16,6 @@ obj/local/armeabi/objs/store/com_example_helloapp_Store.o: \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/types.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/kernel.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h \
- jni/store_watcher.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/pthread.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/time.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/time.h \
@@ -43,11 +41,11 @@ obj/local/armeabi/objs/store/com_example_helloapp_Store.o: \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/capability.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/pathconf.h
 
-jni/com_example_helloapp_Store.h:
-
-E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h:
+jni/store_watcher.h:
 
 jni/store.h:
+
+E:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/stdio.h:
 
@@ -78,8 +76,6 @@ E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/types.h:
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/kernel.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h:
-
-jni/store_watcher.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/pthread.h:
 

@@ -1,9 +1,9 @@
 #ifndef _STORE_H_
 #define _STORE_H_
 
+#include <jni.h>
 #include <stdio.h>
 #include <stdint.h>
-#include "jni.h"
 
 #define STORE_MAX_CAPACITY 16
 #define TRUE 1

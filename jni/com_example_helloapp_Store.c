@@ -1,9 +1,42 @@
 #include "com_example_helloapp_Store.h"
 #include "store.h"
+#include "store_watcher.h"
 #include <stdint.h>
 #include <string.h>
 
 static Store gStore = { { }, 0 };
+static Store mStore;
+static StoreWatcher mStoreWatcher;
+
+JavaVM *mGlobalJavaVM;
+
+jint JNI_OnLoad(JavaVM* vm, void *reserved) {
+	mGlobalJavaVM = vm;
+	JNIEnv *env;
+	if ((*vm)->GetEnv(vm,(void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+		return -1;
+	}
+	return JNI_VERSION_1_4;
+}
+
+JNIEXPORT void JNICALL Java_com_example_helloapp_Store_initializeStore
+(JNIEnv *env, jobject this) {
+	mStore.mLength=0;
+	startWatcher(env,&mStoreWatcher,&mStore,this);
+}
+
+JNIEXPORT void JNICALL Java_com_example_helloapp_Store_finalizeStore
+(JNIEnv *env, jobject this) {
+	stopWatcher(env,&mStoreWatcher);
+	StoreEntry *entry=mStore.mEntries;
+	StoreEntry *entryEnd=entry+mStore.mLength;
+	while(entry<entryEnd) {
+		free(entry->mKey);
+		releaseEntryValue(env,entry);
+		++entry;
+	}
+	mStore.mLength=0;
+}
 
 JNIEXPORT jint JNICALL Java_com_example_helloapp_Store_getInteger(JNIEnv *env,
 		jobject obj, jstring key) {
