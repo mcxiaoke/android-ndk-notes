@@ -16,6 +16,7 @@ obj/local/armeabi/objs/store/store_watcher.o: jni/store_watcher.c \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/types.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/kernel.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h \
+ E:/android/ndk/platforms/android-14/arch-arm/usr/include/android/log.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/pthread.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/time.h \
  E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/time.h \
@@ -76,6 +77,8 @@ E:/android/ndk/platforms/android-14/arch-arm/usr/include/linux/types.h:
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/kernel.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h:
+
+E:/android/ndk/platforms/android-14/arch-arm/usr/include/android/log.h:
 
 E:/android/ndk/platforms/android-14/arch-arm/usr/include/pthread.h:
 

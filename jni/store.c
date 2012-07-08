@@ -14,10 +14,13 @@ int32_t isEntryValid(JNIEnv *env, StoreEntry *entry, StoreType type) {
 
 StoreEntry *allocateEntry(JNIEnv *env, Store *store, jstring key) {
 	//int32_t error = 0;
+	DLOG("allocateEntry ");
 	StoreEntry *entry = findEntry(env, store, key);
 	if (entry != NULL) {
 		releaseEntryValue(env, entry);
 	} else {
+		DLOG("allocateEntry found");
+		DLOG("allocateEntry found store length=%d",store->mLength);
 		if (store->mLength >= STORE_MAX_CAPACITY) {
 			throwStoreFullException(env);
 			return NULL;
@@ -30,14 +33,19 @@ StoreEntry *allocateEntry(JNIEnv *env, Store *store, jstring key) {
 		entry->mKey = (char*) malloc(strlen(tmpKey));
 		strcpy(entry->mKey, tmpKey);
 		(*env)->ReleaseStringUTFChars(env, key, tmpKey);
-		++store->mLength;
+		DLOG("allocateEntry found entry key=%s",entry->mKey);
+		++(store->mLength);
+		DLOG("allocateEntry found over store length=%d",store->mLength);
 	}
 	return entry;
 }
 
 StoreEntry *findEntry(JNIEnv *env, Store *store, jstring key) {
+	DLOG("findEntry ");
 	StoreEntry *start = store->mEntries;
 	StoreEntry *end = start + store->mLength;
+
+	DLOG("findEntry start:%p, end:%p",start,end);
 
 	const char *tmpKey = (*env)->GetStringUTFChars(env, key, NULL);
 	if (tmpKey == NULL) {

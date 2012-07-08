@@ -20,8 +20,9 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-public class HelloApp extends Activity implements OnClickListener {
-	//TODO 学习到了112页
+public class HelloApp extends Activity implements OnClickListener,
+		StoreListener {
+	// TODO 学习到了132/143页
 
 	private EditText mKeyEdit, mValueEdit;
 	private Spinner mTypeSpinner;
@@ -35,6 +36,7 @@ public class HelloApp extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
 		mKeyEdit = (EditText) findViewById(R.id.key);
 		mValueEdit = (EditText) findViewById(R.id.value);
 		mTypeSpinner = (Spinner) findViewById(R.id.type);
@@ -49,9 +51,9 @@ public class HelloApp extends Activity implements OnClickListener {
 		mTypeValues
 				.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		mTypeSpinner.setAdapter(mTypeValues);
-
+		
 		setTitle(NativeUtils.getTitle());
-		mStore = new Store();
+		mStore = new Store(this);
 
 	}
 
@@ -59,11 +61,11 @@ public class HelloApp extends Activity implements OnClickListener {
 	protected void onStart() {
 		super.onStart();
 		mStore.initializeStore();
-		try {
-			mStore.setInteger("watcherCounter", 0);
-		} catch (StoreFullException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			mStore.setInteger("watcherCounter", 0);
+//		} catch (StoreFullException e) {
+//			error(e.toString());
+//		}
 	}
 
 	@Override
@@ -152,12 +154,13 @@ public class HelloApp extends Activity implements OnClickListener {
 						}, value)));
 				break;
 			case ColorArray:
-				List<Color> colors=stringToList(new Function<String, Color>() {
-					public Color apply(String str) {
-						return new Color(str);
-					}
-				},value);
-				Color[] colorArray=colors.toArray(new Color[colors.size()]);
+				List<Color> colors = stringToList(
+						new Function<String, Color>() {
+							public Color apply(String str) {
+								return new Color(str);
+							}
+						}, value);
+				Color[] colorArray = colors.toArray(new Color[colors.size()]);
 				mStore.setColorArray(key, colorArray);
 				break;
 			default:
@@ -193,6 +196,21 @@ public class HelloApp extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onAlert(int value) {
+		error(String.format("%1$d is not an allowed integer.", value));
+	}
+
+	@Override
+	public void onAlert(String value) {
+		error(String.format("%1$s is not an allowed string.", value));
+	}
+
+	@Override
+	public void onAlert(Color value) {
+		error(String.format("%1$s is not an allowed color.", value));
 	}
 
 }

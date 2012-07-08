@@ -1,6 +1,52 @@
 package com.example.helloapp;
 
-public class Store {
+import android.os.Handler;
+import android.util.Log;
+
+public class Store implements StoreListener {
+	private Handler mHandler;
+	private StoreListener mStoreListener;
+
+	public Store(StoreListener li) {
+		mHandler = new Handler();
+		mStoreListener = li;
+	}
+
+	@Override
+	public void onAlert(final int value) {
+		Log.d("Store", "onAlert() int="+value);
+		mHandler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				mStoreListener.onAlert(value);
+			}
+		});
+	}
+
+	@Override
+	public void onAlert(final String value) {
+		Log.d("Store", "onAlert() string="+value);
+		mHandler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				mStoreListener.onAlert(value);
+			}
+		});
+	}
+
+	@Override
+	public void onAlert(final Color value) {
+		Log.d("Store", "onAlert() color="+value);
+		mHandler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				mStoreListener.onAlert(value);
+			}
+		});
+	}
 
 	public native void initializeStore();
 

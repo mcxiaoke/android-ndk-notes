@@ -1,5 +1,16 @@
 #include "hello.h"
 
+JavaVM *mGlobalJavaVM;
+
+jint JNI_OnLoad(JavaVM* vm, void *reserved) {
+	mGlobalJavaVM = vm;
+	JNIEnv *env;
+	if ((*vm)->GetEnv(vm,(void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+		return -1;
+	}
+	return JNI_VERSION_1_4;
+}
+
 JNIEXPORT jstring JNICALL Java_com_example_helloapp_NativeUtils_getTitle
   (JNIEnv * env, jclass cls){
 

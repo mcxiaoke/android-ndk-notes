@@ -15,6 +15,16 @@ typedef struct {
 	Store *mStore;
 	JavaVM *mJavaVM;
 	jobject mStoreFront;
+	jobject mColor;
+	// classes
+	jclass ClassStore;
+	jclass ClassColor;
+	//methods
+	jmethodID MethodOnAlertInt;
+	jmethodID MethodOnAlertString;
+	jmethodID MethodOnAlertColor;
+	jmethodID MethodColorEquals;
+	// threads variables
 	pthread_t mThread;
 	int32_t mState;
 } StoreWatcher;
@@ -23,12 +33,15 @@ void startWatcher(JNIEnv *env, StoreWatcher *watcher, Store *store,
 		jobject storeFront);
 void stopWatcher(JNIEnv *env, StoreWatcher *watcher);
 
-void deleteGlobalRef(JNIEnv *env, jobject *ref);
-
+void makeGlobalRef(JNIEnv *env, jobject *obj);
+void deleteGlobalRef(JNIEnv *env, jobject *obj);
 JNIEnv *getJNIEnv(JavaVM *vm);
 
 void *runWatcher(void* args);
 
 void processEntry(JNIEnv *env, StoreWatcher *watcher, StoreEntry *entry);
+void processEntryInt(JNIEnv *env, StoreWatcher *watcher, StoreEntry *entry);
+void processEntryString(JNIEnv *env, StoreWatcher *watcher, StoreEntry *entry);
+void processEntryColor(JNIEnv *env, StoreWatcher *watcher, StoreEntry *entry);
 
 #endif
