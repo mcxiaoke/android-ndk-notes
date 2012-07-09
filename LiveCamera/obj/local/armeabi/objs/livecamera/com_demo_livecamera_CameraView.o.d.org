@@ -1,0 +1,26 @@
+obj/local/armeabi/objs/livecamera/com_demo_livecamera_CameraView.o: \
+ jni/com_demo_livecamera_CameraView.c \
+ jni/com_demo_livecamera_CameraView.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/android/bitmap.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/stdint.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/_types.h \
+ e:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/_types.h
+
+jni/com_demo_livecamera_CameraView.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/jni.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/android/bitmap.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/stdint.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/sys/_types.h:
+
+e:/android/ndk/platforms/android-14/arch-arm/usr/include/machine/_types.h:
