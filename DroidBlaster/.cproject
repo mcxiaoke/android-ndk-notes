@@ -32,10 +32,6 @@
 							<tool id="com.android.gcc.compiler.1666853154" name="Android GCC Compiler" superClass="com.android.gcc.compiler">
 								<option id="com.android.gcc.option.includePath.685388221" superClass="com.android.gcc.option.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\platforms\android-9\arch-arm\usr\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\toolchains\arm-linux-androideabi-4.4.3\prebuilt\windows\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\toolchains\arm-linux-androideabi-4.4.3\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.4.3\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\cxx-stl\gnu-libstdc++\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\android\native_app_glue&quot;"/>
 								</option>
 								<inputType id="com.android.gcc.inputType.1735165433" superClass="com.android.gcc.inputType"/>
 							</tool>
