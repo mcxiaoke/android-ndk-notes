@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/com.android.toolchain.gcc.788448200/PATH/delimiter=;
+environment/project/com.android.toolchain.gcc.788448200/PATH/operation=append
+environment/project/com.android.toolchain.gcc.788448200/PATH/value=${Path};E\:\\develop\\msys\\bin
+environment/project/com.android.toolchain.gcc.788448200/append=true
+environment/project/com.android.toolchain.gcc.788448200/appendContributed=true
