@@ -9,8 +9,10 @@
 #include "EventLoop.hpp"
 
 void android_main(android_app *app){
+	demo::TimeService timeService;
+	demo::Context context={&timeService};
 	demo::EventLoop eventLoop(app);
-	db::DroidBlaster droidBlaster;
+	db::DroidBlaster droidBlaster(context, app);
 	eventLoop.run(droidBlaster);
 }
 

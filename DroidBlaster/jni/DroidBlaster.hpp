@@ -9,36 +9,56 @@
 #define DROIDBLASTER_HPP_
 
 #include "EventHandler.hpp"
+#include "Context.hpp"
+#include "TimeService.hpp"
+#include "Types.hpp"
 
-namespace db{
-	class DroidBlaster : public demo::EventHandler{
-	public:
-		DroidBlaster();
-		~DroidBlaster();
+#include <android_native_app_glue.h>
 
-	protected:
-		demo::status onActivate();
-		void onDeactivate();
-		demo::status onStep();
+namespace db {
+class DroidBlaster: public demo::EventHandler {
+public:
+	DroidBlaster(demo::Context &context, android_app *app);
+	~DroidBlaster();
 
-		void onStart();
-		void onResume();
-		void onPause();
-		void onStop();
-		void onDestroy();
+protected:
+	demo::status onActivate();
+	void onDeactivate();
+	demo::status onStep();
 
-		void onSaveState(void** data, size_t* size);
-		void onConfigurationChanged();
-		void onLowMemory();
+	void onStart();
+	void onResume();
+	void onPause();
+	void onStop();
+	void onDestroy();
 
-		void onCreateWindow();
-		void onDestroyWindow();
-		void onGainFocus();
-		void onLostFocus();
+	void onSaveState(void** data, size_t* size);
+	void onConfigurationChanged();
+	void onLowMemory();
 
-	};
+	void onCreateWindow();
+	void onDestroyWindow();
+	void onGainFocus();
+	void onLostFocus();
+
+private:
+	void clear();
+	void drawCursor(int size, int px, int py);
+
+private:
+	android_app *mApp;
+	ANativeWindow_Buffer mWindowBuffer;
+	demo::TimeService *mTimeService;
+
+	bool mInitialized;
+
+	float mPosX;
+	float mPosY;
+	const int32_t mSize;
+	const float mSpeed;
+
+};
 
 }
-
 
 #endif /* DROIDBLASTER_HPP_ */
