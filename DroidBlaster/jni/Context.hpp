@@ -10,14 +10,15 @@
 
 #include "Types.hpp"
 
-namespace demo{
+namespace demo {
 
-	class TimeService;
+class GraphicsService;
+class TimeService;
 
-	struct Context{
-		TimeService *mTimeService;
-	};
+struct Context {
+    GraphicsService *mGraphicsService;
+    TimeService *mTimeService;
+};
 }
-
 
 #endif /* CONTEXT_HPP_ */

@@ -11,12 +11,11 @@
 #include <stdint.h>
 
 namespace demo {
-    typedef int32_t status;
+typedef int32_t status;
 
-    const status STATUS_OK   = 0;
-    const status STATUS_KO   = -1;
-    const status STATUS_EXIT = -2;
+const status STATUS_OK = 0;
+const status STATUS_KO = -1;
+const status STATUS_EXIT = -2;
 }
-
 
 #endif /* TYPES_HPP_ */

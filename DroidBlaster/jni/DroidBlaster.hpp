@@ -10,6 +10,7 @@
 
 #include "EventHandler.hpp"
 #include "Context.hpp"
+#include "GraphicsService.hpp"
 #include "TimeService.hpp"
 #include "Types.hpp"
 
@@ -18,44 +19,45 @@
 namespace db {
 class DroidBlaster: public demo::EventHandler {
 public:
-	DroidBlaster(demo::Context &context, android_app *app);
-	~DroidBlaster();
+    DroidBlaster(demo::Context *context);
+    ~DroidBlaster();
 
 protected:
-	demo::status onActivate();
-	void onDeactivate();
-	demo::status onStep();
+    demo::status onActivate();
+    void onDeactivate();
+    demo::status onStep();
 
-	void onStart();
-	void onResume();
-	void onPause();
-	void onStop();
-	void onDestroy();
+    void onStart();
+    void onResume();
+    void onPause();
+    void onStop();
+    void onDestroy();
 
-	void onSaveState(void** data, size_t* size);
-	void onConfigurationChanged();
-	void onLowMemory();
+    void onSaveState(void** data, size_t* size);
+    void onConfigurationChanged();
+    void onLowMemory();
 
-	void onCreateWindow();
-	void onDestroyWindow();
-	void onGainFocus();
-	void onLostFocus();
+    void onCreateWindow();
+    void onDestroyWindow();
+    void onGainFocus();
+    void onLostFocus();
+//
+//private:
+//    void clear();
+//    void drawCursor(int size, int px, int py);
 
 private:
-	void clear();
-	void drawCursor(int size, int px, int py);
+//    android_app *mApp;
+//    ANativeWindow_Buffer mWindowBuffer;
+    demo::GraphicsService *mGraphicsService;
+    demo::TimeService *mTimeService;
 
-private:
-	android_app *mApp;
-	ANativeWindow_Buffer mWindowBuffer;
-	demo::TimeService *mTimeService;
+//    bool mInitialized;
 
-	bool mInitialized;
-
-	float mPosX;
-	float mPosY;
-	const int32_t mSize;
-	const float mSpeed;
+//    float mPosX;
+//    float mPosY;
+//    const int32_t mSize;
+//    const float mSpeed;
 
 };
 

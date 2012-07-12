@@ -14,16 +14,16 @@
 namespace demo {
 class TimeService {
 public:
-	TimeService();
+    TimeService();
 
-	void reset();
-	void update();
+    void reset();
+    void update();
 
-	double now();
-	float elapsed();
+    double now();
+    float elapsed();
 private:
-	float mElapsed;
-	double mLastTime;
+    float mElapsed;
+    double mLastTime;
 };
 }
 

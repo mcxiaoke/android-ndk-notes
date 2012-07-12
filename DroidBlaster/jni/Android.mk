@@ -7,7 +7,7 @@ LS_CPP=$(subst $(1)/,,$(wildcard $(1)/*.cpp))
 LOCAL_MODULE    := droidblaster
 #LOCAL_SRC_FILES := Main.cpp DroidBlaster.cpp EventLoop.cpp Log.cpp
 LOCAL_SRC_FILES := $(call LS_CPP,$(LOCAL_PATH))
-LOCAL_LDLIBS    := -landroid -llog
+LOCAL_LDLIBS    := -landroid -llog -lEGL -lGLESv1_CM
 
 LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
