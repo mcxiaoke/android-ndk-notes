@@ -13,6 +13,7 @@
 #define __ANDROID__ 1
 #endif
 
+#include "GraphicsTexture.hpp"
 #include "TimeService.hpp"
 #include "Types.hpp"
 
@@ -23,6 +24,7 @@ namespace demo {
 class GraphicsService {
 public:
     GraphicsService(android_app *app, TimeService *ts);
+    ~GraphicsService();
 
     const char* getPath();
     const int32_t& getHeight();
@@ -31,6 +33,11 @@ public:
     status start();
     void stop();
     status update();
+
+    GraphicsTexture* registerTexture(const char* path);
+protected:
+    status loadResources();
+    status unloadResources();
 private:
     android_app *mApp;
     TimeService *mTimeService;
@@ -39,6 +46,8 @@ private:
     EGLDisplay mDisplay;
     EGLSurface mSurface;
     EGLContext mContext;
+    GraphicsTexture* mTextures[32];
+    int32_t mTextureCount;
 };
 }
 

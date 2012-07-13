@@ -16,8 +16,16 @@ namespace demo {
 GraphicsService::GraphicsService(android_app *app, TimeService *ts) :
         mApp(app), mTimeService(ts), mWidth(0), mHeight(0), mDisplay(
                 EGL_NO_DISPLAY ), mSurface(EGL_NO_SURFACE ), mContext(
-                EGL_NO_CONTEXT ) {
+                EGL_NO_CONTEXT ), mTextures(), mTextureCount(0) {
     Log::debug("Creating GraphicsService.");
+}
+
+GraphicsService::~GraphicsService() {
+    for (int32_t i = 0; i < mTextureCount; ++i) {
+        delete mTextures[i];
+        mTextures[i] = NULL;
+    }
+    mTextureCount = 0;
 }
 
 const int32_t& GraphicsService::getHeight() {
@@ -88,6 +96,10 @@ status GraphicsService::start() {
     Log::debug("Renderer : %s", glGetString(GL_RENDERER));
     Log::debug("Viewport : %d x %d", mWidth, mHeight);
 
+    if (loadResources() != STATUS_OK) {
+        goto ERROR;
+    }
+
     return STATUS_OK;
 
     ERROR: Log::error("Error while starting GraphicsService.");
@@ -98,6 +110,7 @@ status GraphicsService::start() {
 
 void GraphicsService::stop() {
     Log::debug("GraphicsService::stop().");
+    unloadResources();
     if (mDisplay != EGL_NO_DISPLAY ) {
         eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE,
                 EGL_NO_CONTEXT );
@@ -117,9 +130,9 @@ void GraphicsService::stop() {
 status GraphicsService::update() {
     float timeStep = mTimeService->elapsed();
     static float color = 0.0f;
-    color += timeStep*0.2f;
-    if(color>1.0f){
-        color-=1.0f;
+    color += timeStep * 0.2f;
+    if (color > 1.0f) {
+        color -= 1.0f;
     }
     Log::info("GraphicsService::update Color: %f", color);
     glClearColor(color, color, 1.0f, 1.0f);
@@ -130,6 +143,35 @@ status GraphicsService::update() {
         return STATUS_KO;
     }
     return STATUS_OK;
+}
+
+status GraphicsService::loadResources() {
+    for (int32_t i = 0; i < mTextureCount; ++i) {
+        if (mTextures[i]->load() != STATUS_OK) {
+            return STATUS_KO;
+        }
+    }
+    return STATUS_OK;
+}
+
+status GraphicsService::unloadResources() {
+    for (int32_t i = 0; i < mTextureCount; ++i) {
+        mTextures[i]->unload();
+    }
+    return STATUS_OK;
+}
+
+GraphicsTexture* GraphicsService::registerTexture(const char* path) {
+    for (int32_t i = 0; i < mTextureCount; ++i) {
+        if (strcmp(path, mTextures[i]->getPath()) != 0) {
+            return mTextures[i];
+        }
+    }
+
+    GraphicsTexture* texture = new GraphicsTexture(mApp, path);
+    mTextures[mTextureCount++] = texture;
+    return texture;
+
 }
 
 }

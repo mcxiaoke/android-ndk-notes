@@ -29,6 +29,11 @@ demo::status DroidBlaster::onActivate() {
         return demo::STATUS_KO;
     }
     mTimeService->reset();
+
+    // test textures load
+    demo::GraphicsTexture* shipTexture = mGraphicsService->registerTexture(
+            "ship.png");
+
     return demo::STATUS_OK;
 }
 
