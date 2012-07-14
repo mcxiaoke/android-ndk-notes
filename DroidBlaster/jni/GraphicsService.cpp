@@ -16,11 +16,17 @@ namespace demo {
 GraphicsService::GraphicsService(android_app *app, TimeService *ts) :
         mApp(app), mTimeService(ts), mWidth(0), mHeight(0), mDisplay(
                 EGL_NO_DISPLAY ), mSurface(EGL_NO_SURFACE ), mContext(
-                EGL_NO_CONTEXT ), mTextures(), mTextureCount(0) {
+                EGL_NO_CONTEXT ), mTextures(), mTextureCount(0), mSprites(), mSpriteCount(
+                0) {
     Log::debug("Creating GraphicsService.");
 }
 
 GraphicsService::~GraphicsService() {
+    for (int32_t i = 0; i < mSpriteCount; ++i) {
+        delete mSprites[i];
+        mSprites[i] = NULL;
+    }
+
     for (int32_t i = 0; i < mTextureCount; ++i) {
         delete mTextures[i];
         mTextures[i] = NULL;
@@ -99,7 +105,7 @@ status GraphicsService::start() {
     if (loadResources() != STATUS_OK) {
         goto ERROR;
     }
-
+    setup();
     return STATUS_OK;
 
     ERROR: Log::error("Error while starting GraphicsService.");
@@ -129,14 +135,15 @@ void GraphicsService::stop() {
 
 status GraphicsService::update() {
     float timeStep = mTimeService->elapsed();
-    static float color = 0.0f;
-    color += timeStep * 0.2f;
-    if (color > 1.0f) {
-        color -= 1.0f;
-    }
-    Log::info("GraphicsService::update Color: %f", color);
-    glClearColor(color, color, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    for (int32_t i = 0; i < mSpriteCount; ++i) {
+        mSprites[i]->draw(timeStep);
+    }
+    glDisable (GL_BLEND);
 
     if (eglSwapBuffers(mDisplay, mSurface) != EGL_TRUE) {
         Log::error("Error %d swapping buffers.", eglGetError());
@@ -158,6 +165,9 @@ status GraphicsService::unloadResources() {
     for (int32_t i = 0; i < mTextureCount; ++i) {
         mTextures[i]->unload();
     }
+    for (int32_t i = 0; i < mSpriteCount; ++i) {
+        mSprites[i]->load();
+    }
     return STATUS_OK;
 }
 
@@ -172,6 +182,20 @@ GraphicsTexture* GraphicsService::registerTexture(const char* path) {
     mTextures[mTextureCount++] = texture;
     return texture;
 
+}
+
+void GraphicsService::setup() {
+    glEnable(GL_TEXTURE_2D);
+    glDisable(GL_DEPTH_TEST);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+GraphicsSprite* GraphicsService::registerSprite(GraphicsTexture* texture,
+        int32_t height, int32_t width, Location* location) {
+    GraphicsSprite* sprite = new GraphicsSprite(texture, height, width,
+            location);
+    mSprites[mSpriteCount++] = sprite;
+    return sprite;
 }
 
 }

@@ -13,6 +13,7 @@
 #define __ANDROID__ 1
 #endif
 
+#include "GraphicsSprite.hpp"
 #include "GraphicsTexture.hpp"
 #include "TimeService.hpp"
 #include "Types.hpp"
@@ -35,9 +36,12 @@ public:
     status update();
 
     GraphicsTexture* registerTexture(const char* path);
+    GraphicsSprite* registerSprite(GraphicsTexture* texture, int32_t height,
+            int32_t width, Location* location);
 protected:
     status loadResources();
     status unloadResources();
+    void setup();
 private:
     android_app *mApp;
     TimeService *mTimeService;
@@ -48,6 +52,8 @@ private:
     EGLContext mContext;
     GraphicsTexture* mTextures[32];
     int32_t mTextureCount;
+    GraphicsSprite* mSprites[256];
+    int32_t mSpriteCount;
 };
 }
 

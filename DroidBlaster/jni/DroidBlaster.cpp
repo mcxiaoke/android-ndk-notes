@@ -15,7 +15,7 @@ namespace db {
 
 DroidBlaster::DroidBlaster(demo::Context *context) :
         mGraphicsService(context->mGraphicsService), mTimeService(
-                context->mTimeService) {
+                context->mTimeService),mShip(context) {
     demo::Log::debug("Creating DroidBlaster.");
 }
 
@@ -28,11 +28,9 @@ demo::status DroidBlaster::onActivate() {
     if (mGraphicsService->start() != demo::STATUS_OK) {
         return demo::STATUS_KO;
     }
-    mTimeService->reset();
 
-    // test textures load
-    demo::GraphicsTexture* shipTexture = mGraphicsService->registerTexture(
-            "ship.png");
+    mShip.spawn();
+    mTimeService->reset();
 
     return demo::STATUS_OK;
 }

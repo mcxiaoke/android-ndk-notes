@@ -11,6 +11,7 @@
 #include "EventHandler.hpp"
 #include "Context.hpp"
 #include "GraphicsService.hpp"
+#include "Ship.hpp"
 #include "TimeService.hpp"
 #include "Types.hpp"
 
@@ -51,6 +52,7 @@ private:
 //    ANativeWindow_Buffer mWindowBuffer;
     demo::GraphicsService *mGraphicsService;
     demo::TimeService *mTimeService;
+    Ship mShip;
 
 //    bool mInitialized;
 
