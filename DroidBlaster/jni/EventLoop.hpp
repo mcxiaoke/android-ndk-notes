@@ -16,13 +16,13 @@ namespace demo {
 class EventLoop {
 public:
     EventLoop(android_app *app);
-    void run(EventHandler &eventHandler);
+    void run(EventHandler *eventHandler);
 protected:
     void activate();
     void deactivate();
-    void processActivityEvent(int32_t cmd);
+    void processAppEvent(int32_t cmd);
 private:
-    static void activityCallback(android_app *app, int32_t cmd);
+    static void eventCallback(android_app *app, int32_t cmd);
 private:
     bool mEnabled;
     bool mQuit;

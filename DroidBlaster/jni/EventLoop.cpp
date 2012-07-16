@@ -11,16 +11,16 @@
 namespace demo {
 EventLoop::EventLoop(android_app *app) :
         mApp(app), mEnabled(false), mQuit(false), mEventHandler(NULL) {
-    mApp->onAppCmd = activityCallback;
+    mApp->onAppCmd = eventCallback;
     mApp->userData = this;
 }
 
-void EventLoop::run(EventHandler &eventHandler) {
+void EventLoop::run(EventHandler *eventHandler) {
     int32_t result;
     int32_t events;
     android_poll_source *source;
     app_dummy();
-    mEventHandler = &eventHandler;
+    mEventHandler = eventHandler;
 
     demo::Log::info("starting event loop");
     while (true) {
@@ -51,6 +51,7 @@ void EventLoop::activate() {
         mEnabled = true;
         if (mEventHandler->onActivate() != STATUS_OK) {
             mQuit = true;
+            deactivate();
             ANativeActivity_finish(mApp->activity);
         }
     }
@@ -63,7 +64,7 @@ void EventLoop::deactivate() {
     }
 }
 
-void EventLoop::processActivityEvent(int32_t cmd) {
+void EventLoop::processAppEvent(int32_t cmd) {
     switch (cmd) {
     case APP_CMD_CONFIG_CHANGED:
         mEventHandler->onConfigurationChanged();
@@ -110,9 +111,9 @@ void EventLoop::processActivityEvent(int32_t cmd) {
     }
 }
 
-void EventLoop::activityCallback(android_app *app, int32_t cmd) {
+void EventLoop::eventCallback(android_app *app, int32_t cmd) {
     EventLoop &eventLoop = *(EventLoop*) app->userData;
-    eventLoop.processActivityEvent(cmd);
+    eventLoop.processAppEvent(cmd);
 }
 
 }

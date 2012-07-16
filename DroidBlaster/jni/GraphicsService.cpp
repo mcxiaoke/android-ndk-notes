@@ -158,15 +158,15 @@ status GraphicsService::loadResources() {
             return STATUS_KO;
         }
     }
+    for (int32_t i = 0;  i< mSpriteCount; ++i) {
+        mSprites[i]->load();
+    }
     return STATUS_OK;
 }
 
 status GraphicsService::unloadResources() {
     for (int32_t i = 0; i < mTextureCount; ++i) {
         mTextures[i]->unload();
-    }
-    for (int32_t i = 0; i < mSpriteCount; ++i) {
-        mSprites[i]->load();
     }
     return STATUS_OK;
 }
@@ -186,8 +186,8 @@ GraphicsTexture* GraphicsService::registerTexture(const char* path) {
 
 void GraphicsService::setup() {
     glEnable(GL_TEXTURE_2D);
-    glDisable(GL_DEPTH_TEST);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glDisable(GL_DEPTH_TEST);
 }
 
 GraphicsSprite* GraphicsService::registerSprite(GraphicsTexture* texture,

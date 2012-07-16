@@ -17,6 +17,6 @@ void android_main(android_app *app) {
     demo::Context context = { &graphicsService, &timeService };
     demo::EventLoop eventLoop(app);
     db::DroidBlaster droidBlaster(&context);
-    eventLoop.run(droidBlaster);
+    eventLoop.run(&droidBlaster);
 }
 
