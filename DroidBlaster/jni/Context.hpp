@@ -13,10 +13,12 @@
 namespace demo {
 
 class GraphicsService;
+class SoundService;
 class TimeService;
 
 struct Context {
     GraphicsService *mGraphicsService;
+    SoundService *mSoundService;
     TimeService *mTimeService;
 };
 }

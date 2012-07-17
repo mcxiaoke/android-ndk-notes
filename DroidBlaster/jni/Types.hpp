@@ -8,6 +8,11 @@
 #ifndef TYPES_HPP_
 #define TYPES_HPP_
 
+// eclipse not define __ANDROID__, this is a hack
+#ifndef __ANDROID__
+#define __ANDROID__ 1
+#endif
+
 #include <stdint.h>
 
 // hack from https://groups.google.com/forum/?fromgroups#!topic/android-ndk/Inip9SFiRZs

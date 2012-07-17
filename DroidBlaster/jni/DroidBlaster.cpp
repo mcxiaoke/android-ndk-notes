@@ -14,9 +14,9 @@
 namespace db {
 
 DroidBlaster::DroidBlaster(demo::Context *context) :
-        mGraphicsService(context->mGraphicsService), mTimeService(
-                context->mTimeService),mShip(context),
-                mBackground(context){
+        mGraphicsService(context->mGraphicsService), mSoundService(
+                context->mSoundService), mTimeService(context->mTimeService), mShip(
+                context), mBackground(context) {
     demo::Log::debug("Creating DroidBlaster.");
 }
 
@@ -30,6 +30,10 @@ demo::status DroidBlaster::onActivate() {
         return demo::STATUS_KO;
     }
 
+    if (mSoundService->start() != demo::STATUS_OK) {
+        return demo::STATUS_KO;
+    }
+
     mBackground.spawn();
     mShip.spawn();
     mTimeService->reset();
@@ -40,6 +44,7 @@ demo::status DroidBlaster::onActivate() {
 void DroidBlaster::onDeactivate() {
     demo::Log::debug("Deactivating DroidBlaster.");
     mGraphicsService->stop();
+    mSoundService->stop();
 }
 
 demo::status DroidBlaster::onStep() {

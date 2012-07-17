@@ -8,11 +8,6 @@
 #ifndef GRAPHICSSERVICE_HPP_
 #define GRAPHICSSERVICE_HPP_
 
-// eclipse not define __ANDROID__, this is a hack
-#ifndef __ANDROID__
-#define __ANDROID__ 1
-#endif
-
 #include "GraphicsSprite.hpp"
 #include "GraphicsTexture.hpp"
 #include "GraphicsTileMap.hpp"
