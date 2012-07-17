@@ -35,5 +35,13 @@ status Resource::read(void* buffer, size_t size) {
     return (read == size) ? STATUS_OK : STATUS_KO;
 }
 
+off_t Resource::getLength(){
+    return AAsset_getLength(mAsset);
+}
+
+const void* Resource::bufferize(){
+    return AAsset_getBuffer(mAsset);
+}
+
 }
 

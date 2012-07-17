@@ -9,6 +9,7 @@
 #define DROIDBLASTER_HPP_
 
 #include "EventHandler.hpp"
+#include "Background.hpp"
 #include "Context.hpp"
 #include "GraphicsService.hpp"
 #include "Ship.hpp"
@@ -52,6 +53,7 @@ private:
 //    ANativeWindow_Buffer mWindowBuffer;
     demo::GraphicsService *mGraphicsService;
     demo::TimeService *mTimeService;
+    Background mBackground;
     Ship mShip;
 
 //    bool mInitialized;

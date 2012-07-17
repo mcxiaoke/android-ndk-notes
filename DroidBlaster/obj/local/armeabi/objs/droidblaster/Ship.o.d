@@ -57,7 +57,7 @@ obj/local/armeabi/objs/droidblaster/Ship.o: jni/Ship.cpp jni/Ship.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/setjmp.h \
  /e/android/ndk/sources/libpng/pngconf.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h \
- jni/TimeService.hpp \
+ jni/TimeService.hpp jni/GraphicsTileMap.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
  jni/Log.hpp
@@ -187,6 +187,8 @@ jni/Resource.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h:
 
 jni/TimeService.hpp:
+
+jni/GraphicsTileMap.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h:
 

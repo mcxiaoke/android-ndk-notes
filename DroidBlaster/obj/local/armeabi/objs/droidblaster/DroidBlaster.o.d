@@ -3,8 +3,8 @@ obj/local/armeabi/objs/droidblaster/DroidBlaster.o: jni/DroidBlaster.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
- jni/Context.hpp jni/GraphicsService.hpp jni/GraphicsSprite.hpp \
- jni/GraphicsTexture.hpp jni/Resource.hpp \
+ jni/Background.hpp jni/Context.hpp jni/GraphicsService.hpp \
+ jni/GraphicsSprite.hpp jni/GraphicsTexture.hpp jni/Resource.hpp \
  /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/poll.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/cdefs.h \
@@ -57,7 +57,7 @@ obj/local/armeabi/objs/droidblaster/DroidBlaster.o: jni/DroidBlaster.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/setjmp.h \
  /e/android/ndk/sources/libpng/pngconf.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h \
- jni/TimeService.hpp \
+ jni/TimeService.hpp jni/GraphicsTileMap.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
  jni/Ship.hpp jni/Log.hpp \
@@ -79,6 +79,8 @@ jni/Types.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h:
+
+jni/Background.hpp:
 
 jni/Context.hpp:
 
@@ -195,6 +197,8 @@ jni/Resource.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h:
 
 jni/TimeService.hpp:
+
+jni/GraphicsTileMap.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h:
 

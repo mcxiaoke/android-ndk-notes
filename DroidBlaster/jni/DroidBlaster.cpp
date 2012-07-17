@@ -15,7 +15,8 @@ namespace db {
 
 DroidBlaster::DroidBlaster(demo::Context *context) :
         mGraphicsService(context->mGraphicsService), mTimeService(
-                context->mTimeService),mShip(context) {
+                context->mTimeService),mShip(context),
+                mBackground(context){
     demo::Log::debug("Creating DroidBlaster.");
 }
 
@@ -29,6 +30,7 @@ demo::status DroidBlaster::onActivate() {
         return demo::STATUS_KO;
     }
 
+    mBackground.spawn();
     mShip.spawn();
     mTimeService->reset();
 
@@ -43,6 +45,7 @@ void DroidBlaster::onDeactivate() {
 demo::status DroidBlaster::onStep() {
 //    demo::Log::debug("Starting step.");
     mTimeService->update();
+    mBackground.update();
     if (mGraphicsService->update() != demo::STATUS_OK) {
         demo::Log::debug("update graphics service failed.");
         return demo::STATUS_KO;

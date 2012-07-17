@@ -17,16 +17,26 @@ GraphicsService::GraphicsService(android_app *app, TimeService *ts) :
         mApp(app), mTimeService(ts), mWidth(0), mHeight(0), mDisplay(
                 EGL_NO_DISPLAY ), mSurface(EGL_NO_SURFACE ), mContext(
                 EGL_NO_CONTEXT ), mTextures(), mTextureCount(0), mSprites(), mSpriteCount(
-                0) {
+                0), mTileMaps(), mTileMapCount(0) {
     Log::debug("Creating GraphicsService.");
 }
 
 GraphicsService::~GraphicsService() {
+    // Deletes tile maps.
+    for (int32_t i = 0; i < mTileMapCount; ++i) {
+        delete mTileMaps[i];
+        mTileMaps[i] = NULL;
+    }
+    mTileMapCount = 0;
+
+    // Deletes all sprites.
     for (int32_t i = 0; i < mSpriteCount; ++i) {
         delete mSprites[i];
         mSprites[i] = NULL;
     }
+    mSpriteCount = 0;
 
+    // Deletes all textures.
     for (int32_t i = 0; i < mTextureCount; ++i) {
         delete mTextures[i];
         mTextures[i] = NULL;
@@ -43,84 +53,78 @@ const int32_t& GraphicsService::getWidth() {
 }
 
 status GraphicsService::start() {
-    Log::debug("GraphicsService::start()");
-    EGLint format;
-    EGLint numConfigs;
-    EGLint error;
-    EGLConfig eglConfig;
-    const EGLint attrs[] = { EGL_RENDERABLE_TYPE, EGL_OPENGL_ES_BIT,
+    Log::info("Starting GraphicsService.");
+
+    EGLint lFormat, lNumConfigs, lErrorResult;
+    EGLConfig lConfig;
+    // Defines display requirements. 16bits mode here.
+    const EGLint lAttributes[] = { EGL_RENDERABLE_TYPE, EGL_OPENGL_ES_BIT,
             EGL_BLUE_SIZE, 5, EGL_GREEN_SIZE, 6, EGL_RED_SIZE, 5,
             EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_NONE };
-    Log::debug("GraphicsService::start() Connecting to the display.");
+
+    // Retrieves a display connection and initializes it.
+    Log::info("Connecting to the display.");
     mDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY );
-    if (mDisplay == EGL_NO_DISPLAY ) {
-        Log::error("GraphicsService::start() eglGetDisplay failed.");
+    if (mDisplay == EGL_NO_DISPLAY )
         goto ERROR;
-    }
-    if (!eglInitialize(mDisplay, NULL, NULL)) {
-        Log::error("GraphicsService::start() eglInitialize failed.");
+    if (!eglInitialize(mDisplay, NULL, NULL))
         goto ERROR;
-    }
-    if (!eglChooseConfig(mDisplay, attrs, &eglConfig, 1, &numConfigs)
-            || (numConfigs <= 0)) {
-        Log::error("GraphicsService::start() eglChooseConfig failed.");
-        goto ERROR;
-    }
-    if (!eglGetConfigAttrib(mDisplay, eglConfig, EGL_NATIVE_VISUAL_ID,
-            &format)) {
-        Log::error("GraphicsService::start() eglGetConfigAttrib failed.");
-        goto ERROR;
-    }
-    ANativeWindow_setBuffersGeometry(mApp->window, 0, 0, format);
 
-    mSurface = eglCreateWindowSurface(mDisplay, eglConfig, mApp->window, NULL);
-    if (mSurface == EGL_NO_SURFACE ) {
-        Log::error("GraphicsService::start() eglCreateWindowSurface failed.");
+    // Selects the first OpenGL configuration found.
+    Log::info("Selecting a display config.");
+    if (!eglChooseConfig(mDisplay, lAttributes, &lConfig, 1, &lNumConfigs)
+            || (lNumConfigs <= 0))
         goto ERROR;
-    }
-    mContext = eglCreateContext(mDisplay, eglConfig, EGL_NO_CONTEXT, NULL);
-    if (mContext == EGL_NO_CONTEXT ) {
-        Log::error("GraphicsService::start() eglCreateContext failed.");
-        goto ERROR;
-    }
 
-    Log::debug("GraphicsService::start() Activating the display.");
+    // Reconfigures the Android window with the EGL format.
+    Log::info("Configuring window format.");
+    if (!eglGetConfigAttrib(mDisplay, lConfig, EGL_NATIVE_VISUAL_ID, &lFormat))
+        goto ERROR;
+    ANativeWindow_setBuffersGeometry(mApp->window, 0, 0, lFormat);
+    // Creates the display surface.
+    Log::info("Initializing the display.");
+    mSurface = eglCreateWindowSurface(mDisplay, lConfig, mApp->window, NULL);
+    if (mSurface == EGL_NO_SURFACE )
+        goto ERROR;
+    mContext = eglCreateContext(mDisplay, lConfig, EGL_NO_CONTEXT, NULL);
+    if (mContext == EGL_NO_CONTEXT )
+        goto ERROR;
+
+    // Activates the display surface.
+    Log::info("Activating the display.");
     if (!eglMakeCurrent(mDisplay, mSurface, mSurface, mContext)
             || !eglQuerySurface(mDisplay, mSurface, EGL_WIDTH, &mWidth)
             || !eglQuerySurface(mDisplay, mSurface, EGL_HEIGHT, &mHeight)
-            || (mWidth <= 0) || (mHeight <= 0)) {
+            || (mWidth <= 0) || (mHeight <= 0))
         goto ERROR;
-        Log::error("GraphicsService::start() eglMakeCurrent failed.");
-    }
-
     glViewport(0, 0, mWidth, mHeight);
-    Log::debug("GraphicsService::start() glViewport status ok.");
 
     // Displays information about OpenGL.
-    Log::debug("Version  : %s", glGetString(GL_VERSION));
-    Log::debug("Vendor   : %s", glGetString(GL_VENDOR));
-    Log::debug("Renderer : %s", glGetString(GL_RENDERER));
-    Log::debug("Viewport : %d x %d", mWidth, mHeight);
+    Log::info("Starting GraphicsService");
+    Log::info("Version  : %s", glGetString(GL_VERSION));
+    Log::info("Vendor   : %s", glGetString(GL_VENDOR));
+    Log::info("Renderer : %s", glGetString(GL_RENDERER));
+    Log::info("Viewport : %d x %d", mWidth, mHeight);
 
-    if (loadResources() != STATUS_OK) {
+    if (loadResources() != STATUS_OK)
         goto ERROR;
-    }
     setup();
     return STATUS_OK;
 
-    ERROR: Log::error("Error while starting GraphicsService.");
+    ERROR: Log::error("Error while starting GraphicsService");
     stop();
     return STATUS_KO;
-
 }
 
 void GraphicsService::stop() {
-    Log::debug("GraphicsService::stop().");
+    Log::info("Stopping GraphicsService.");
     unloadResources();
+
+    // Destroys OpenGL context.
     if (mDisplay != EGL_NO_DISPLAY ) {
         eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE,
                 EGL_NO_CONTEXT );
-        if (mContext != NULL) {
+        if (mContext != EGL_NO_CONTEXT ) {
             eglDestroyContext(mDisplay, mContext);
             mContext = EGL_NO_CONTEXT;
         }
@@ -133,18 +137,69 @@ void GraphicsService::stop() {
     }
 }
 
+status GraphicsService::loadResources() {
+    // Loads all requested textures.
+    for (int32_t i = 0; i < mTextureCount; ++i) {
+        if (mTextures[i]->load() != STATUS_OK) {
+            return STATUS_KO;
+        }
+    }
+    // Loads all requested sprites.
+    for (int32_t i = 0; i < mSpriteCount; ++i) {
+        mSprites[i]->load();
+    }
+    // Loads all requested tile maps.
+    for (int32_t i = 0; i < mTileMapCount; ++i) {
+        if (mTileMaps[i]->load() != STATUS_OK) {
+            return STATUS_KO;
+        }
+    }
+    return STATUS_OK;
+}
+
+status GraphicsService::unloadResources() {
+    for (int32_t i = 0; i < mTileMapCount; ++i) {
+        mTileMaps[i]->unload();
+    }
+    for (int32_t i = 0; i < mTextureCount; ++i) {
+        mTextures[i]->unload();
+    }
+    return STATUS_OK;
+}
+
+void GraphicsService::setup() {
+    // Initializes base GL state.
+    glEnable(GL_TEXTURE_2D);
+    // In a simple 2D game, we have control over the third
+    // dimension. So we do not really need a Z-buffer.
+    glDisable(GL_DEPTH_TEST);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+    // Set-up view aand projection matrixes.
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrthof(0.0f, mWidth, 0.0f, mHeight, 0.0f, 1.0f);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
 status GraphicsService::update() {
-    float timeStep = mTimeService->elapsed();
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    float lTimeStep = mTimeService->elapsed();
+
+    // Draw tiles and sprites (with transparency).
+    for (int32_t i = 0; i < mTileMapCount; ++i) {
+        mTileMaps[i]->draw();
+    }
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     for (int32_t i = 0; i < mSpriteCount; ++i) {
-        mSprites[i]->draw(timeStep);
+        mSprites[i]->draw(lTimeStep);
     }
-    glDisable (GL_BLEND);
+    glDisable(GL_BLEND);
 
+    // Shows rendering surface.
     if (eglSwapBuffers(mDisplay, mSurface) != EGL_TRUE) {
         Log::error("Error %d swapping buffers.", eglGetError());
         return STATUS_KO;
@@ -152,50 +207,36 @@ status GraphicsService::update() {
     return STATUS_OK;
 }
 
-status GraphicsService::loadResources() {
+GraphicsTexture* GraphicsService::registerTexture(const char* pPath) {
+    // Finds out if texture already loaded.
     for (int32_t i = 0; i < mTextureCount; ++i) {
-        if (mTextures[i]->load() != STATUS_OK) {
-            return STATUS_KO;
-        }
-    }
-    for (int32_t i = 0;  i< mSpriteCount; ++i) {
-        mSprites[i]->load();
-    }
-    return STATUS_OK;
-}
-
-status GraphicsService::unloadResources() {
-    for (int32_t i = 0; i < mTextureCount; ++i) {
-        mTextures[i]->unload();
-    }
-    return STATUS_OK;
-}
-
-GraphicsTexture* GraphicsService::registerTexture(const char* path) {
-    for (int32_t i = 0; i < mTextureCount; ++i) {
-        if (strcmp(path, mTextures[i]->getPath()) != 0) {
+        if (strcmp(pPath, mTextures[i]->getPath()) == 0) {
             return mTextures[i];
         }
     }
 
-    GraphicsTexture* texture = new GraphicsTexture(mApp, path);
-    mTextures[mTextureCount++] = texture;
-    return texture;
-
+    // Appends a new texture to the texture array.
+    GraphicsTexture* lTexture = new GraphicsTexture(mApp, pPath);
+    mTextures[mTextureCount++] = lTexture;
+    return lTexture;
 }
 
-void GraphicsService::setup() {
-    glEnable(GL_TEXTURE_2D);
-    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-    glDisable(GL_DEPTH_TEST);
+GraphicsSprite* GraphicsService::registerSprite(GraphicsTexture* pTexture,
+        int32_t pHeight, int32_t pWidth, Location* pLocation) {
+    // Appends a new sprite to the sprite array.
+    GraphicsSprite* lSprite = new GraphicsSprite(pTexture, pHeight, pWidth,
+            pLocation);
+    mSprites[mSpriteCount++] = lSprite;
+    return lSprite;
 }
 
-GraphicsSprite* GraphicsService::registerSprite(GraphicsTexture* texture,
-        int32_t height, int32_t width, Location* location) {
-    GraphicsSprite* sprite = new GraphicsSprite(texture, height, width,
-            location);
-    mSprites[mSpriteCount++] = sprite;
-    return sprite;
+GraphicsTileMap* GraphicsService::registerTileMap(const char* pPath,
+        GraphicsTexture* pTexture, Location* pLocation) {
+    // Appends a new tile map to the tile map array.
+    GraphicsTileMap* lTileMap = new GraphicsTileMap(mApp, pPath,
+            pTexture, pLocation);
+    mTileMaps[mTileMapCount++] = lTileMap;
+    return lTileMap;
 }
 
 }

@@ -15,6 +15,7 @@
 
 #include "GraphicsSprite.hpp"
 #include "GraphicsTexture.hpp"
+#include "GraphicsTileMap.hpp"
 #include "TimeService.hpp"
 #include "Types.hpp"
 
@@ -38,6 +39,8 @@ public:
     GraphicsTexture* registerTexture(const char* path);
     GraphicsSprite* registerSprite(GraphicsTexture* texture, int32_t height,
             int32_t width, Location* location);
+    GraphicsTileMap* registerTileMap(const char* path, GraphicsTexture* texture,
+            Location* location);
 protected:
     status loadResources();
     status unloadResources();
@@ -54,6 +57,8 @@ private:
     int32_t mTextureCount;
     GraphicsSprite* mSprites[256];
     int32_t mSpriteCount;
+    GraphicsTileMap* mTileMaps[8];
+    int32_t mTileMapCount;
 };
 }
 

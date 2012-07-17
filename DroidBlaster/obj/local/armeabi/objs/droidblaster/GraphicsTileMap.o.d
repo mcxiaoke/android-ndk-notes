@@ -1,6 +1,6 @@
-obj/local/armeabi/objs/droidblaster/GraphicsService.o: \
- jni/GraphicsService.cpp jni/GraphicsService.hpp jni/GraphicsSprite.hpp \
- jni/GraphicsTexture.hpp jni/Context.hpp jni/Types.hpp \
+obj/local/armeabi/objs/droidblaster/GraphicsTileMap.o: \
+ jni/GraphicsTileMap.cpp jni/GraphicsTileMap.hpp jni/GraphicsTexture.hpp \
+ jni/Context.hpp jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
@@ -57,16 +57,19 @@ obj/local/armeabi/objs/droidblaster/GraphicsService.o: \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/setjmp.h \
  /e/android/ndk/sources/libpng/pngconf.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h \
- jni/TimeService.hpp jni/GraphicsTileMap.hpp \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
  jni/Log.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glext.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h
+ jni/rapidxml.hpp /e/android/ndk/sources/cxx-stl/system/include/cstdlib \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdlib.h \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/alloca.h \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/strings.h \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/memory.h \
+ /e/android/ndk/sources/cxx-stl/system/include/cassert \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/assert.h \
+ /e/android/ndk/sources/cxx-stl/system/include/new \
+ /e/android/ndk/sources/cxx-stl/system/include/cstddef
 
-jni/GraphicsService.hpp:
-
-jni/GraphicsSprite.hpp:
+jni/GraphicsTileMap.hpp:
 
 jni/GraphicsTexture.hpp:
 
@@ -186,16 +189,26 @@ jni/Resource.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h:
 
-jni/TimeService.hpp:
-
-jni/GraphicsTileMap.hpp:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h:
-
 jni/Log.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glext.h:
 
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h:
+jni/rapidxml.hpp:
+
+/e/android/ndk/sources/cxx-stl/system/include/cstdlib:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/stdlib.h:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/alloca.h:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/strings.h:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/memory.h:
+
+/e/android/ndk/sources/cxx-stl/system/include/cassert:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/assert.h:
+
+/e/android/ndk/sources/cxx-stl/system/include/new:
+
+/e/android/ndk/sources/cxx-stl/system/include/cstddef:

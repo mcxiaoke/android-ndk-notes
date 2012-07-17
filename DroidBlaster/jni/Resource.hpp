@@ -19,6 +19,9 @@ public:
     status open();
     void close();
     status read(void* buffer, size_t size);
+
+    off_t getLength();
+    const void* bufferize();
 private:
     const char* mPath;
     AAssetManager* mAssetManager;
