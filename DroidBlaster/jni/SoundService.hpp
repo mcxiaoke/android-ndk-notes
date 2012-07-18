@@ -16,6 +16,9 @@ namespace demo {
         status start();
         void stop();
 
+        status playBGM(const char* pPath);
+        void stopBGM();
+
     private:
         android_app* mApplication;
 
@@ -23,6 +26,10 @@ namespace demo {
         SLObjectItf mEngineObj; SLEngineItf mEngine;
         // Audio output.
         SLObjectItf mOutputMixObj;
+
+        // Background music player.
+        SLObjectItf mBGMPlayerObj; SLPlayItf mBGMPlayer;
+        SLSeekItf mBGMPlayerSeek;
     };
 }
 #endif

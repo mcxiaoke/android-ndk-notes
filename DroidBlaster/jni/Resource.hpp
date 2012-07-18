@@ -12,6 +12,13 @@
 #include <android_native_app_glue.h>
 
 namespace demo {
+
+struct ResourceDescriptor {
+    int32_t mDescriptor;
+    off_t mStart;
+    off_t mLength;
+};
+
 class Resource {
 public:
     Resource(android_app* app, const char* path);
@@ -22,6 +29,7 @@ public:
 
     off_t getLength();
     const void* bufferize();
+    ResourceDescriptor descript();
 private:
     const char* mPath;
     AAssetManager* mAssetManager;

@@ -35,12 +35,24 @@ status Resource::read(void* buffer, size_t size) {
     return (read == size) ? STATUS_OK : STATUS_KO;
 }
 
-off_t Resource::getLength(){
+off_t Resource::getLength() {
     return AAsset_getLength(mAsset);
 }
 
-const void* Resource::bufferize(){
+const void* Resource::bufferize() {
     return AAsset_getBuffer(mAsset);
+}
+
+ResourceDescriptor Resource::descript() {
+    ResourceDescriptor lDescriptor = { -1, 0, 0 };
+    AAsset* lAsset = AAssetManager_open(mAssetManager, mPath,
+            AASSET_MODE_UNKNOWN);
+    if (lAsset != NULL) {
+        lDescriptor.mDescriptor = AAsset_openFileDescriptor(lAsset,
+                &lDescriptor.mStart, &lDescriptor.mLength);
+        AAsset_close(lAsset);
+    }
+    return lDescriptor;
 }
 
 }

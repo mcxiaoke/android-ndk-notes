@@ -33,6 +33,7 @@ demo::status DroidBlaster::onActivate() {
     if (mSoundService->start() != demo::STATUS_OK) {
         return demo::STATUS_KO;
     }
+    mSoundService->playBGM("bgm.mp3");
 
     mBackground.spawn();
     mShip.spawn();
