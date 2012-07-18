@@ -35,6 +35,7 @@ demo::status DroidBlaster::onActivate() {
         return demo::STATUS_KO;
     }
     mSoundService->playBGM("bgm.mp3");
+    mSoundService->recordSound();
     mSoundService->playSound(mStartSound);
 
     mBackground.spawn();
