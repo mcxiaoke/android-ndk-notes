@@ -1,5 +1,5 @@
-obj/local/armeabi/objs/droidblaster/EventLoop.o: jni/EventLoop.cpp \
- jni/EventLoop.hpp jni/EventHandler.hpp jni/Types.hpp \
+obj/local/armeabi/objs/droidblaster/InputService.o: jni/InputService.cpp \
+ jni/InputService.hpp jni/Context.hpp jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
@@ -47,11 +47,13 @@ obj/local/armeabi/objs/droidblaster/EventLoop.o: jni/EventLoop.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/jni.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/native_window.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/rect.h \
- jni/Log.hpp
+ jni/Log.hpp /e/android/ndk/sources/cxx-stl/system/include/cmath \
+ /e/android/ndk/sources/cxx-stl/system/include/cstddef \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h
 
-jni/EventLoop.hpp:
+jni/InputService.hpp:
 
-jni/EventHandler.hpp:
+jni/Context.hpp:
 
 jni/Types.hpp:
 
@@ -150,3 +152,9 @@ jni/InputHandler.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/rect.h:
 
 jni/Log.hpp:
+
+/e/android/ndk/sources/cxx-stl/system/include/cmath:
+
+/e/android/ndk/sources/cxx-stl/system/include/cstddef:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h:

@@ -60,7 +60,8 @@ obj/local/armeabi/objs/droidblaster/DroidBlaster.o: jni/DroidBlaster.cpp \
  jni/TimeService.hpp jni/GraphicsTileMap.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
- jni/Sound.hpp jni/SoundService.hpp \
+ jni/InputService.hpp jni/InputHandler.hpp jni/Sound.hpp \
+ jni/SoundService.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Platform.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h \
@@ -208,6 +209,10 @@ jni/GraphicsTileMap.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h:
+
+jni/InputService.hpp:
+
+jni/InputHandler.hpp:
 
 jni/Sound.hpp:
 

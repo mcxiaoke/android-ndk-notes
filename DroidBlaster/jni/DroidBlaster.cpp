@@ -15,8 +15,8 @@ namespace db {
 
 DroidBlaster::DroidBlaster(demo::Context *context) :
         mGraphicsService(context->mGraphicsService), mSoundService(
-                context->mSoundService), mTimeService(context->mTimeService), mShip(
-                context), mBackground(context), mStartSound(
+                context->mSoundService), mTimeService(context->mTimeService), mInputService(
+                context->mInputService), mShip(context), mBackground(context), mStartSound(
                 mSoundService->registerSound("start.pcm")) {
     demo::Log::debug("Creating DroidBlaster.");
 }
@@ -30,12 +30,14 @@ demo::status DroidBlaster::onActivate() {
     if (mGraphicsService->start() != demo::STATUS_OK) {
         return demo::STATUS_KO;
     }
-
+    if (mInputService->start() != demo::STATUS_OK) {
+        return demo::STATUS_KO;
+    }
     if (mSoundService->start() != demo::STATUS_OK) {
         return demo::STATUS_KO;
     }
     mSoundService->playBGM("bgm.mp3");
-    mSoundService->recordSound();
+//    mSoundService->recordSound();
     mSoundService->playSound(mStartSound);
 
     mBackground.spawn();
@@ -55,6 +57,7 @@ demo::status DroidBlaster::onStep() {
 //    demo::Log::debug("Starting step.");
     mTimeService->update();
     mBackground.update();
+    mShip.update();
     if (mGraphicsService->update() != demo::STATUS_OK) {
         demo::Log::debug("update graphics service failed.");
         return demo::STATUS_KO;

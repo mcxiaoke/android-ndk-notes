@@ -1,34 +1,44 @@
-/*
- * EventLoop.hpp
- *
- *  Created on: 2012-7-10
- *      Author: mcxiaoke
- */
+#ifndef _PACKT_EVENTLOOP_HPP_
+#define _PACKT_EVENTLOOP_HPP_
 
-#ifndef EVENTLOOP_HPP_
-#define EVENTLOOP_HPP_
-
-#include "Types.hpp"
 #include "EventHandler.hpp"
+#include "InputHandler.hpp"
+#include "Types.hpp"
+
 #include <android_native_app_glue.h>
 
 namespace demo {
-class EventLoop {
-public:
-    EventLoop(android_app *app);
-    void run(EventHandler *eventHandler);
-protected:
-    void activate();
-    void deactivate();
-    void processAppEvent(int32_t cmd);
-private:
-    static void eventCallback(android_app *app, int32_t cmd);
-private:
-    bool mEnabled;
-    bool mQuit;
-    EventHandler *mEventHandler;
-    android_app *mApp;
-};
-}
+    class EventLoop {
+    public:
+        EventLoop(android_app* pApplication);
+        void run(EventHandler* pActivityHandler,
+                 InputHandler* pInputHandler);
 
-#endif /* EVENTLOOP_HPP_ */
+    protected:
+        void activate();
+        void deactivate();
+
+        void processAppEvent(int32_t pCommand);
+        int32_t processInputEvent(AInputEvent* pEvent);
+
+    private:
+        // Private callbacks handling events occuring in the thread loop.
+        static void callback_event(android_app* pApplication,
+            int32_t pCommand);
+        static int32_t callback_input(android_app* pApplication,
+            AInputEvent* pEvent);
+
+    private:
+        // Saves application state when application is active/paused.
+        bool mEnabled;
+        // Indicates if the event handler wants to exit.
+        bool mQuit;
+        // Application details provided by Android.
+        android_app* mApplication;
+        // Activity event observer.
+        EventHandler* mActivityHandler;
+        // Input event observer.
+        InputHandler* mInputHandler;
+    };
+}
+#endif

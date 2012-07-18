@@ -1,10 +1,11 @@
-obj/local/armeabi/objs/droidblaster/Main.o: jni/Main.cpp \
- jni/DroidBlaster.hpp jni/EventHandler.hpp jni/Types.hpp \
+obj/local/armeabi/objs/droidblaster/Main.o: jni/Main.cpp jni/Context.hpp \
+ jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
- jni/Background.hpp jni/Context.hpp jni/GraphicsService.hpp \
- jni/GraphicsSprite.hpp jni/GraphicsTexture.hpp jni/Resource.hpp \
+ jni/DroidBlaster.hpp jni/EventHandler.hpp jni/Background.hpp \
+ jni/GraphicsService.hpp jni/GraphicsSprite.hpp jni/GraphicsTexture.hpp \
+ jni/Resource.hpp \
  /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/poll.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/cdefs.h \
@@ -60,16 +61,15 @@ obj/local/armeabi/objs/droidblaster/Main.o: jni/Main.cpp \
  jni/TimeService.hpp jni/GraphicsTileMap.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
- jni/Sound.hpp jni/SoundService.hpp \
+ jni/InputService.hpp jni/InputHandler.hpp jni/Sound.hpp \
+ jni/SoundService.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Platform.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h \
  jni/Ship.hpp jni/EventLoop.hpp
 
-jni/DroidBlaster.hpp:
-
-jni/EventHandler.hpp:
+jni/Context.hpp:
 
 jni/Types.hpp:
 
@@ -79,9 +79,11 @@ jni/Types.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h:
 
-jni/Background.hpp:
+jni/DroidBlaster.hpp:
 
-jni/Context.hpp:
+jni/EventHandler.hpp:
+
+jni/Background.hpp:
 
 jni/GraphicsService.hpp:
 
@@ -202,6 +204,10 @@ jni/GraphicsTileMap.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h:
+
+jni/InputService.hpp:
+
+jni/InputHandler.hpp:
 
 jni/Sound.hpp:
 

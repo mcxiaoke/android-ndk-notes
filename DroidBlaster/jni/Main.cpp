@@ -5,20 +5,30 @@
  *      Author: mcxiaoke
  */
 
+#include "Context.hpp"
 #include "DroidBlaster.hpp"
 #include "EventLoop.hpp"
-#include "Context.hpp"
 #include "GraphicsService.hpp"
+#include "InputService.hpp"
 #include "SoundService.hpp"
 #include "TimeService.hpp"
 
-void android_main(android_app *app) {
-    demo::TimeService timeService;
-    demo::GraphicsService graphicsService(app, &timeService);
-    demo::SoundService soundService(app);
-    demo::Context context = { &graphicsService, &soundService, &timeService };
-    demo::EventLoop eventLoop(app);
-    db::DroidBlaster droidBlaster(&context);
-    eventLoop.run(&droidBlaster);
+void android_main(android_app* pApplication) {
+    // Creates services.
+    demo::TimeService lTimeService;
+    demo::GraphicsService lGraphicsService(pApplication,
+        &lTimeService);
+    demo::InputService lInputService(pApplication,
+        lGraphicsService.getWidth(), lGraphicsService.getHeight());
+    demo::SoundService lSoundService(pApplication);
+
+    // Fills the context.
+    demo::Context lContext = { &lGraphicsService, &lInputService,
+        &lSoundService, &lTimeService };
+
+    // Starts the game loop.
+    demo::EventLoop lEventLoop(pApplication);
+    db::DroidBlaster lDroidBlaster(&lContext);
+    lEventLoop.run(&lDroidBlaster, &lInputService);
 }
 

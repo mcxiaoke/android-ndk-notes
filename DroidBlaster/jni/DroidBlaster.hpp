@@ -12,6 +12,7 @@
 #include "Background.hpp"
 #include "Context.hpp"
 #include "GraphicsService.hpp"
+#include "InputService.hpp"
 #include "Sound.hpp"
 #include "SoundService.hpp"
 #include "Ship.hpp"
@@ -53,6 +54,7 @@ protected:
 private:
 //    android_app *mApp;
 //    ANativeWindow_Buffer mWindowBuffer;
+    demo::InputService *mInputService;
     demo::GraphicsService *mGraphicsService;
     demo::SoundService *mSoundService;
     demo::TimeService *mTimeService;
