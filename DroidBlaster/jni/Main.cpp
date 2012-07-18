@@ -1,34 +1,31 @@
-/*
- * Main.cpp
- *
- *  Created on: 2012-7-10
- *      Author: mcxiaoke
- */
-
 #include "Context.hpp"
 #include "DroidBlaster.hpp"
 #include "EventLoop.hpp"
 #include "GraphicsService.hpp"
 #include "InputService.hpp"
+#include "Sensor.hpp"
 #include "SoundService.hpp"
 #include "TimeService.hpp"
+#include "Log.hpp"
 
 void android_main(android_app* pApplication) {
+    packt::EventLoop lEventLoop(pApplication);
+    packt::Sensor lAccelerometer(lEventLoop,
+        ASENSOR_TYPE_ACCELEROMETER);
+
     // Creates services.
-    demo::TimeService lTimeService;
-    demo::GraphicsService lGraphicsService(pApplication,
+    packt::TimeService lTimeService;
+    packt::GraphicsService lGraphicsService(pApplication,
         &lTimeService);
-    demo::InputService lInputService(pApplication,
+    packt::InputService lInputService(pApplication, &lAccelerometer,
         lGraphicsService.getWidth(), lGraphicsService.getHeight());
-    demo::SoundService lSoundService(pApplication);
+    packt::SoundService lSoundService(pApplication);
 
     // Fills the context.
-    demo::Context lContext = { &lGraphicsService, &lInputService,
+    packt::Context lContext = { &lGraphicsService, &lInputService,
         &lSoundService, &lTimeService };
 
     // Starts the game loop.
-    demo::EventLoop lEventLoop(pApplication);
-    db::DroidBlaster lDroidBlaster(&lContext);
+    dbs::DroidBlaster lDroidBlaster(&lContext);
     lEventLoop.run(&lDroidBlaster, &lInputService);
 }
-

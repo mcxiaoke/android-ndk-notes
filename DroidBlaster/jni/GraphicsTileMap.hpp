@@ -6,7 +6,7 @@
 
 #include <android_native_app_glue.h>
 
-namespace demo {
+namespace packt {
     class GraphicsTileMap {
     public:
         GraphicsTileMap(android_app* pApplication, const char* pPath,

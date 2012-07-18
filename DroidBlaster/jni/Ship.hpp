@@ -8,21 +8,21 @@
 #include "TimeService.hpp"
 #include "Types.hpp"
 
-namespace db {
+namespace dbs {
     class Ship {
     public:
-        Ship(demo::Context* pContext);
+        Ship(packt::Context* pContext);
 
         void spawn();
         void update();
 
     private:
-        demo::GraphicsService* mGraphicsService;
-        demo::InputService* mInputService;
-        demo::TimeService* mTimeService;
+        packt::GraphicsService* mGraphicsService;
+        packt::InputService* mInputService;
+        packt::TimeService* mTimeService;
 
-        demo::GraphicsSprite* mSprite;
-        demo::Location mLocation;
+        packt::GraphicsSprite* mSprite;
+        packt::Location mLocation;
         float mAnimSpeed;
     };
 }

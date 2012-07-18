@@ -61,8 +61,7 @@ obj/local/armeabi/objs/droidblaster/GraphicsService.o: \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
  jni/Log.hpp \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glext.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glext.h
 
 jni/GraphicsService.hpp:
 
@@ -197,5 +196,3 @@ jni/GraphicsTileMap.hpp:
 jni/Log.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glext.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h:

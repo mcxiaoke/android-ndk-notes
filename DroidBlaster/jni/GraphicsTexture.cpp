@@ -1,19 +1,12 @@
-/*
- * GraphicsTexture.cpp
- *
- *  Created on: 2012-7-13
- *      Author: mcxiaoke
- */
-
 #include "Log.hpp"
 #include "GraphicsTexture.hpp"
 
-namespace demo {
+namespace packt {
     GraphicsTexture::GraphicsTexture(android_app* pApplication,
         const char* pPath) :
         mResource(pApplication, pPath),
         mTextureId(0),
-        mWidth(0), mHeight(0),mFormat(0)
+        mWidth(0), mHeight(0)
     {}
 
     const char* GraphicsTexture::getPath() {
@@ -29,7 +22,7 @@ namespace demo {
     }
 
     uint8_t* GraphicsTexture::loadImage() {
-        Log::info("GraphicsTexture::loadImage() %s",mResource.getPath());
+        Log::info("Loading texture %s", mResource.getPath());
 
         png_byte lHeader[8];
         png_structp lPngPtr = NULL; png_infop lInfoPtr = NULL;
@@ -38,13 +31,13 @@ namespace demo {
 
         // Opens and checks image signature (first 8 bytes).
         if (mResource.open() != STATUS_OK) goto ERROR;
-        Log::debug("Checking signature.");
+        packt_Log_debug("Checking signature.");
         if (mResource.read(lHeader, sizeof(lHeader)) != STATUS_OK)
             goto ERROR;
         if (png_sig_cmp(lHeader, 0, 8) != 0) goto ERROR;
 
         // Creates required structures.
-        Log::debug("Creating required structures.");
+        packt_Log_debug("Creating required structures.");
         lPngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING,
             NULL, NULL, NULL);
         if (!lPngPtr) goto ERROR;
@@ -142,7 +135,6 @@ namespace demo {
 
     void GraphicsTexture::callback_read(png_structp pStruct,
         png_bytep pData, png_size_t pSize) {
-        Log::info("GraphicsTexture::callback_read()");
         Resource* lResource = ((Resource*) png_get_io_ptr(pStruct));
         if (lResource->read(pData, pSize) != STATUS_OK) {
             lResource->close();
@@ -154,8 +146,6 @@ namespace demo {
         if (lImageBuffer == NULL) {
             return STATUS_KO;
         }
-
-        Log::info("GraphicsTexture::load()");
 
         // Creates a new OpenGL texture.
         GLenum lErrorResult;
@@ -193,6 +183,5 @@ namespace demo {
     void GraphicsTexture::apply() {
         glActiveTexture( GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, mTextureId);
-        Log::info("GraphicsTexture::apply()");
     }
 }

@@ -1,30 +1,24 @@
-/*
- * TimeService.hpp
- *
- *  Created on: 2012-7-11
- *      Author: mcxiaoke
- */
-
-#ifndef TIMESERVICE_HPP_
-#define TIMESERVICE_HPP_
+#ifndef _PACKT_TIMESERVICE_HPP_
+#define _PACKT_TIMESERVICE_HPP_
 
 #include "Types.hpp"
+
 #include <time.h>
 
-namespace demo {
-class TimeService {
-public:
-    TimeService();
+namespace packt {
+    class TimeService {
+    public:
+        TimeService();
 
-    void reset();
-    void update();
+        void reset();
+        void update();
 
-    double now();
-    float elapsed();
-private:
-    float mElapsed;
-    double mLastTime;
-};
+        double now();
+        float elapsed();
+
+    private:
+        float mElapsed;
+        double mLastTime;
+    };
 }
-
-#endif /* TIMESERVICE_HPP_ */
+#endif

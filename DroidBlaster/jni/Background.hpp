@@ -6,20 +6,20 @@
 #include "GraphicsTileMap.hpp"
 #include "Types.hpp"
 
-namespace db {
+namespace dbs {
     class Background {
     public:
-        Background(demo::Context* pContext);
+        Background(packt::Context* pContext);
 
         void spawn();
         void update();
 
     private:
-        demo::TimeService* mTimeService;
-        demo::GraphicsService* mGraphicsService;
+        packt::TimeService* mTimeService;
+        packt::GraphicsService* mGraphicsService;
 
-        demo::GraphicsTileMap* mTileMap;
-        demo::Location mLocation; float mAnimSpeed;
+        packt::GraphicsTileMap* mTileMap;
+        packt::Location mLocation; float mAnimSpeed;
     };
 }
 #endif

@@ -1,27 +1,20 @@
-/*
- * Log.hpp
- *
- *  Created on: 2012-7-10
- *      Author: mcxiaoke
- */
+#ifndef _PACKT_LOG_HPP_
+#define _PACKT_LOG_HPP_
 
-#ifndef LOG_HPP_
-#define LOG_HPP_
-
-namespace demo {
-class Log {
-public:
-    static void error(const char* message, ...);
-    static void warn(const char* message, ...);
-    static void info(const char* message, ...);
-    static void debug(const char* message, ...);
-};
+namespace packt {
+    class Log {
+    public:
+        static void error(const char* pMessage, ...);
+        static void warn(const char* pMessage, ...);
+        static void info(const char* pMessage, ...);
+        static void debug(const char* pMessage, ...);
+    };
 }
 
 #ifndef NDEBUG
-#define demo_Log_debug(...) demo::Log::debug(__VA_ARGS__)
+    #define packt_Log_debug(...) packt::Log::debug(__VA_ARGS__)
 #else
-#define demo_Log_debug(...)
+    #define packt_Log_debug(...)
 #endif
 
-#endif /* LOG_HPP_ */
+#endif

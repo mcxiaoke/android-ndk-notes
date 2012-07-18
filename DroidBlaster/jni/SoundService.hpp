@@ -9,7 +9,7 @@
 #include <SLES/OpenSLES_Android.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
 
-namespace demo {
+namespace packt {
     class SoundService {
     public:
         SoundService(android_app* pApplication);
@@ -24,16 +24,8 @@ namespace demo {
         Sound* registerSound(const char* pPath);
         void playSound(Sound* pSound);
 
-        // Recorder methods.
-        void recordSound();
-        void playRecordedSound();
-
     private:
         status startSoundPlayer();
-        status startSoundRecorder();
-
-        static void callback_recorder(
-            SLAndroidSimpleBufferQueueItf pQueue, void* pContext);
 
     private:
         android_app* mApplication;
@@ -52,12 +44,6 @@ namespace demo {
         SLBufferQueueItf mPlayerQueue;
         // Sounds.
         Sound* mSounds[32]; int32_t mSoundCount;
-
-        // Sound recorder.
-        SLObjectItf mRecorderObj; SLRecordItf mRecorder;
-        SLAndroidSimpleBufferQueueItf mRecorderQueue;
-        // Record buffer.
-        int32_t mRecordSize; int16_t* mRecordBuffer;
     };
 }
 #endif

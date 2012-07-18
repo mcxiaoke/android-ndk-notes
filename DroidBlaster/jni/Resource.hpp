@@ -1,40 +1,36 @@
-/*
- * Resource.hpp
- *
- *  Created on: 2012-7-13
- *      Author: mcxiaoke
- */
-
-#ifndef RESOURCE_HPP_
-#define RESOURCE_HPP_
+#ifndef _PACKT_RESOURCE_HPP_
+#define _PACKT_RESOURCE_HPP_
 
 #include "Types.hpp"
+
 #include <android_native_app_glue.h>
 
-namespace demo {
+namespace packt {
+    struct ResourceDescriptor {
+        int32_t mDescriptor;
+        off_t mStart;
+        off_t mLength;
+    };
 
-struct ResourceDescriptor {
-    int32_t mDescriptor;
-    off_t mStart;
-    off_t mLength;
-};
+    class Resource {
+    public:
+        Resource(android_app* pApplication, const char* pPath);
 
-class Resource {
-public:
-    Resource(android_app* app, const char* path);
-    const char* getPath();
-    status open();
-    void close();
-    status read(void* buffer, size_t size);
+        const char* getPath();
 
-    off_t getLength();
-    const void* bufferize();
-    ResourceDescriptor descript();
-private:
-    const char* mPath;
-    AAssetManager* mAssetManager;
-    AAsset* mAsset;
-};
+        status open();
+        void close();
+        status read(void* pBuffer, size_t pCount);
+
+        off_t getLength();
+        const void* bufferize();
+
+        ResourceDescriptor descript();
+
+    private:
+        const char* mPath;
+        AAssetManager* mAssetManager;
+        AAsset* mAsset;
+    };
 }
-
-#endif /* RESOURCE_HPP_ */
+#endif

@@ -1,5 +1,5 @@
 obj/local/armeabi/objs/droidblaster/DroidBlaster.o: jni/DroidBlaster.cpp \
- jni/DroidBlaster.hpp jni/EventHandler.hpp jni/Types.hpp \
+ jni/DroidBlaster.hpp jni/ActivityHandler.hpp jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
@@ -60,23 +60,18 @@ obj/local/armeabi/objs/droidblaster/DroidBlaster.o: jni/DroidBlaster.cpp \
  jni/TimeService.hpp jni/GraphicsTileMap.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
- jni/InputService.hpp jni/InputHandler.hpp jni/Sound.hpp \
- jni/SoundService.hpp \
+ jni/InputService.hpp jni/InputHandler.hpp \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/sensor.h \
+ jni/Sensor.hpp jni/Ship.hpp jni/Sound.hpp jni/SoundService.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Platform.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h \
- jni/Ship.hpp jni/Log.hpp \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/unistd.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/select.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/sysconf.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/linux/capability.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/pathconf.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h
+ jni/Log.hpp
 
 jni/DroidBlaster.hpp:
 
-jni/EventHandler.hpp:
+jni/ActivityHandler.hpp:
 
 jni/Types.hpp:
 
@@ -214,6 +209,12 @@ jni/InputService.hpp:
 
 jni/InputHandler.hpp:
 
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/android/sensor.h:
+
+jni/Sensor.hpp:
+
+jni/Ship.hpp:
+
 jni/Sound.hpp:
 
 jni/SoundService.hpp:
@@ -226,18 +227,4 @@ jni/SoundService.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h:
 
-jni/Ship.hpp:
-
 jni/Log.hpp:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/unistd.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/select.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/sysconf.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/linux/capability.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/pathconf.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/math.h:

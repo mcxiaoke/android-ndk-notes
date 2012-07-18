@@ -1,8 +1,8 @@
 #include "Ship.hpp"
 #include "Log.hpp"
 
-namespace db {
-    Ship::Ship(demo::Context* pContext) :
+namespace dbs {
+    Ship::Ship(packt::Context* pContext) :
       mInputService(pContext->mInputService),
       mGraphicsService(pContext->mGraphicsService),
       mTimeService(pContext->mTimeService),

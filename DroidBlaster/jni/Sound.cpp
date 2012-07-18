@@ -6,11 +6,11 @@
 #include <SLES/OpenSLES_Android.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
 
-namespace demo {
+namespace packt {
     Sound::Sound(android_app* pApplication, const char* pPath) :
         mResource(pApplication, pPath),
-        mBuffer(NULL), mLength(0)
-    {}
+        mBuffer(NULL), mLength(0) {
+    }
 
     const char* Sound::getPath() {
         return mResource.getPath();

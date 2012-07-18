@@ -1,133 +1,111 @@
-/*
- * DroidBlaster.cpp
- *
- *  Created on: 2012-7-10
- *      Author: mcxiaoke
- */
-
 #include "DroidBlaster.hpp"
 #include "Log.hpp"
 
-#include <unistd.h>
-#include <math.h>
-
-namespace db {
-
-DroidBlaster::DroidBlaster(demo::Context *context) :
-        mGraphicsService(context->mGraphicsService), mSoundService(
-                context->mSoundService), mTimeService(context->mTimeService), mInputService(
-                context->mInputService), mShip(context), mBackground(context), mStartSound(
-                mSoundService->registerSound("start.pcm")) {
-    demo::Log::debug("Creating DroidBlaster.");
-}
-
-DroidBlaster::~DroidBlaster() {
-    demo::Log::debug("Destructing DroidBlaster.");
-}
-
-demo::status DroidBlaster::onActivate() {
-    demo::Log::debug("Activating DroidBlaster.");
-    if (mGraphicsService->start() != demo::STATUS_OK) {
-        return demo::STATUS_KO;
+namespace dbs {
+    DroidBlaster::DroidBlaster(packt::Context* pContext) :
+        mGraphicsService(pContext->mGraphicsService),
+        mInputService(pContext->mInputService),
+        mSoundService(pContext->mSoundService),
+        mTimeService(pContext->mTimeService),
+        mBackground(pContext), mShip(pContext),
+        mStartSound(mSoundService->registerSound("start.pcm")) {
+        packt::Log::info("Creating DroidBlaster");
     }
-    if (mInputService->start() != demo::STATUS_OK) {
-        return demo::STATUS_KO;
+
+    packt::status DroidBlaster::onActivate() {
+        packt::Log::info("Activating DroidBlaster");
+
+        // Starts services.
+        if (mGraphicsService->start() != packt::STATUS_OK) {
+            return packt::STATUS_KO;
+        }
+        if (mInputService->start() != packt::STATUS_OK) {
+            return packt::STATUS_KO;
+        }
+        if (mSoundService->start() != packt::STATUS_OK) {
+            return packt::STATUS_KO;
+        }
+
+        // Starts background music.
+        mSoundService->playBGM("bgm.mp3");
+        mSoundService->playSound(mStartSound);
+        // Initializes game objects.
+        mBackground.spawn();
+        mShip.spawn();
+
+        mTimeService->reset();
+        return packt::STATUS_OK;
     }
-    if (mSoundService->start() != demo::STATUS_OK) {
-        return demo::STATUS_KO;
+
+    void DroidBlaster::onDeactivate() {
+        packt::Log::info("Deactivating DroidBlaster");
+        mGraphicsService->stop();
+        mInputService->stop();
+        mSoundService->stop();
     }
-    mSoundService->playBGM("bgm.mp3");
-//    mSoundService->recordSound();
-    mSoundService->playSound(mStartSound);
 
-    mBackground.spawn();
-    mShip.spawn();
-    mTimeService->reset();
+    packt::status DroidBlaster::onStep() {
+        mTimeService->update();
 
-    return demo::STATUS_OK;
-}
+        // Updates entities.
+        mBackground.update();
+        mShip.update();
 
-void DroidBlaster::onDeactivate() {
-    demo::Log::debug("Deactivating DroidBlaster.");
-    mGraphicsService->stop();
-    mSoundService->stop();
-}
-
-demo::status DroidBlaster::onStep() {
-//    demo::Log::debug("Starting step.");
-    mTimeService->update();
-    mBackground.update();
-    mShip.update();
-    if (mGraphicsService->update() != demo::STATUS_OK) {
-        demo::Log::debug("update graphics service failed.");
-        return demo::STATUS_KO;
+        // Updates services.
+        if (mGraphicsService->update() != packt::STATUS_OK) {
+            return packt::STATUS_KO;
+        }
+        if (mInputService->update() != packt::STATUS_OK) {
+            return packt::STATUS_KO;
+        }
+        return packt::STATUS_OK;
     }
-//    demo::Log::debug("update graphics service.");
-//    demo::Log::debug("Steping done..");
-    return demo::STATUS_OK;
-}
 
-void DroidBlaster::onStart() {
-    demo::Log::debug("onStart.");
-}
+    void DroidBlaster::onStart() {
+        packt::Log::info("onStart");
+    }
 
-void DroidBlaster::onResume() {
-    demo::Log::debug("onResume.");
-}
-void DroidBlaster::onPause() {
-    demo::Log::debug("onPause.");
-}
-void DroidBlaster::onStop() {
-    demo::Log::debug("onStop.");
-}
-void DroidBlaster::onDestroy() {
-    demo::Log::debug("onDestroy.");
-}
+    void DroidBlaster::onResume() {
+        packt::Log::info("onResume");
+    }
 
-void DroidBlaster::onSaveState(void** data, size_t* size) {
-    demo::Log::debug("onSaveState.");
-}
-void DroidBlaster::onConfigurationChanged() {
-    demo::Log::debug("onConfigurationChanged.");
-}
-void DroidBlaster::onLowMemory() {
-    demo::Log::debug("onLowMemory.");
-}
+    void DroidBlaster::onPause() {
+        packt::Log::info("onPause");
+    }
 
-void DroidBlaster::onCreateWindow() {
-    demo::Log::debug("onCreateWindow.");
-}
-void DroidBlaster::onDestroyWindow() {
-    demo::Log::debug("onDestroyWindow.");
-}
-void DroidBlaster::onGainFocus() {
-    demo::Log::debug("onGainFocus.");
-}
-void DroidBlaster::onLostFocus() {
-    demo::Log::debug("onLostFocus.");
-}
+    void DroidBlaster::onStop() {
+        packt::Log::info("onStop");
+    }
 
-//void DroidBlaster::clear() {
-//    memset(mWindowBuffer.bits, 0,
-//            mWindowBuffer.stride * mWindowBuffer.height * sizeof(uint32_t*));
-//}
-//
-//void DroidBlaster::drawCursor(int size, int px, int py) {
-//    const int halfSize = size / 2;
-//    const int upLeftX = px - halfSize;
-//    const int upLeftY = py - halfSize;
-//    const int downRightX = px + halfSize;
-//    const int downRightY = py + halfSize;
-//
-//    uint32_t* line = reinterpret_cast<uint32_t*>(mWindowBuffer.bits)
-//            + (mWindowBuffer.stride * upLeftY);
-//    for (int iy = upLeftY; iy < downRightY; ++iy) {
-//        for (int ix = upLeftX; ix < downRightX; ++ix) {
-//            line[ix] = 255;
-//        }
-//        line = line + mWindowBuffer.stride;
-//    }
-//}
+    void DroidBlaster::onDestroy() {
+        packt::Log::info("onDestroy");
+    }
 
+    void DroidBlaster::onSaveState(void** pData, size_t* pSize) {
+        packt::Log::info("onSaveInstanceState");
+    }
+
+    void DroidBlaster::onConfigurationChanged() {
+        packt::Log::info("onConfigurationChanged");
+    }
+
+    void DroidBlaster::onLowMemory() {
+        packt::Log::info("onLowMemory");
+    }
+
+    void DroidBlaster::onCreateWindow() {
+        packt::Log::info("onCreateWindow");
+    }
+
+    void DroidBlaster::onDestroyWindow() {
+        packt::Log::info("onDestroyWindow");
+    }
+
+    void DroidBlaster::onGainFocus() {
+        packt::Log::info("onGainFocus");
+    }
+
+    void DroidBlaster::onLostFocus() {
+        packt::Log::info("onLostFocus");
+    }
 }
-

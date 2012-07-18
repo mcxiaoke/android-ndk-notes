@@ -1,8 +1,8 @@
 #include "Background.hpp"
 #include "Log.hpp"
 
-namespace db {
-    Background::Background(demo::Context* pContext) :
+namespace dbs {
+    Background::Background(packt::Context* pContext) :
       mTimeService(pContext->mTimeService),
       mGraphicsService(pContext->mGraphicsService),
       mLocation(), mAnimSpeed(8.0f) {

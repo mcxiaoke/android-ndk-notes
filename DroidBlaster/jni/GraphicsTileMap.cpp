@@ -10,15 +10,15 @@ namespace rapidxml {
     static jmp_buf sJmpBuffer;
 
     void parse_error_handler(const char* pWhat, void* pWhere) {
-        demo::Log::error("Error while parsing TMX file.");
-        demo::Log::error(pWhat);
+        packt::Log::error("Error while parsing TMX file.");
+        packt::Log::error(pWhat);
         // If this function returns, result is undefined (i.e. crash).
         // Needs to jump instead...
         longjmp(sJmpBuffer, 0);
     }
 }
 
-namespace demo {
+namespace packt {
     GraphicsTileMap::GraphicsTileMap(android_app* pApplication,
         const char* pPath, GraphicsTexture* pTexture,
         Location* pLocation) :
@@ -38,7 +38,7 @@ namespace demo {
         xml_attribute<>* lXmlWidth, *lXmlHeight, *lXmlGID;
         char* lFileBuffer = NULL; int32_t* lTiles = NULL;
 
-        Log::debug("Opening TMX file");
+        packt_Log_debug("Opening TMX file");
         if (mResource.open() != STATUS_OK) goto ERROR;
         {
             int32_t lLength = mResource.getLength();
@@ -56,7 +56,7 @@ namespace demo {
         lXmlDocument.parse<parse_default>(lFileBuffer);
 
         // Reads XML tags.
-        Log::debug("Parsing TMX file");
+        packt_Log_debug("Parsing TMX file");
         lXmlMap = lXmlDocument.first_node("map");
         if (lXmlMap == NULL) goto ERROR;
         lXmlTileset = lXmlMap->first_node("tileset");
@@ -77,7 +77,7 @@ namespace demo {
         if (lXmlData == NULL) goto ERROR;
 
         // Initializes member data.
-        Log::debug("Loading tiles from TMX file");
+        packt_Log_debug("Loading tiles from TMX file");
         mWidth      = atoi(lXmlWidth->value());
         mHeight     = atoi(lXmlHeight->value());
         mTileWidth  = atoi(lXmlTileWidth->value());
@@ -239,7 +239,7 @@ namespace demo {
         if (lIndexBuffer == NULL) goto ERROR;
 
         // Generates new buffer names.
-        Log::debug("Loads tiles into OpenGL %d.", lIndexBuffer);
+        packt_Log_debug("Loads tiles into OpenGL %d.", lIndexBuffer);
         glGenBuffers(1, &mVertexBuffer);
         glGenBuffers(1, &mIndexBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
@@ -307,7 +307,8 @@ namespace demo {
         glVertexPointer(3, GL_FLOAT, lVertexSize, lPosOffset);
         glTexCoordPointer(2, GL_FLOAT, lVertexSize, lUVOffset);
 
-        glDrawElements(GL_TRIANGLES, mIndexCount,GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, mIndexCount,
+                GL_UNSIGNED_SHORT, 0 * sizeof(GLushort));
 
         // Restores device state.
         glBindBuffer(GL_ARRAY_BUFFER, 0);

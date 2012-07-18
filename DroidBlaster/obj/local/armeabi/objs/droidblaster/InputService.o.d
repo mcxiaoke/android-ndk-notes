@@ -18,6 +18,8 @@ obj/local/armeabi/objs/droidblaster/InputService.o: jni/InputService.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/sysmacros.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/keycodes.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/looper.h \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/sensor.h \
+ jni/Sensor.hpp \
  /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/poll.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/linux/poll.h \
@@ -92,6 +94,10 @@ jni/InputHandler.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/keycodes.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/looper.h:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/android/sensor.h:
+
+jni/Sensor.hpp:
 
 /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h:
 

@@ -1,5 +1,5 @@
 obj/local/armeabi/objs/droidblaster/EventLoop.o: jni/EventLoop.cpp \
- jni/EventLoop.hpp jni/EventHandler.hpp jni/Types.hpp \
+ jni/EventLoop.hpp jni/ActivityHandler.hpp jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
@@ -18,6 +18,7 @@ obj/local/armeabi/objs/droidblaster/EventLoop.o: jni/EventLoop.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/sysmacros.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/keycodes.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/looper.h \
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/sensor.h \
  /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/poll.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/linux/poll.h \
@@ -51,7 +52,7 @@ obj/local/armeabi/objs/droidblaster/EventLoop.o: jni/EventLoop.cpp \
 
 jni/EventLoop.hpp:
 
-jni/EventHandler.hpp:
+jni/ActivityHandler.hpp:
 
 jni/Types.hpp:
 
@@ -90,6 +91,8 @@ jni/InputHandler.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/keycodes.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/looper.h:
+
+/e/android/ndk/platforms/android-9/arch-arm/usr/include/android/sensor.h:
 
 /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h:
 

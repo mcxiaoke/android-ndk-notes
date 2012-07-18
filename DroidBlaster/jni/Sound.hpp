@@ -7,7 +7,7 @@ class SoundService;
 #include "Resource.hpp"
 #include "Types.hpp"
 
-namespace demo {
+namespace packt {
     class Sound {
     public:
         Sound(android_app* pApplication, const char* pPath);

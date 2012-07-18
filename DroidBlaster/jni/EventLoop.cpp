@@ -1,17 +1,19 @@
 #include "EventLoop.hpp"
 #include "Log.hpp"
 
-namespace demo {
+namespace packt {
     EventLoop::EventLoop(android_app* pApplication) :
         mEnabled(false), mQuit(false),
         mApplication(pApplication),
-        mActivityHandler(NULL), mInputHandler(NULL) {
+        mActivityHandler(NULL), mInputHandler(NULL),
+        mSensorPollSource(), mSensorManager(NULL),
+        mSensorEventQueue(NULL) {
         mApplication->userData = this;
         mApplication->onAppCmd = callback_event;
         mApplication->onInputEvent = callback_input;
     }
 
-    void EventLoop::run(EventHandler* pActivityHandler,
+    void EventLoop::run(ActivityHandler* pActivityHandler,
                         InputHandler* pInputHandler) {
         int32_t lResult;
         int32_t lEvents;
@@ -23,19 +25,18 @@ namespace demo {
         mInputHandler    = pInputHandler;
 
         // Global step loop.
-        Log::info("Starting event loop");
+        packt::Log::info("Starting event loop");
         while (true) {
             // Event processing loop.
             while ((lResult = ALooper_pollAll(mEnabled ? 0 : -1,
                          NULL, &lEvents, (void**) &lSource)) >= 0) {
                 // An event has to be processed.
                 if (lSource != NULL) {
-                    Log::info("Processing an event");
                     lSource->process(mApplication, lSource);
                 }
                 // Application is getting destroyed.
                 if (mApplication->destroyRequested) {
-                    Log::info("Exiting event loop");
+                    packt::Log::info("Exiting event loop");
                     return;
                 }
             }
@@ -53,19 +54,42 @@ namespace demo {
     void EventLoop::activate() {
         // Enables activity only if a window is available.
         if ((!mEnabled) && (mApplication->window != NULL)) {
+            // Registers sensor queue.
+            mSensorPollSource.id = LOOPER_ID_USER;
+            mSensorPollSource.app = mApplication;
+            mSensorPollSource.process = callback_sensor;
+            mSensorManager = ASensorManager_getInstance();
+            if (mSensorManager != NULL) {
+                mSensorEventQueue = ASensorManager_createEventQueue(
+                    mSensorManager, mApplication->looper,
+                    LOOPER_ID_USER, NULL, &mSensorPollSource);
+                if (mSensorEventQueue == NULL) goto ERROR;
+            }
+
             mQuit = false; mEnabled = true;
             if (mActivityHandler->onActivate() != STATUS_OK) {
-                mQuit = true;
-                deactivate();
-                ANativeActivity_finish(mApplication->activity);
+                goto ERROR;
             }
         }
+        return;
+
+    ERROR:
+        mQuit = true;
+        deactivate();
+        ANativeActivity_finish(mApplication->activity);
     }
 
     void EventLoop::deactivate() {
         if (mEnabled) {
             mActivityHandler->onDeactivate();
             mEnabled = false;
+
+            if (mSensorEventQueue != NULL) {
+                ASensorManager_destroyEventQueue(mSensorManager,
+                    mSensorEventQueue);
+                mSensorEventQueue = NULL;
+            }
+            mSensorManager = NULL;
         }
     }
 
@@ -131,7 +155,15 @@ namespace demo {
             case AINPUT_SOURCE_TOUCHSCREEN:
                 return mInputHandler->onTouchEvent(pEvent);
                 break;
+
+            case AINPUT_SOURCE_TRACKBALL:
+                return mInputHandler->onTrackballEvent(pEvent);
+                break;
             }
+            break;
+
+        case AINPUT_EVENT_TYPE_KEY:
+            return mInputHandler->onKeyboardEvent(pEvent);
             break;
         }
         return 0;
@@ -141,5 +173,23 @@ namespace demo {
         AInputEvent* pEvent) {
         EventLoop& lEventLoop = *(EventLoop*) pApplication->userData;
         return lEventLoop.processInputEvent(pEvent);
+    }
+
+    void EventLoop::processSensorEvent() {
+        ASensorEvent lEvent;
+        while (ASensorEventQueue_getEvents(mSensorEventQueue,
+                                           &lEvent, 1) > 0) {
+            switch (lEvent.type) {
+            case ASENSOR_TYPE_ACCELEROMETER:
+                mInputHandler->onAccelerometerEvent(&lEvent);
+                break;
+            }
+        }
+    }
+
+    void EventLoop::callback_sensor(android_app* pApplication,
+        android_poll_source* pSource) {
+        EventLoop& lEventLoop = *(EventLoop*) pApplication->userData;
+        lEventLoop.processSensorEvent();
     }
 }

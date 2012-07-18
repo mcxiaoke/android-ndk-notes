@@ -1,45 +1,42 @@
-/*
- * Log.cpp
- *
- *  Created on: 2012-7-10
- *      Author: mcxiaoke
- */
-
 #include "Log.hpp"
+
 #include <stdarg.h>
 #include <android/log.h>
 
-namespace demo {
-void Log::info(const char *message, ...) {
-    va_list varArgs;
-    va_start(varArgs, message);
-    __android_log_vprint(ANDROID_LOG_INFO, "DEMO", message, varArgs);
-    __android_log_print(ANDROID_LOG_INFO, "DEMO", "\n");
-    va_end(varArgs);
-}
+namespace packt {
+    void Log::info(const char* pMessage, ...) {
+        va_list lVarArgs;
+        va_start(lVarArgs, pMessage);
+        __android_log_vprint(ANDROID_LOG_INFO, "PACKT", pMessage,
+            lVarArgs);
+        __android_log_print(ANDROID_LOG_INFO, "PACKT", "\n");
+        va_end(lVarArgs);
+    }
 
-void Log::debug(const char *message, ...) {
-    va_list varArgs;
-    va_start(varArgs, message);
-    __android_log_vprint(ANDROID_LOG_DEBUG, "DEMO", message, varArgs);
-    __android_log_print(ANDROID_LOG_DEBUG, "DEMO", "\n");
-    va_end(varArgs);
-}
+    void Log::error(const char* pMessage, ...) {
+        va_list lVarArgs;
+        va_start(lVarArgs, pMessage);
+        __android_log_vprint(ANDROID_LOG_ERROR, "PACKT", pMessage,
+            lVarArgs);
+        __android_log_print(ANDROID_LOG_ERROR, "PACKT", "\n");
+        va_end(lVarArgs);
+    }
 
-void Log::warn(const char *message, ...) {
-    va_list varArgs;
-    va_start(varArgs, message);
-    __android_log_vprint(ANDROID_LOG_WARN, "DEMO", message, varArgs);
-    __android_log_print(ANDROID_LOG_WARN, "DEMO", "\n");
-    va_end(varArgs);
-}
+    void Log::warn(const char* pMessage, ...) {
+        va_list lVarArgs;
+        va_start(lVarArgs, pMessage);
+        __android_log_vprint(ANDROID_LOG_WARN, "PACKT", pMessage,
+            lVarArgs);
+        __android_log_print(ANDROID_LOG_WARN, "PACKT", "\n");
+        va_end(lVarArgs);
+    }
 
-void Log::error(const char *message, ...) {
-    va_list varArgs;
-    va_start(varArgs, message);
-    __android_log_vprint(ANDROID_LOG_ERROR, "DEMO", message, varArgs);
-    __android_log_print(ANDROID_LOG_ERROR, "DEMO", "\n");
-    va_end(varArgs);
+    void Log::debug(const char* pMessage, ...) {
+        va_list lVarArgs;
+        va_start(lVarArgs, pMessage);
+        __android_log_vprint(ANDROID_LOG_DEBUG, "PACKT", pMessage,
+            lVarArgs);
+        __android_log_print(ANDROID_LOG_DEBUG, "PACKT", "\n");
+        va_end(lVarArgs);
+    }
 }
-}
-
