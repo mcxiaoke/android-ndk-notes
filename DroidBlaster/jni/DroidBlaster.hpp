@@ -12,6 +12,7 @@
 #include "Background.hpp"
 #include "Context.hpp"
 #include "GraphicsService.hpp"
+#include "Sound.hpp"
 #include "SoundService.hpp"
 #include "Ship.hpp"
 #include "TimeService.hpp"
@@ -57,6 +58,7 @@ private:
     demo::TimeService *mTimeService;
     Background mBackground;
     Ship mShip;
+    demo::Sound *mStartSound;
 
 //    bool mInitialized;
 

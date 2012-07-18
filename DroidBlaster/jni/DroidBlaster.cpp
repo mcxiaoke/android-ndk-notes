@@ -16,7 +16,8 @@ namespace db {
 DroidBlaster::DroidBlaster(demo::Context *context) :
         mGraphicsService(context->mGraphicsService), mSoundService(
                 context->mSoundService), mTimeService(context->mTimeService), mShip(
-                context), mBackground(context) {
+                context), mBackground(context), mStartSound(
+                mSoundService->registerSound("start.pcm")) {
     demo::Log::debug("Creating DroidBlaster.");
 }
 
@@ -34,6 +35,7 @@ demo::status DroidBlaster::onActivate() {
         return demo::STATUS_KO;
     }
     mSoundService->playBGM("bgm.mp3");
+    mSoundService->playSound(mStartSound);
 
     mBackground.spawn();
     mShip.spawn();

@@ -1,6 +1,7 @@
 #ifndef _PACKT_SOUNDSERVICE_HPP_
 #define _PACKT_SOUNDSERVICE_HPP_
 
+#include "Sound.hpp"
 #include "Types.hpp"
 
 #include <android_native_app_glue.h>
@@ -12,12 +13,19 @@ namespace demo {
     class SoundService {
     public:
         SoundService(android_app* pApplication);
+        ~SoundService();
 
         status start();
         void stop();
 
         status playBGM(const char* pPath);
         void stopBGM();
+
+        Sound* registerSound(const char* pPath);
+        void playSound(Sound* pSound);
+
+    private:
+        status startSoundPlayer();
 
     private:
         android_app* mApplication;
@@ -30,6 +38,12 @@ namespace demo {
         // Background music player.
         SLObjectItf mBGMPlayerObj; SLPlayItf mBGMPlayer;
         SLSeekItf mBGMPlayerSeek;
+
+        // Sound player.
+        SLObjectItf mPlayerObj; SLPlayItf mPlayer;
+        SLBufferQueueItf mPlayerQueue;
+        // Sounds.
+        Sound* mSounds[32]; int32_t mSoundCount;
     };
 }
 #endif

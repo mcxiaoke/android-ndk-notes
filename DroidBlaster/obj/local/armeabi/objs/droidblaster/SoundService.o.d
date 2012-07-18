@@ -1,8 +1,9 @@
 obj/local/armeabi/objs/droidblaster/SoundService.o: jni/SoundService.cpp \
- jni/SoundService.hpp jni/Types.hpp \
+ jni/SoundService.hpp jni/Sound.hpp jni/Context.hpp jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
+ jni/Resource.hpp \
  /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/poll.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/cdefs.h \
@@ -50,9 +51,13 @@ obj/local/armeabi/objs/droidblaster/SoundService.o: jni/SoundService.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Platform.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h \
- jni/Resource.hpp jni/Log.hpp
+ jni/Log.hpp
 
 jni/SoundService.hpp:
+
+jni/Sound.hpp:
+
+jni/Context.hpp:
 
 jni/Types.hpp:
 
@@ -61,6 +66,8 @@ jni/Types.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h:
+
+jni/Resource.hpp:
 
 /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h:
 
@@ -155,7 +162,5 @@ jni/Types.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h:
-
-jni/Resource.hpp:
 
 jni/Log.hpp:

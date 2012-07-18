@@ -1,10 +1,9 @@
-obj/local/armeabi/objs/droidblaster/Main.o: jni/Main.cpp \
- jni/DroidBlaster.hpp jni/EventHandler.hpp jni/Types.hpp \
+obj/local/armeabi/objs/droidblaster/Sound.o: jni/Sound.cpp jni/Sound.hpp \
+ jni/Context.hpp jni/Types.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdint.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h \
- jni/Background.hpp jni/Context.hpp jni/GraphicsService.hpp \
- jni/GraphicsSprite.hpp jni/GraphicsTexture.hpp jni/Resource.hpp \
+ jni/Resource.hpp \
  /e/android/ndk/sources/android/native_app_glue/android_native_app_glue.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/poll.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/cdefs.h \
@@ -48,28 +47,20 @@ obj/local/armeabi/objs/droidblaster/Main.o: jni/Main.cpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/keycodes.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/native_window.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/rect.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/gl.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glplatform.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/KHR/khrplatform.h \
- /e/android/ndk/sources/libpng/png.h \
+ jni/Log.hpp /e/android/ndk/sources/libpng/png.h \
  /e/android/ndk/sources/libpng/pnglibconf.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/setjmp.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/setjmp.h \
  /e/android/ndk/sources/libpng/pngconf.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h \
- jni/TimeService.hpp jni/GraphicsTileMap.hpp \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h \
- jni/Sound.hpp jni/SoundService.hpp \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Platform.h \
  /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h \
- /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h \
- jni/Ship.hpp jni/EventLoop.hpp
+ /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h
 
-jni/DroidBlaster.hpp:
+jni/Sound.hpp:
 
-jni/EventHandler.hpp:
+jni/Context.hpp:
 
 jni/Types.hpp:
 
@@ -78,16 +69,6 @@ jni/Types.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/sys/_types.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/machine/_types.h:
-
-jni/Background.hpp:
-
-jni/Context.hpp:
-
-jni/GraphicsService.hpp:
-
-jni/GraphicsSprite.hpp:
-
-jni/GraphicsTexture.hpp:
 
 jni/Resource.hpp:
 
@@ -177,11 +158,7 @@ jni/Resource.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/android/rect.h:
 
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/gl.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/GLES/glplatform.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/KHR/khrplatform.h:
+jni/Log.hpp:
 
 /e/android/ndk/sources/libpng/png.h:
 
@@ -195,18 +172,6 @@ jni/Resource.hpp:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/stdio.h:
 
-jni/TimeService.hpp:
-
-jni/GraphicsTileMap.hpp:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/egl.h:
-
-/e/android/ndk/platforms/android-9/arch-arm/usr/include/EGL/eglplatform.h:
-
-jni/Sound.hpp:
-
-jni/SoundService.hpp:
-
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Platform.h:
@@ -214,7 +179,3 @@ jni/SoundService.hpp:
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_Android.h:
 
 /e/android/ndk/platforms/android-9/arch-arm/usr/include/SLES/OpenSLES_AndroidConfiguration.h:
-
-jni/Ship.hpp:
-
-jni/EventLoop.hpp:
