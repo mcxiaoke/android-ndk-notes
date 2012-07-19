@@ -40,9 +40,6 @@ namespace dbs {
         void onLostFocus();
 
     private:
-        void updateThread();
-
-    private:
         packt::GraphicsService* mGraphicsService;
         packt::InputService*    mInputService;
         packt::SoundService*    mSoundService;

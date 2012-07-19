@@ -1,8 +1,6 @@
 #include "DroidBlaster.hpp"
 #include "Log.hpp"
 
-#include <boost/thread.hpp>
-
 namespace dbs {
     DroidBlaster::DroidBlaster(packt::Context* pContext) :
         mGraphicsService(pContext->mGraphicsService),
@@ -61,22 +59,16 @@ namespace dbs {
         mSoundService->stop();
     }
 
-    void DroidBlaster::updateThread() {
-        // Updates asteroids.
-        Asteroid::vec_it iAsteroid = mAsteroids.begin();
-        for (; iAsteroid < mAsteroids.end(); ++iAsteroid) {
-            (*iAsteroid)->update();
-        }
-    }
-
     packt::status DroidBlaster::onStep() {
         mTimeService->update();
 
         // Updates entities.
-        boost::thread lThread(&DroidBlaster::updateThread, this);
         mBackground.update();
         mShip.update();
-        lThread.join();
+        Asteroid::vec_it iAsteroid = mAsteroids.begin();
+        for (; iAsteroid < mAsteroids.end(); ++iAsteroid) {
+            (*iAsteroid)->update();
+        }
 
         // Updates services.
         if (mGraphicsService->update() != packt::STATUS_OK) {

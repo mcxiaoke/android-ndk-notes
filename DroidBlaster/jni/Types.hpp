@@ -4,15 +4,13 @@
 #include <stdint.h>
 #include <cstdlib>
 
-#ifndef __ANDROID__
-#define __ANDROID__
+#ifndef ANDROID
+#define ANDROID
 #endif
 
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES
 #endif
-
-#define RAND(pMax) (float(pMax) * float(rand()) / float(RAND_MAX))
 
 namespace packt {
     typedef int32_t status;
@@ -33,4 +31,8 @@ namespace packt {
         float mPosX; float mPosY;
     };
 }
+
+// Generates a random value in the range [O, pMax].
+#define RAND(pMax) (float(pMax) * float(rand()) / float(RAND_MAX))
+
 #endif

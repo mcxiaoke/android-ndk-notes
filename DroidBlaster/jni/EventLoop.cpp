@@ -3,11 +3,11 @@
 
 namespace packt {
     EventLoop::EventLoop(android_app* pApplication) :
-        mEnabled(false), mQuit(false),
-        mApplication(pApplication),
-        mActivityHandler(NULL), mInputHandler(NULL),
-        mSensorPollSource(), mSensorManager(NULL),
-        mSensorEventQueue(NULL) {
+      mEnabled(false), mQuit(false),
+      mApplication(pApplication),
+      mActivityHandler(NULL), mInputHandler(NULL),
+      mSensorPollSource(), mSensorManager(NULL),
+      mSensorEventQueue(NULL) {
         mApplication->userData = this;
         mApplication->onAppCmd = callback_event;
         mApplication->onInputEvent = callback_input;
@@ -170,8 +170,7 @@ namespace packt {
     }
 
     int32_t EventLoop::callback_input(android_app* pApplication,
-        AInputEvent* pEvent)
-    {
+        AInputEvent* pEvent) {
         EventLoop& lEventLoop = *(EventLoop*) pApplication->userData;
         return lEventLoop.processInputEvent(pEvent);
     }

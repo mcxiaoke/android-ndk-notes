@@ -26,5 +26,4 @@ namespace dbs {
         float mAnimSpeed;
     };
 }
-
 #endif

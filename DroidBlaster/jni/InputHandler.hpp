@@ -15,4 +15,5 @@ namespace packt {
         virtual bool onAccelerometerEvent(ASensorEvent* pEvent) = 0;
     };
 }
+
 #endif

@@ -16,5 +16,4 @@ namespace packt {
         TimeService*     mTimeService;
     };
 }
-
 #endif
