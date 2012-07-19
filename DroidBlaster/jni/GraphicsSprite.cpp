@@ -11,8 +11,8 @@ namespace packt {
         mHeight(pHeight), mWidth(pWidth),
         mFrameCount(0), mFrameXCount(0), mFrameYCount(0),
         mAnimStartFrame(0), mAnimFrameCount(0),
-        mAnimSpeed(0), mAnimFrame(0), mAnimLoop(false) {
-    }
+        mAnimSpeed(0), mAnimFrame(0), mAnimLoop(false)
+    {}
 
     void GraphicsSprite::load() {
         mFrameXCount = mTexture->getWidth() / mWidth;

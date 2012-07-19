@@ -4,14 +4,9 @@
 #include "Types.hpp"
 
 #include <android_native_app_glue.h>
+#include <fstream>
 
 namespace packt {
-    struct ResourceDescriptor {
-        int32_t mDescriptor;
-        off_t mStart;
-        off_t mLength;
-    };
-
     class Resource {
     public:
         Resource(android_app* pApplication, const char* pPath);
@@ -25,12 +20,10 @@ namespace packt {
         off_t getLength();
         const void* bufferize();
 
-        ResourceDescriptor descript();
-
     private:
         const char* mPath;
-        AAssetManager* mAssetManager;
-        AAsset* mAsset;
+        std::ifstream mInputStream;
+        char* mBuffer;
     };
 }
 #endif

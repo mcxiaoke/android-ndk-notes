@@ -1,29 +1,26 @@
 #include "Resource.hpp"
 #include "Log.hpp"
 
+#include <sys/stat.h>
+
 namespace packt {
     Resource::Resource(android_app* pApplication, const char* pPath):
-        mPath(pPath),
-        mAssetManager(pApplication->activity->assetManager),
-        mAsset(NULL) {
-    }
+        mPath(pPath), mInputStream(), mBuffer(NULL)
+    {}
 
     status Resource::open() {
-        mAsset = AAssetManager_open(mAssetManager, mPath,
-                                    AASSET_MODE_UNKNOWN);
-        return (mAsset != NULL) ? STATUS_OK : STATUS_KO;
+        mInputStream.open(mPath, std::ios::in | std::ios::binary);
+        return mInputStream ? STATUS_OK : STATUS_KO;
     }
 
     void Resource::close() {
-        if (mAsset != NULL) {
-            AAsset_close(mAsset);
-            mAsset = NULL;
-        }
+        mInputStream.close();
+        delete[] mBuffer; mBuffer = NULL;
     }
 
     status Resource::read(void* pBuffer, size_t pCount) {
-        int32_t lReadCount = AAsset_read(mAsset, pBuffer, pCount);
-        return (lReadCount == pCount) ? STATUS_OK : STATUS_KO;
+        mInputStream.read((char*)pBuffer, pCount);
+        return (!mInputStream.fail()) ? STATUS_OK : STATUS_KO;
     }
 
     const char* Resource::getPath() {
@@ -31,22 +28,24 @@ namespace packt {
     }
 
     off_t Resource::getLength() {
-        return AAsset_getLength(mAsset);
+        struct stat filestatus;
+        if (stat(mPath, &filestatus) >= 0) {
+            return filestatus.st_size;
+        } else {
+            return -1;
+        }
     }
 
     const void* Resource::bufferize() {
-        return AAsset_getBuffer(mAsset);
-    }
+        off_t lSize = getLength();
+        if (lSize <= 0) return NULL;
 
-    ResourceDescriptor Resource::descript() {
-        ResourceDescriptor lDescriptor = { -1, 0, 0 };
-        AAsset* lAsset = AAssetManager_open(mAssetManager, mPath,
-                                            AASSET_MODE_UNKNOWN);
-        if (lAsset != NULL) {
-            lDescriptor.mDescriptor = AAsset_openFileDescriptor(
-                lAsset, &lDescriptor.mStart, &lDescriptor.mLength);
-            AAsset_close(lAsset);
+        mBuffer = new char[lSize];
+        mInputStream.read(mBuffer, lSize);
+        if (!mInputStream.fail()) {
+            return mBuffer;
+        } else {
+            return NULL;
         }
-        return lDescriptor;
     }
 }

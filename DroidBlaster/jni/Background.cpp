@@ -6,8 +6,10 @@ namespace dbs {
       mTimeService(pContext->mTimeService),
       mGraphicsService(pContext->mGraphicsService),
       mLocation(), mAnimSpeed(8.0f) {
-        mTileMap = mGraphicsService->registerTileMap("tilemap.tmx",
-            mGraphicsService->registerTexture("tilemap.png"),
+        mTileMap = mGraphicsService->registerTileMap(
+            "/sdcard/droidblaster/tilemap.tmx",
+            mGraphicsService->registerTexture(
+                    "/sdcard/droidblaster/tilemap.png"),
             &mLocation);
     }
 

@@ -6,14 +6,14 @@
 
 namespace packt {
     InputService::InputService(android_app* pApplication,
-        Sensor* pAccelerometer, const int32_t& pWidth,
-        const int32_t& pHeight) :
+        Sensor* pAccelerometer,
+        const int32_t& pWidth, const int32_t& pHeight) :
         mApplication(pApplication),
         mHorizontal(0.0f), mVertical(0.0f),
         mRefPoint(NULL), mWidth(pWidth), mHeight(pHeight),
         mMenuKey(false),
-        mAccelerometer(pAccelerometer) {
-    }
+        mAccelerometer(pAccelerometer)
+    {}
 
     float InputService::getHorizontal() {
         return mHorizontal;

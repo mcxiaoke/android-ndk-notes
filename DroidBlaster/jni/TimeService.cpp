@@ -1,10 +1,13 @@
 #include "TimeService.hpp"
 #include "Log.hpp"
 
+#include <cstdlib>
+
 namespace packt {
     TimeService::TimeService() :
         mElapsed(0.0f),
         mLastTime(0.0f) {
+        srand(time(NULL));
     }
 
     void TimeService::reset() {

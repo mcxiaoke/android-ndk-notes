@@ -1,16 +1,28 @@
 #include "DroidBlaster.hpp"
 #include "Log.hpp"
 
+#include <boost/thread.hpp>
+
 namespace dbs {
     DroidBlaster::DroidBlaster(packt::Context* pContext) :
         mGraphicsService(pContext->mGraphicsService),
         mInputService(pContext->mInputService),
         mSoundService(pContext->mSoundService),
         mTimeService(pContext->mTimeService),
-        mBackground(pContext), mShip(pContext),
-        mStartSound(mSoundService->registerSound("start.pcm")) {
+        mBackground(pContext), mShip(pContext), mAsteroids(),
+        mStartSound(mSoundService->registerSound(
+                            "/sdcard/droidblaster/start.pcm")) {
         packt::Log::info("Creating DroidBlaster");
+
+        // Creates asteroids.
+        for (int i = 0; i < 16; ++i) {
+            Asteroid::ptr lAsteroid(new Asteroid(pContext));
+            mAsteroids.push_back(lAsteroid);
+        }
     }
+
+    DroidBlaster::~DroidBlaster()
+    {}
 
     packt::status DroidBlaster::onActivate() {
         packt::Log::info("Activating DroidBlaster");
@@ -27,11 +39,16 @@ namespace dbs {
         }
 
         // Starts background music.
-        mSoundService->playBGM("bgm.mp3");
+        mSoundService->playBGM("/sdcard/droidblaster/bgm.mp3");
         mSoundService->playSound(mStartSound);
         // Initializes game objects.
         mBackground.spawn();
         mShip.spawn();
+
+        Asteroid::vec_it iAsteroid = mAsteroids.begin();
+        for (; iAsteroid < mAsteroids.end() ; ++iAsteroid) {
+            (*iAsteroid)->spawn();
+        }
 
         mTimeService->reset();
         return packt::STATUS_OK;
@@ -44,12 +61,22 @@ namespace dbs {
         mSoundService->stop();
     }
 
+    void DroidBlaster::updateThread() {
+        // Updates asteroids.
+        Asteroid::vec_it iAsteroid = mAsteroids.begin();
+        for (; iAsteroid < mAsteroids.end(); ++iAsteroid) {
+            (*iAsteroid)->update();
+        }
+    }
+
     packt::status DroidBlaster::onStep() {
         mTimeService->update();
 
         // Updates entities.
+        boost::thread lThread(&DroidBlaster::updateThread, this);
         mBackground.update();
         mShip.update();
+        lThread.join();
 
         // Updates services.
         if (mGraphicsService->update() != packt::STATUS_OK) {

@@ -170,7 +170,8 @@ namespace packt {
     }
 
     int32_t EventLoop::callback_input(android_app* pApplication,
-        AInputEvent* pEvent) {
+        AInputEvent* pEvent)
+    {
         EventLoop& lEventLoop = *(EventLoop*) pApplication->userData;
         return lEventLoop.processInputEvent(pEvent);
     }

@@ -8,8 +8,9 @@ namespace dbs {
       mTimeService(pContext->mTimeService),
       mLocation(), mAnimSpeed(8.0f) {
         mSprite = pContext->mGraphicsService->registerSprite(
-            mGraphicsService->registerTexture("ship.png"), 64, 64,
-            &mLocation);
+            mGraphicsService->registerTexture(
+                    "/sdcard/droidblaster/ship.png"),
+            64, 64, &mLocation);
         mInputService->setRefPoint(&mLocation);
     }
 

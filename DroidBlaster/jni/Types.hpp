@@ -2,10 +2,17 @@
 #define _PACKT_TYPES_HPP_
 
 #include <stdint.h>
+#include <cstdlib>
+
+#ifndef __ANDROID__
+#define __ANDROID__
+#endif
 
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES
 #endif
+
+#define RAND(pMax) (float(pMax) * float(rand()) / float(RAND_MAX))
 
 namespace packt {
     typedef int32_t status;

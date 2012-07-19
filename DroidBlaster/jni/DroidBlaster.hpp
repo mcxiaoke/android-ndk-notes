@@ -2,6 +2,7 @@
 #define _PACKT_DROIDBLASTER_HPP_
 
 #include "ActivityHandler.hpp"
+#include "Asteroid.hpp"
 #include "Background.hpp"
 #include "Context.hpp"
 #include "GraphicsService.hpp"
@@ -16,6 +17,7 @@ namespace dbs {
     class DroidBlaster : public packt::ActivityHandler {
     public:
         DroidBlaster(packt::Context* pContext);
+        ~DroidBlaster();
 
     protected:
         packt::status onActivate();
@@ -38,6 +40,9 @@ namespace dbs {
         void onLostFocus();
 
     private:
+        void updateThread();
+
+    private:
         packt::GraphicsService* mGraphicsService;
         packt::InputService*    mInputService;
         packt::SoundService*    mSoundService;
@@ -45,6 +50,7 @@ namespace dbs {
 
         Background mBackground;
         Ship mShip;
+        Asteroid::vec mAsteroids;
         packt::Sound* mStartSound;
     };
 }

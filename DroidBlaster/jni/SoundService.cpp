@@ -2,6 +2,8 @@
 #include "Resource.hpp"
 #include "Log.hpp"
 
+#include <string>
+
 namespace packt {
     SoundService::SoundService(android_app* pApplication) :
         mApplication(pApplication),
@@ -162,18 +164,10 @@ namespace packt {
         Log::info("Opening BGM %s", pPath);
 
         // Set-up BGM audio source.
-        Resource lResource(mApplication, pPath);
-        ResourceDescriptor lDescriptor = lResource.descript();
-        if (lDescriptor.mDescriptor < 0) {
-            Log::info("Could not open BGM file");
-            return STATUS_KO;
-        }
-
-        SLDataLocator_AndroidFD lDataLocatorIn;
-        lDataLocatorIn.locatorType = SL_DATALOCATOR_ANDROIDFD;
-        lDataLocatorIn.fd          = lDescriptor.mDescriptor;
-        lDataLocatorIn.offset      = lDescriptor.mStart;
-        lDataLocatorIn.length      = lDescriptor.mLength;
+        SLDataLocator_URI lDataLocatorIn;
+        std::string lPath = std::string("file://") + pPath;
+        lDataLocatorIn.locatorType = SL_DATALOCATOR_URI;
+        lDataLocatorIn.URI = (SLchar*) lPath.c_str();
 
         SLDataFormat_MIME lDataFormat;
         lDataFormat.formatType    = SL_DATAFORMAT_MIME;

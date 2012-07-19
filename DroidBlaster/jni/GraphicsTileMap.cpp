@@ -6,18 +6,6 @@
 
 #include "rapidxml.hpp"
 
-namespace rapidxml {
-    static jmp_buf sJmpBuffer;
-
-    void parse_error_handler(const char* pWhat, void* pWhere) {
-        packt::Log::error("Error while parsing TMX file.");
-        packt::Log::error(pWhat);
-        // If this function returns, result is undefined (i.e. crash).
-        // Needs to jump instead...
-        longjmp(sJmpBuffer, 0);
-    }
-}
-
 namespace packt {
     GraphicsTileMap::GraphicsTileMap(android_app* pApplication,
         const char* pPath, GraphicsTexture* pTexture,
@@ -52,8 +40,13 @@ namespace packt {
             mResource.close();
         }
         // Parses the document. Jumps back here if an error occurs
-        if (setjmp(sJmpBuffer)) goto ERROR;
-        lXmlDocument.parse<parse_default>(lFileBuffer);
+        try {
+            lXmlDocument.parse<parse_default>(lFileBuffer);
+        } catch (rapidxml::parse_error& parseException) {
+            packt::Log::error("Error while parsing TMX file.");
+            packt::Log::error(parseException.what());
+            goto ERROR;
+        }
 
         // Reads XML tags.
         packt_Log_debug("Parsing TMX file");
@@ -308,7 +301,7 @@ namespace packt {
         glTexCoordPointer(2, GL_FLOAT, lVertexSize, lUVOffset);
 
         glDrawElements(GL_TRIANGLES, mIndexCount,
-                GL_UNSIGNED_SHORT, 0 * sizeof(GLushort));
+                GL_UNSIGNED_SHORT, 0);
 
         // Restores device state.
         glBindBuffer(GL_ARRAY_BUFFER, 0);

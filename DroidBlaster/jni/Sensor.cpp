@@ -6,8 +6,8 @@ namespace packt {
     Sensor::Sensor(EventLoop& pEventLoop, int32_t pSensorType):
         mEventLoop(pEventLoop),
         mSensor(NULL),
-        mSensorType(pSensorType) {
-    }
+        mSensorType(pSensorType)
+    {}
 
     status Sensor::toggle() {
         return (mSensor != NULL) ? disable() : enable();
