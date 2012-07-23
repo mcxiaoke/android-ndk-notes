@@ -1,7 +1,7 @@
 #ifndef _PACKT_TYPES_HPP_
 #define _PACKT_TYPES_HPP_
 
-#include <stdint.h>
+//#include <stdint.h>
 #include <cstdlib>
 
 #ifndef ANDROID
@@ -34,5 +34,8 @@ namespace packt {
 
 // Generates a random value in the range [O, pMax].
 #define RAND(pMax) (float(pMax) * float(rand()) / float(RAND_MAX))
+
+// Physics simulation scale
+#define SCALE_FACTOR 32.0f
 
 #endif

@@ -39,8 +39,8 @@
 									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\toolchains\arm-linux-androideabi-4.4.3\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.4.3\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\cxx-stl\gnu-libstdc++\libs\armeabi\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\boost&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\Box2D&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\irrlicht\project\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:\android\ndk\sources\box2d&quot;"/>
 								</option>
 								<inputType id="com.android.gcc.inputType.1735165433" superClass="com.android.gcc.inputType"/>
 							</tool>

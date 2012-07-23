@@ -301,7 +301,7 @@ namespace packt {
         glTexCoordPointer(2, GL_FLOAT, lVertexSize, lUVOffset);
 
         glDrawElements(GL_TRIANGLES, mIndexCount,
-                GL_UNSIGNED_SHORT, 0);
+                GL_UNSIGNED_SHORT, 0 * sizeof(GLushort));
 
         // Restores device state.
         glBindBuffer(GL_ARRAY_BUFFER, 0);
