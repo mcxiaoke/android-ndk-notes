@@ -1,8 +1,10 @@
 # Object files
 *.o
+*.o.d
 *.ko
 *.obj
 *.elf
+obj/local/
 
 # Precompiled Headers
 *.gch

@@ -18,7 +18,8 @@ android {
         versionName "0.1.0"
         minSdkVersion 15
         targetSdkVersion 23
-        applicationId "com.mcxiaoke.ndk.hellojni"
+        applicationId "com.mcxiaoke.ndk.swig"
+
     }
 
     buildTypes {
@@ -52,9 +53,32 @@ tasks.withType(JavaCompile) {
     compileTask -> compileTask.dependsOn ndkBuild
 }
 
-task javah(type:Exec) {
+task javah(type: Exec) {
     def jniClassName = "com.example.hellojni.HelloJni"
     def classpath = "$buildDir/intermediates/classes/debug/"
     def nativeIncludes = "src/main/jni/"
     commandLine "javah", "-d", "$nativeIncludes", "-classpath", "$classpath", "$jniClassName"
+}
+
+// Location of where to store the jni wrapped files
+def sourceDir = new File("${projectDir}/src/main/java/com/example/hellojni")
+task createSourceDir {
+    sourceDir.mkdirs()
+}
+
+// For this to work, it's assumed SWIG is installed
+// TODO: This only works when called from Command Line (gradlew runSwig)
+task runSwig(type: Exec, dependsOn: ['createSourceDir']) {
+
+    String osName = System.getProperty("os.name").toLowerCase();
+    if (osName.contains("windows")) {
+        workingDir '/src/main/jni'   // This implicitly starts from $(projectDir) evidently
+        commandLine 'cmd', '/c', 'swig'
+        // for c++
+        args '-c++', '-java', '-package', 'com.example.hellojni', '-outdir', sourceDir.absolutePath, 'Unix.i'
+    } else {
+        commandLine 'swig'
+        args '-c++', '-java', '-package', 'com.example.hellojni', '-outdir', sourceDir.absolutePath, "${projectDir}/src/main/jni/Unix.i"
+    }
+
 }
