@@ -17,7 +17,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := hello-jni
-LOCAL_SRC_FILES := hello-jni.c
+LOCAL_SRC_FILES := hello-jni.c Unix.c
 
 MY_SWIG_PACKAGE := com.example.hellojni
 MY_SWIG_INTERFACES := Unix.i

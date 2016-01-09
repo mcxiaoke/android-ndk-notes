@@ -205,11 +205,136 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 
 #include <unistd.h>
+#include "Unix.h"
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+SWIGEXPORT jint JNICALL Java_com_example_hellojni_UnixJNI_MAX_1HEIGHT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(320);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_example_hellojni_UnixJNI_readOnly_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)readOnly;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_UnixJNI_readWrite_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  readWrite = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_example_hellojni_UnixJNI_readWrite_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)readWrite;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_UnixJNI_Point_1x_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  struct Point *arg1 = (struct Point *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(struct Point **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->x = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_example_hellojni_UnixJNI_Point_1x_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  struct Point *arg1 = (struct Point *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(struct Point **)&jarg1; 
+  result = (int) ((arg1)->x);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_UnixJNI_Point_1y_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  struct Point *arg1 = (struct Point *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(struct Point **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->y = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_example_hellojni_UnixJNI_Point_1y_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  struct Point *arg1 = (struct Point *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(struct Point **)&jarg1; 
+  result = (int) ((arg1)->y);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_example_hellojni_UnixJNI_new_1Point(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  struct Point *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (struct Point *)calloc(1, sizeof(struct Point));
+  *(struct Point **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_UnixJNI_delete_1Point(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  struct Point *arg1 = (struct Point *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(struct Point **)&jarg1; 
+  free((char *) arg1);
+}
+
 
 SWIGEXPORT jlong JNICALL Java_com_example_hellojni_UnixJNI_getuid(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
@@ -219,6 +344,20 @@ SWIGEXPORT jlong JNICALL Java_com_example_hellojni_UnixJNI_getuid(JNIEnv *jenv, 
   (void)jcls;
   result = (uid_t)getuid();
   jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_example_hellojni_UnixJNI_fact(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jint jresult = 0 ;
+  int arg1 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  result = (long)fact(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 

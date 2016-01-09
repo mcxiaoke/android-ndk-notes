@@ -6,7 +6,6 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package com.example.hellojni;
 
 public class Unix implements UnixConstants {
   public static int getReadOnly() {

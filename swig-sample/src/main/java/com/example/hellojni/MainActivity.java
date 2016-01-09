@@ -30,6 +30,10 @@ public class MainActivity extends Activity {
         builder.append(HelloJni.stringFromJNI()).append("\n");
         builder.append(jni.instanceStringFromJNI()).append("\n");
         builder.append("UID: ").append(Unix.getuid()).append("\n");
+        builder.append("ReadOnly: ").append(Unix.getReadOnly()).append("\n");
+        Unix.setReadWrite(12345);
+        builder.append("ReadWrite: ").append(Unix.getReadWrite()).append("\n");
+        builder.append("Fact: ").append(Unix.fact(20)).append("\n");
         TextView tv = new TextView(this);
         tv.setText(builder.toString());
         setContentView(tv);

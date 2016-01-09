@@ -58,7 +58,7 @@ JNIEXPORT jstring JNICALL Java_com_example_hellojni_HelloJni_stringFromJNI
 #define ABI "unknown"
 #endif
 
-    return (*env)->NewStringUTF(env, "Hello from JNI !  Compiled with ABI " ABI ".");
+    return (*env)->NewStringUTF(env, "Hello from JNI, ABI: " ABI ".");
 }
 
 JNIEXPORT jstring JNICALL Java_com_example_hellojni_HelloJni_instanceStringFromJNI
