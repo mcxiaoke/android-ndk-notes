@@ -1,1 +1,1 @@
-include ':hello-jni', 'swig-sample'
+include ':hello-jni', 'swig-sample', 'swig-cpp-sample'
