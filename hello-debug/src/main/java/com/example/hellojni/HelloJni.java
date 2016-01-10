@@ -15,10 +15,7 @@
  */
 package com.example.hellojni;
 
-import android.app.Activity;
-import android.widget.TextView;
-import android.os.Bundle;
-
+import android.util.Log;
 
 public class HelloJni {
     private static String staticField = "Static Field";
@@ -43,6 +40,7 @@ public class HelloJni {
     private native void accessMethods();
 
     static {
+        Log.e("HelloJni", "static init");
         System.loadLibrary("hello-jni");
     }
 }

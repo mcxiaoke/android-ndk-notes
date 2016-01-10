@@ -7,6 +7,33 @@
 
 #include <android/log.h>
 
+ /**
+//CheckJNI
+// for rooted device
+adb shell stop
+adb shell setprop dalvik.vm.checkjni true
+adb shell start
+// for regular device
+adb shell setprop debug.checkjni 1
+
+// libc debug mode
+adb shell stop
+adb shell setprop libc.debug.malloc 1
+adb shell start
+
+// get ndk crash stack trace
+adb logcat | ndk-stack –sym obj/local/armeabi
+adb logcat | ndk-stack –sym obj/local/x86
+adb logcat | $NDK/ndk-stack -sym $PROJECT_PATH/obj/local/armeabi
+db logcat > /tmp/foo.txt
+$NDK/ndk-stack -sym $PROJECT_PATH/obj/local/armeabi -dump foo.txt
+
+// strace
+adb shell ps | grep com.example.hellojni
+adb shell strace –v –p <Process ID>
+
+ **/
+
 /**
 
 typedef enum android_LogPriority {
@@ -20,6 +47,14 @@ typedef enum android_LogPriority {
    ANDROID_LOG_FATAL,
    ANDROID_LOG_SILENT,
 } android_LogPriority;
+
+**/
+
+/**
+// redirect STDOUT and STDERR to logcat
+adb shell stop
+adb shell setprop log.redirect-stdio true
+adb shell start
 
 **/
 

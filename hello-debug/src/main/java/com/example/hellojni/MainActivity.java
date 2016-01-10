@@ -17,6 +17,10 @@ package com.example.hellojni;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -25,11 +29,21 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HelloJni jni = new HelloJni();
-        TextView tv = new TextView(this);
-        tv.setText(HelloJni.stringFromJNI());
-        tv.append(jni.instanceStringFromJNI());
-        setContentView(tv);
+        final LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        final TextView tv = new TextView(this);
+        final Button button = new Button(this);
+        button.setText("Call Native");
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                tv.append(HelloJni.stringFromJNI() + "\n");
+//                tv.append(new HelloJni().instanceStringFromJNI());
+            }
+        });
+        layout.addView(button);
+        layout.addView(tv);
+        setContentView(layout);
     }
 
 
