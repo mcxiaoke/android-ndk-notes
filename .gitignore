@@ -4,6 +4,8 @@
 *.ko
 *.obj
 *.elf
+gdbserver
+gdb.setup
 obj/local/
 
 # Precompiled Headers
