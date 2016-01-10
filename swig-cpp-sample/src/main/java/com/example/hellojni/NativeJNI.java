@@ -43,6 +43,10 @@ public class NativeJNI {
   public final static native long new_MyClass__SWIG_1(int jarg1);
   public final static native void delete_MyClass(long jarg1);
   public final static native String MyClass_show(long jarg1, MyClass jarg1_);
+  public final static native long new_AsyncUidProvider();
+  public final static native void delete_AsyncUidProvider(long jarg1);
+  public final static native void AsyncUidProvider_getUid(long jarg1, AsyncUidProvider jarg1_);
+  public final static native void AsyncUidProvider_onUid(long jarg1, AsyncUidProvider jarg1_, long jarg2);
   public final static native long BIG_get();
   public final static native java.math.BigInteger LARGE_get();
   public final static native long Circle_SWIGUpcast(long jarg1);

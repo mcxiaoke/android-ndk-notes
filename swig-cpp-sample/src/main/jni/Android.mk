@@ -17,7 +17,8 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := hello-jni
-LOCAL_SRC_FILES := HelloJni.cxx democpp.cxx simple.cxx
+LOCAL_SRC_FILES := HelloJni.cxx democpp.cxx simple.cxx callback.cxx
+LOCAL_CPP_FLAGS += rtti # for swig directors
 
 MY_SWIG_PACKAGE := com.example.hellojni
 MY_SWIG_INTERFACES := Native.i

@@ -43,10 +43,10 @@ void Shape::methodOverloaded(char s[]) {
 }
 void Shape::methodOverloaded(int i, double d, std::vector<int> v) {
     std::stringstream ss;
-    for (size_t i = 0; i < v.size(); ++i)
+    for (size_t x = 0; x < v.size(); ++x)
     {
-        if (i != 0)
-            ss << "," << v[i];
+        if (x != 0)
+            ss << "," << v[x];
     }
     std::string s = ss.str();
     std::cout << i << d << s << endl;

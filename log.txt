@@ -1,0 +1,6 @@
+make.exe: Entering directory `D:/mcxiaoke/ndk/swig-cpp-sample/src/main'
+[armeabi] Compile++ thumb: hello-jni <= HelloJni.cxx
+[armeabi] Compile++ thumb: hello-jni <= democpp.cxx
+[armeabi] Compile++ thumb: hello-jni <= simple.cxx
+[armeabi] Compile++ thumb: hello-jni <= callback.cxx
+make.exe: Leaving directory `D:/mcxiaoke/ndk/swig-cpp-sample/src/main'

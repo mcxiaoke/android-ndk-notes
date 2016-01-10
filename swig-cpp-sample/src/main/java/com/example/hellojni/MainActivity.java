@@ -37,6 +37,8 @@ public class MainActivity extends Activity {
         TextView tv = new TextView(this);
         tv.setText(builder.toString());
         setContentView(tv);
+        UidHandler handler = new UidHandler(tv);
+        handler.getUid();
     }
 
 
