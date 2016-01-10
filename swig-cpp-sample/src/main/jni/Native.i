@@ -7,6 +7,7 @@
 
 %include "enums.swg" // generate java enum type
 %include "std_string.i" // std::string type
+%include "std_vector.i" // std::vector type
 
 %include "democpp.h"
 %include "simple.h"

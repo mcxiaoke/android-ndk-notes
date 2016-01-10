@@ -75,6 +75,38 @@ public class Shape {
     return NativeJNI.Shape_perimeter(swigCPtr, this);
   }
 
+  public void methodWithDefaultArgs(int a, float b, String c) {
+    NativeJNI.Shape_methodWithDefaultArgs__SWIG_0(swigCPtr, this, a, b, c);
+  }
+
+  public void methodWithDefaultArgs(int a, float b) {
+    NativeJNI.Shape_methodWithDefaultArgs__SWIG_1(swigCPtr, this, a, b);
+  }
+
+  public void methodWithDefaultArgs(int a) {
+    NativeJNI.Shape_methodWithDefaultArgs__SWIG_2(swigCPtr, this, a);
+  }
+
+  public void methodWithDefaultArgs() {
+    NativeJNI.Shape_methodWithDefaultArgs__SWIG_3(swigCPtr, this);
+  }
+
+  public void methodOverloaded(int i) {
+    NativeJNI.Shape_methodOverloaded__SWIG_0(swigCPtr, this, i);
+  }
+
+  public void methodOverloaded(double d) {
+    NativeJNI.Shape_methodOverloaded__SWIG_1(swigCPtr, this, d);
+  }
+
+  public void methodOverloaded(String s) {
+    NativeJNI.Shape_methodOverloaded__SWIG_2(swigCPtr, this, s);
+  }
+
+  public void methodOverloaded(int i, double d, SWIGTYPE_p_std__vectorT_int_t v) {
+    NativeJNI.Shape_methodOverloaded__SWIG_3(swigCPtr, this, i, d, SWIGTYPE_p_std__vectorT_int_t.getCPtr(v));
+  }
+
   public static void setNshapes(int value) {
     NativeJNI.Shape_nshapes_set(value);
   }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <sstream>
 
 
@@ -37,6 +38,11 @@ public:
   std::string info();
   double area();
   double perimeter();
+  void methodWithDefaultArgs(int a = 1, float b = 2.8, std::string c = "default arg");
+  void methodOverloaded(int i);
+  void methodOverloaded(double d);
+  void methodOverloaded(char s[]);
+  void methodOverloaded(int i, double d, std::vector<int> v);
   static int nshapes;
 };
 

@@ -20,6 +20,14 @@ public class NativeJNI {
   public final static native String Shape_info(long jarg1, Shape jarg1_);
   public final static native double Shape_area(long jarg1, Shape jarg1_);
   public final static native double Shape_perimeter(long jarg1, Shape jarg1_);
+  public final static native void Shape_methodWithDefaultArgs__SWIG_0(long jarg1, Shape jarg1_, int jarg2, float jarg3, String jarg4);
+  public final static native void Shape_methodWithDefaultArgs__SWIG_1(long jarg1, Shape jarg1_, int jarg2, float jarg3);
+  public final static native void Shape_methodWithDefaultArgs__SWIG_2(long jarg1, Shape jarg1_, int jarg2);
+  public final static native void Shape_methodWithDefaultArgs__SWIG_3(long jarg1, Shape jarg1_);
+  public final static native void Shape_methodOverloaded__SWIG_0(long jarg1, Shape jarg1_, int jarg2);
+  public final static native void Shape_methodOverloaded__SWIG_1(long jarg1, Shape jarg1_, double jarg2);
+  public final static native void Shape_methodOverloaded__SWIG_2(long jarg1, Shape jarg1_, String jarg2);
+  public final static native void Shape_methodOverloaded__SWIG_3(long jarg1, Shape jarg1_, int jarg2, double jarg3, long jarg4);
   public final static native void Shape_nshapes_set(int jarg1);
   public final static native int Shape_nshapes_get();
   public final static native String Circle_info(long jarg1, Circle jarg1_);

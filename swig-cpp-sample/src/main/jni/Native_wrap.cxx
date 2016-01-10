@@ -235,6 +235,13 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include <string>
 
 
+#include <stdexcept>
+
+
+#include <vector>
+#include <stdexcept>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -394,6 +401,137 @@ SWIGEXPORT jdouble JNICALL Java_com_example_hellojni_NativeJNI_Shape_1perimeter(
   result = (double)(arg1)->perimeter();
   jresult = (jdouble)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodWithDefaultArgs_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jfloat jarg3, jstring jarg4) {
+  Shape *arg1 = (Shape *) 0 ;
+  int arg2 ;
+  float arg3 ;
+  std::string arg4 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (float)jarg3; 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  } 
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return ;
+  (&arg4)->assign(arg4_pstr);
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  (arg1)->methodWithDefaultArgs(arg2,arg3,arg4);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodWithDefaultArgs_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jfloat jarg3) {
+  Shape *arg1 = (Shape *) 0 ;
+  int arg2 ;
+  float arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (float)jarg3; 
+  (arg1)->methodWithDefaultArgs(arg2,arg3);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodWithDefaultArgs_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  Shape *arg1 = (Shape *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->methodWithDefaultArgs(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodWithDefaultArgs_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  Shape *arg1 = (Shape *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  (arg1)->methodWithDefaultArgs();
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodOverloaded_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  Shape *arg1 = (Shape *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->methodOverloaded(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodOverloaded_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  Shape *arg1 = (Shape *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = (double)jarg2; 
+  (arg1)->methodOverloaded(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodOverloaded_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  Shape *arg1 = (Shape *) 0 ;
+  char *arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return ;
+  }
+  (arg1)->methodOverloaded(arg2);
+  
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_Shape_1methodOverloaded_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3, jlong jarg4) {
+  Shape *arg1 = (Shape *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  SwigValueWrapper< std::vector< int > > arg4 ;
+  std::vector< int > *argp4 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Shape **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (double)jarg3; 
+  argp4 = *(std::vector< int > **)&jarg4; 
+  if (!argp4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::vector< int >");
+    return ;
+  }
+  arg4 = *argp4; 
+  (arg1)->methodOverloaded(arg2,arg3,arg4);
 }
 
 
