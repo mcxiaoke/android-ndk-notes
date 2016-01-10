@@ -31,6 +31,14 @@ JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeFree
 JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeWorker
   (JNIEnv *, jobject, jint, jint);
 
+/*
+ * Class:     com_example_hellojni_Native
+ * Method:    posixThreads
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_com_example_hellojni_Native_posixThreads
+  (JNIEnv *, jobject, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

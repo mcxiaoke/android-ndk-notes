@@ -23,6 +23,8 @@ public class Native {
 
     public native void nativeWorker(int id, int iterations);
 
+    public native void posixThreads(int threads, int iterations);
+
     public void onNativeMessage(final String message) {
         Log.d("Native", "onNativeMessage() " + message);
         this.main.onNativeMessage(message);

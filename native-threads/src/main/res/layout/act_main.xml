@@ -23,6 +23,15 @@
         android:hint="@string/iterations_edit"
         android:inputType="number" />
 
+    <Switch
+        android:text="PosixThreads: "
+        android:id="@+id/mode_switch"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="PosixThreads"
+        android:textOff="JavaThreads" />
+
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
