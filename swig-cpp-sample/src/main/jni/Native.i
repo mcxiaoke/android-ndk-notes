@@ -1,9 +1,22 @@
 %module(directors=1) Native
 
 %{
+#include "unistd.h"
 #include "democpp.h"
 #include "simple.h"
-#include "callback.h"
+
+class AsyncUidProvider {
+public:
+  AsyncUidProvider() {
+  }
+  virtual ~AsyncUidProvider() {
+  }
+  void getUid() {
+   onUid(getuid());
+  }
+  virtual void onUid(uid_t uid) {
+  }
+};
 %}
 
 %include "enums.swg" // generate java enum type
@@ -12,16 +25,42 @@
 
 %include "democpp.h"
 %include "simple.h"
-%include "callback.h"
+
 
 %feature("director") AsyncUidProvider;
 
-%javaconst(1);
-%javaconst(0) BIG;
-%javaconst(0) LARGE;
-
-#define EXPRESSION (0x100+5)
-#define BIG 1000LL
-#define LARGE 2000ULL
-
 typedef unsigned int uid_t; // typedef
+
+class AsyncUidProvider {
+public:
+  AsyncUidProvider();
+  virtual ~AsyncUidProvider();
+  void getUid();
+  virtual void onUid(uid_t uid);
+};
+
+/* Exception handling for getuid. */
+/**
+%exception getuid {
+  $action
+  if (!result) {
+   jclass clazz = jenv->FindClass("java/lang/OutOfMemoryError");
+   jenv->ThrowNew(clazz, "Out of Memory");
+   return $null;
+  }
+}
+**/
+
+/* Exception handling for getuid. */
+%javaexception("java.lang.IllegalAccessException") getuid {
+  $action
+  if (!result) {
+   jclass clazz = jenv->FindClass("java/lang/IllegalAccessException");
+   jenv->ThrowNew(clazz, "Illegal Access");
+   return $null;
+  }
+}
+
+/* Ask SWIG to wrap getuid function. */
+extern uid_t getuid(void);
+

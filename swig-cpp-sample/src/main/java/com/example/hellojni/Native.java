@@ -8,9 +8,13 @@
 
 package com.example.hellojni;
 
-public class Native implements NativeConstants {
+public class Native {
   public static int add(int a, int b) {
     return NativeJNI.add(a, b);
+  }
+
+  public static long getuid() throws java.lang.IllegalAccessException {
+    return NativeJNI.getuid();
   }
 
 }

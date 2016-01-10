@@ -11,5 +11,20 @@
 #ifndef SWIG_Native_WRAP_H_
 #define SWIG_Native_WRAP_H_
 
+class SwigDirector_AsyncUidProvider : public AsyncUidProvider, public Swig::Director {
+
+public:
+    void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
+    SwigDirector_AsyncUidProvider(JNIEnv *jenv);
+    virtual ~SwigDirector_AsyncUidProvider();
+    virtual void onUid(uid_t uid);
+public:
+    bool swig_overrides(int n) {
+      return (n < 1 ? swig_override[n] : false);
+    }
+protected:
+    Swig::BoolArray<1> swig_override;
+};
+
 
 #endif

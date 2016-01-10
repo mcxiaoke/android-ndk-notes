@@ -656,10 +656,29 @@ namespace Swig {
   }
 }
 
+namespace Swig {
+  namespace {
+    jclass jclass_NativeJNI = NULL;
+    jmethodID director_method_ids[1];
+  }
+}
 
+#include "unistd.h"
 #include "democpp.h"
 #include "simple.h"
-#include "callback.h"
+
+class AsyncUidProvider {
+public:
+  AsyncUidProvider() {
+  }
+  virtual ~AsyncUidProvider() {
+  }
+  void getUid() {
+   onUid(getuid());
+  }
+  virtual void onUid(uid_t uid) {
+  }
+};
 
 
 #include <string>
@@ -678,6 +697,76 @@ namespace Swig {
  * --------------------------------------------------- */
 
 #include "Native_wrap.h"
+
+SwigDirector_AsyncUidProvider::SwigDirector_AsyncUidProvider(JNIEnv *jenv) : AsyncUidProvider(), Swig::Director(jenv) {
+}
+
+SwigDirector_AsyncUidProvider::~SwigDirector_AsyncUidProvider() {
+  swig_disconnect_director_self("swigDirectorDisconnect");
+}
+
+
+void SwigDirector_AsyncUidProvider::onUid(uid_t uid) {
+  JNIEnvWrapper swigjnienv(this) ;
+  JNIEnv * jenv = swigjnienv.getJNIEnv() ;
+  jobject swigjobj = (jobject) NULL ;
+  jlong juid  ;
+  
+  if (!swig_override[0]) {
+    AsyncUidProvider::onUid(uid);
+    return;
+  }
+  swigjobj = swig_get_self(jenv);
+  if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
+    juid = (jlong) uid;
+    jenv->CallStaticVoidMethod(Swig::jclass_NativeJNI, Swig::director_method_ids[0], swigjobj, juid);
+    jthrowable swigerror = jenv->ExceptionOccurred();
+    if (swigerror) {
+      jenv->ExceptionClear();
+      throw Swig::DirectorException(jenv, swigerror);
+    }
+    
+  } else {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in AsyncUidProvider::onUid ");
+  }
+  if (swigjobj) jenv->DeleteLocalRef(swigjobj);
+}
+
+void SwigDirector_AsyncUidProvider::swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global) {
+  static struct {
+    const char *mname;
+    const char *mdesc;
+    jmethodID base_methid;
+  } methods[] = {
+    {
+      "onUid", "(J)V", NULL 
+    }
+  };
+  
+  static jclass baseclass = 0 ;
+  
+  if (swig_set_self(jenv, jself, swig_mem_own, weak_global)) {
+    if (!baseclass) {
+      baseclass = jenv->FindClass("com/example/hellojni/AsyncUidProvider");
+      if (!baseclass) return;
+      baseclass = (jclass) jenv->NewGlobalRef(baseclass);
+    }
+    bool derived = (jenv->IsSameObject(baseclass, jcls) ? false : true);
+    for (int i = 0; i < 1; ++i) {
+      if (!methods[i].base_methid) {
+        methods[i].base_methid = jenv->GetMethodID(baseclass, methods[i].mname, methods[i].mdesc);
+        if (!methods[i].base_methid) return;
+      }
+      swig_override[i] = false;
+      if (derived) {
+        jmethodID methid = jenv->GetMethodID(jcls, methods[i].mname, methods[i].mdesc);
+        swig_override[i] = (methid != methods[i].base_methid);
+        jenv->ExceptionClear();
+      }
+    }
+  }
+}
+
 
 
 #ifdef __cplusplus
@@ -1178,7 +1267,7 @@ SWIGEXPORT jlong JNICALL Java_com_example_hellojni_NativeJNI_new_1AsyncUidProvid
   
   (void)jenv;
   (void)jcls;
-  result = (AsyncUidProvider *)new AsyncUidProvider();
+  result = (AsyncUidProvider *)new SwigDirector_AsyncUidProvider(jenv);
   *(AsyncUidProvider **)&jresult = result; 
   return jresult;
 }
@@ -1218,42 +1307,54 @@ SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_AsyncUidProvider_1on
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_hellojni_NativeJNI_BIG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  long long result;
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_AsyncUidProvider_1onUidSwigExplicitAsyncUidProvider(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  AsyncUidProvider *arg1 = (AsyncUidProvider *) 0 ;
+  uid_t arg2 ;
   
   (void)jenv;
   (void)jcls;
-  result = (long long)(1000LL);
-  jresult = (jlong)result; 
-  return jresult;
+  (void)jarg1_;
+  arg1 = *(AsyncUidProvider **)&jarg1; 
+  arg2 = (uid_t)jarg2; 
+  (arg1)->AsyncUidProvider::onUid(arg2);
 }
 
 
-SWIGEXPORT jobject JNICALL Java_com_example_hellojni_NativeJNI_LARGE_1get(JNIEnv *jenv, jclass jcls) {
-  jobject jresult = 0 ;
-  unsigned long long result;
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_AsyncUidProvider_1director_1connect(JNIEnv *jenv, jclass jcls, jobject jself, jlong objarg, jboolean jswig_mem_own, jboolean jweak_global) {
+  AsyncUidProvider *obj = *((AsyncUidProvider **)&objarg);
+  (void)jcls;
+  SwigDirector_AsyncUidProvider *director = dynamic_cast<SwigDirector_AsyncUidProvider *>(obj);
+  if (director) {
+    director->swig_connect_director(jenv, jself, jenv->GetObjectClass(jself), (jswig_mem_own == JNI_TRUE), (jweak_global == JNI_TRUE));
+  }
+}
+
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_AsyncUidProvider_1change_1ownership(JNIEnv *jenv, jclass jcls, jobject jself, jlong objarg, jboolean jtake_or_release) {
+  AsyncUidProvider *obj = *((AsyncUidProvider **)&objarg);
+  SwigDirector_AsyncUidProvider *director = dynamic_cast<SwigDirector_AsyncUidProvider *>(obj);
+  (void)jcls;
+  if (director) {
+    director->swig_java_change_ownership(jenv, jself, jtake_or_release ? true : false);
+  }
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_example_hellojni_NativeJNI_getuid(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  uid_t result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned long long)(2000ULL);
   {
-    jbyteArray ba = jenv->NewByteArray(9);
-    jbyte* bae = jenv->GetByteArrayElements(ba, 0);
-    jclass clazz = jenv->FindClass("java/math/BigInteger");
-    jmethodID mid = jenv->GetMethodID(clazz, "<init>", "([B)V");
-    jobject bigint;
-    int i;
-    
-    bae[0] = 0;
-    for(i=1; i<9; i++ ) {
-      bae[i] = (jbyte)(result>>8*(8-i));
+    result = (uid_t)getuid();
+    if (!result) {
+      jclass clazz = jenv->FindClass("java/lang/IllegalAccessException");
+      jenv->ThrowNew(clazz, "Illegal Access");
+      return 0;
     }
-    
-    jenv->ReleaseByteArrayElements(ba, bae, 0);
-    bigint = jenv->NewObject(clazz, mid, ba);
-    jresult = bigint;
   }
+  jresult = (jlong)result; 
   return jresult;
 }
 
@@ -1273,6 +1374,26 @@ SWIGEXPORT jlong JNICALL Java_com_example_hellojni_NativeJNI_Square_1SWIGUpcast(
     *(Shape **)&baseptr = *(Square **)&jarg1;
     return baseptr;
 }
+
+SWIGEXPORT void JNICALL Java_com_example_hellojni_NativeJNI_swig_1module_1init(JNIEnv *jenv, jclass jcls) {
+  int i;
+  
+  static struct {
+    const char *method;
+    const char *signature;
+  } methods[1] = {
+    {
+      "SwigDirector_AsyncUidProvider_onUid", "(Lcom/example/hellojni/AsyncUidProvider;J)V" 
+    }
+  };
+  Swig::jclass_NativeJNI = (jclass) jenv->NewGlobalRef(jcls);
+  if (!Swig::jclass_NativeJNI) return;
+  for (i = 0; i < (int) (sizeof(methods)/sizeof(methods[0])); ++i) {
+    Swig::director_method_ids[i] = jenv->GetStaticMethodID(jcls, methods[i].method, methods[i].signature);
+    if (!Swig::director_method_ids[i]) return;
+  }
+}
+
 
 #ifdef __cplusplus
 }

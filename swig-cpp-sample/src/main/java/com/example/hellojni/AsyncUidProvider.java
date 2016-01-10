@@ -35,8 +35,24 @@ public class AsyncUidProvider {
     }
   }
 
+  protected void swigDirectorDisconnect() {
+    swigCMemOwn = false;
+    delete();
+  }
+
+  public void swigReleaseOwnership() {
+    swigCMemOwn = false;
+    NativeJNI.AsyncUidProvider_change_ownership(this, swigCPtr, false);
+  }
+
+  public void swigTakeOwnership() {
+    swigCMemOwn = true;
+    NativeJNI.AsyncUidProvider_change_ownership(this, swigCPtr, true);
+  }
+
   public AsyncUidProvider() {
     this(NativeJNI.new_AsyncUidProvider(), true);
+    NativeJNI.AsyncUidProvider_director_connect(this, swigCPtr, swigCMemOwn, true);
   }
 
   public void getUid() {
@@ -44,7 +60,7 @@ public class AsyncUidProvider {
   }
 
   public void onUid(long uid) {
-    NativeJNI.AsyncUidProvider_onUid(swigCPtr, this, uid);
+    if (getClass() == AsyncUidProvider.class) NativeJNI.AsyncUidProvider_onUid(swigCPtr, this, uid); else NativeJNI.AsyncUidProvider_onUidSwigExplicitAsyncUidProvider(swigCPtr, this, uid);
   }
 
 }
