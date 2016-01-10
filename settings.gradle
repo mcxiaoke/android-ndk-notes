@@ -1,1 +1,1 @@
-include ':hello-jni', 'hello-debug', 'swig-sample', 'swig-cpp-sample'
+include ':hello-jni', 'hello-debug', 'swig-sample', 'swig-cpp-sample', 'native-threads'
