@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PosixTCP</string>
+    <string name="title_activity_echo_server">Echo Server</string>
+    <string name="port_edit">Port Number</string>
+    <string name="start_server_button">Start Server</string>
+    <string name="title_activity_echo_client">Echo Client</string>
+    <string name="ip_edit">IP Address</string>
+    <string name="start_client_button">Start Client</string>
+    <string name="send_button">Send</string>
+    CHAPTER 8: POSIX Socket API: Connection-Oriented Communication 215
+    <string name="message_edit">Message</string>
+    <string name="title_activity_local_echo">Local Echo</string>
+    <string name="local_port_edit">Port Name</string>
+</resources>
