@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/port_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/port_edit"
+        android:inputType="number">
+
+        <requestFocus />
+    </EditText>
+
+    <Switch
+        android:visibility="gone"
+        android:text="PosixThreads: "
+        android:id="@+id/mode_switch"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="PosixThreads"
+        android:textOff="JavaThreads" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_server_button" />
+
+    <ScrollView
+        android:id="@+id/log_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="?android:attr/textAppearanceSmall"
+            android:id="@+id/log_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+</LinearLayout>

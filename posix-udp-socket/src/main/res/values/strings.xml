@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PosixTCP</string>
-    <string name="title_activity_echo_server">TCP Echo Server</string>
+    <string name="app_name">PosixUDP</string>
+    <string name="title_activity_echo_server">UDP Echo Server</string>
     <string name="port_edit">Port Number</string>
-    <string name="start_server_button">Start TCP Server</string>
-    <string name="title_activity_echo_client">TCP Echo Client</string>
+    <string name="start_server_button">Start UDP Server</string>
+    <string name="title_activity_echo_client">UDP Echo Client</string>
     <string name="ip_edit">IP Address</string>
-    <string name="start_client_button">Start TCP Client</string>
+    <string name="start_client_button">Start UDP Client</string>
     <string name="send_button">Send</string>
     <string name="message_edit">Message</string>
     <string name="title_activity_local_echo">Local Echo</string>
