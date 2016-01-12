@@ -3,6 +3,7 @@
     package="com.mcxiaoke.ndk.tcp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application android:label="@string/app_name">
         <activity

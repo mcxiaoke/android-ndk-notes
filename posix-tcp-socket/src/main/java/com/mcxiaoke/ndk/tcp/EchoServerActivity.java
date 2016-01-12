@@ -16,10 +16,16 @@
 package com.mcxiaoke.ndk.tcp;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class EchoServerActivity extends BaseActivity {
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {

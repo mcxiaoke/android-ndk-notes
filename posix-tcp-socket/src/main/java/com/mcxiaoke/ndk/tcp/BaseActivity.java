@@ -27,6 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.hellojni.Native;
+import com.example.hellojni.Utils;
 
 
 public abstract class BaseActivity extends Activity {
@@ -60,7 +61,8 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(layoutId());
         ButterKnife.bind(this);
-        mNative=new Native(this);
+        logMessage("Local IP:\n" + Utils.getLocalIpAddress());
+        mNative = new Native(this);
     }
 
     @Override

@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-11 21:04:57
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-11 23:07:16
+* @Last Modified time: 2016-01-12 21:36:03
 */
 
 // JNI
@@ -30,9 +30,9 @@
 // offsetof
 #include <stddef.h>
 // little endian
-#include <sys/endian.h>
+// #include <sys/endian.h>
 
-//
+#include "nlog.h"
 #include "com_example_hellojni_Native.h"
 
 
@@ -99,7 +99,7 @@ static void BindSocketToPort(JNIEnv* env, jobject obj, int sd, unsigned short po
     address.sin_family = PF_INET;
     address.sin_addr.s_addr = htonl(INADDR_ANY);
     address.sin_port = htons(port);
-    LogMessage(env, obj, "Binding to port %hu.", port);
+    LogMessage(env, obj, "Binding to %s:%hu.", inet_ntoa(address.sin_addr), port);
     if (-1 == bind(sd, (struct sockaddr*) &address, sizeof(address))) {
         ThrowErrnoException(env, "java/io/IOException", errno);
     }
@@ -147,7 +147,19 @@ static int AcceptOnSocket(JNIEnv* env, jobject obj, int sd) {
     if (-1 == clientSocket) {
         ThrowErrnoException(env, "java/io/IOException", errno);
     } else {
-        LogMessage(env, obj, "Client connection from ", &address);
+        LogMessage(env, obj, "Client connection from %s:%hu."
+                   , inet_ntoa(address.sin_addr), ntohs(address.sin_port));
+        struct sockaddr_in serv, guest;
+        char serv_ip[20];
+        char guest_ip[20];
+        socklen_t serv_len = sizeof(serv);
+        socklen_t guest_len = sizeof(guest);
+        getsockname(clientSocket, (struct sockaddr *)&serv, &serv_len);
+        getpeername(clientSocket, (struct sockaddr *)&guest, &guest_len);
+        inet_ntop(AF_INET, &serv.sin_addr, serv_ip, sizeof(serv_ip));
+        inet_ntop(AF_INET, &guest.sin_addr, guest_ip, sizeof(guest_ip));
+        LogMessage(env, obj, "Server %s:%d\nClient %s:%d\n", serv_ip,
+                   ntohs(serv.sin_port), guest_ip, ntohs(guest.sin_port));
     }
     return clientSocket;
 }
@@ -159,7 +171,7 @@ static ssize_t ReceiveFromSocket(JNIEnv* env, jobject obj, int sd, char* buffer,
     if (-1 == recvSize) {
         ThrowErrnoException(env, "java/io/IOException", errno);
     } else {
-        buffer[recvSize] = NULL;
+        buffer[recvSize] = 0;
         if (recvSize > 0) {
             LogMessage(env, obj, "Received %d bytes: %s", recvSize, buffer);
         } else {
@@ -248,9 +260,12 @@ JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartTcpServer
                 break;
 
             // Send to the socket
+            char prefix[] = "Server: ";
+            char toSend[MAX_BUFFER_SIZE + strlen(prefix)];
+            strcpy(toSend, prefix);
+            strcat(toSend, buffer);
             sentSize = SendToSocket(env, obj, clientSocket,
-                                    buffer, (size_t) recvSize);
-
+                                    toSend, (size_t) strlen(toSend));
             if ((0 == sentSize) || (NULL != env->ExceptionOccurred()))
                 break;
         }
