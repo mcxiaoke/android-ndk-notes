@@ -52,7 +52,7 @@ public class EchoClientActivity extends BaseActivity {
         protected void onBackground() {
             logMessage("Starting Client.");
             try {
-                mNative.nativeStartTcpClient(ip, port, message);
+                mNative.nativeStartUdpClient(ip, port, message);
             } catch (Exception e) {
                 e.printStackTrace();
                 logMessage(e.getMessage());

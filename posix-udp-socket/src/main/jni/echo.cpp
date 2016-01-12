@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-11 21:04:57
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-12 21:36:03
+* @Last Modified time: 2016-01-12 23:21:47
 */
 
 // JNI
@@ -39,7 +39,7 @@
 // Max log message length
 #define MAX_LOG_MESSAGE_LENGTH 256
 // Max data buffer size
-#define MAX_BUFFER_SIZE 80
+#define MAX_BUFFER_SIZE 256
 
 // send message to Java
 static void LogMessage(JNIEnv* env, jobject obj, const char* format, ...) {
@@ -92,6 +92,16 @@ static int NewTcpSocket(JNIEnv* env, jobject obj) {
     return tcpSocket;
 }
 
+// create a udp socket
+static int NewUdpSocket(JNIEnv* env, jobject obj) {
+    LogMessage(env, obj, "Constructing a new UDP socket...");
+    int udpSocket = socket(PF_INET, SOCK_DGRAM, 0);
+    if (-1 == udpSocket) {
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    }
+    return udpSocket;
+}
+
 // bind socket to port
 static void BindSocketToPort(JNIEnv* env, jobject obj, int sd, unsigned short port) {
     struct sockaddr_in address;
@@ -99,7 +109,7 @@ static void BindSocketToPort(JNIEnv* env, jobject obj, int sd, unsigned short po
     address.sin_family = PF_INET;
     address.sin_addr.s_addr = htonl(INADDR_ANY);
     address.sin_port = htons(port);
-    LogMessage(env, obj, "Binding to %s:%hu.", inet_ntoa(address.sin_addr), port);
+    LogMessage(env, obj, "Binding to %s:%hu", inet_ntoa(address.sin_addr), port);
     if (-1 == bind(sd, (struct sockaddr*) &address, sizeof(address))) {
         ThrowErrnoException(env, "java/io/IOException", errno);
     }
@@ -181,6 +191,47 @@ static ssize_t ReceiveFromSocket(JNIEnv* env, jobject obj, int sd, char* buffer,
     return recvSize;
 }
 
+// receive datagram from udp socket
+static ssize_t ReceiveDatagramFromSocket(
+    JNIEnv* env,
+    jobject obj,
+    int sd,
+    struct sockaddr_in* address,
+    char* buffer,
+    size_t bufferSize)
+{
+    socklen_t addressLength = sizeof(struct sockaddr_in);
+
+    // Receive datagram from socket
+    LogMessage(env, obj, "Receiving datagram from the socket...");
+    ssize_t recvSize = recvfrom(sd, buffer, bufferSize, 0,
+                                (struct sockaddr*) address,
+                                &addressLength);
+
+    // If receive is failed
+    if (-1 == recvSize)
+    {
+        // Throw an exception with error number
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    }
+    else
+    {
+        // Log address
+        LogAddress(env, obj, "Received data from", address);
+        // NULL terminate the buffer to make it a string
+        buffer[recvSize] = 0;
+
+        // If data is received
+        if (recvSize > 0)
+        {
+            LogMessage(env, obj, "Received data %d bytes: %s",
+                       recvSize, buffer);
+        }
+    }
+
+    return recvSize;
+}
+
 // send data to socket
 static ssize_t SendToSocket(JNIEnv* env, jobject obj, int sd, const char* buffer, size_t bufferSize) {
     LogMessage(env, obj, "Sending to the socket...");
@@ -194,6 +245,35 @@ static ssize_t SendToSocket(JNIEnv* env, jobject obj, int sd, const char* buffer
             LogMessage(env, obj, "Client disconnected.");
         }
     }
+    return sentSize;
+}
+
+// send datagram to socket
+static ssize_t SendDatagramToSocket(
+    JNIEnv* env,
+    jobject obj,
+    int sd,
+    const struct sockaddr_in* address,
+    const char* buffer,
+    size_t bufferSize)
+{
+    // Send data buffer to the socket
+    LogAddress(env, obj, "Sending datagram to", address);
+    ssize_t sentSize = sendto(sd, buffer, bufferSize, 0,
+                              (const sockaddr*) address,
+                              sizeof(struct sockaddr_in));
+
+    // If send is failed
+    if (-1 == sentSize)
+    {
+        // Throw an exception with error number
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    }
+    else if (sentSize > 0)
+    {
+        LogMessage(env, obj, "Sent %d bytes: %s", sentSize, buffer);
+    }
+
     return sentSize;
 }
 
@@ -326,6 +406,148 @@ JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartTcpClient
 
         // Receive from the socket
         ReceiveFromSocket(env, obj, clientSocket, buffer, MAX_BUFFER_SIZE);
+    }
+
+exit:
+    if (clientSocket > 0)
+    {
+        close(clientSocket);
+    }
+}
+
+
+
+JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartUdpServer
+(JNIEnv *env, jobject obj, jint port)
+{
+    // Construct a new UDP socket.
+    int serverSocket = NewUdpSocket(env, obj);
+    if (NULL == env->ExceptionOccurred())
+    {
+        LOGD("Create UDP Socket...");
+        // Bind socket to a port number
+        BindSocketToPort(env, obj, serverSocket, (unsigned short) port);
+        if (NULL != env->ExceptionOccurred())
+            goto exit;
+
+        // If random port number is requested
+        if (0 == port)
+        {
+            // Get the port number socket is currently binded
+            GetSocketPort(env, obj, serverSocket);
+            if (NULL != env->ExceptionOccurred())
+                goto exit;
+        }
+
+        struct sockaddr_in serv;
+        char serv_ip[20];
+        socklen_t serv_len = sizeof(serv);
+        getsockname(serverSocket, (struct sockaddr *)&serv, &serv_len);
+        inet_ntop(AF_INET, &serv.sin_addr, serv_ip, sizeof(serv_ip));
+        LogMessage(env, obj, "Server on %s:%d\n", serv_ip, ntohs(serv.sin_port));
+        // LogMessage(env, obj, "Server on %s:%d\n", serv_ip, ntohs(serv.sin_port));
+        while (1) {
+            // Client address
+            struct sockaddr_in address;
+            memset(&address, 0, sizeof(address));
+
+            char buffer[MAX_BUFFER_SIZE];
+            ssize_t recvSize;
+            ssize_t sentSize;
+            // Receive from the socket
+            recvSize = ReceiveDatagramFromSocket(env, obj, serverSocket,
+                                                 &address, buffer, MAX_BUFFER_SIZE);
+            LOGD("Received from %s:%hu."
+                 , inet_ntoa(address.sin_addr), ntohs(address.sin_port));
+            LOGD("Received %hu bytes: %s", recvSize, buffer);
+            // LogMessage(env, obj, "Received from %s:%hu"
+            //            , inet_ntoa(address.sin_addr), ntohs(address.sin_port));
+            // LogMessage(env, obj, "Received %hu bytes: %s", recvSize, buffer);
+
+
+            if ((0 == recvSize) || (NULL != env->ExceptionOccurred()))
+                goto exit;
+
+            // Send to the socket
+            // combine data
+            char prefix[] = "Server: ";
+            char buffer2[MAX_BUFFER_SIZE + strlen(prefix)];
+            strcpy(buffer2, prefix);
+            strcat(buffer2, buffer);
+            sentSize = SendDatagramToSocket(env, obj, serverSocket,
+                                            &address, buffer2, (size_t) recvSize);
+        }
+    }
+
+exit:
+    if (serverSocket > 0)
+    {
+        close(serverSocket);
+    }
+}
+
+
+JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartUdpClient
+(JNIEnv *env, jobject obj, jstring ip, jint port, jstring message)
+{
+    // Construct a new UDP socket.
+    int clientSocket = NewUdpSocket(env, obj);
+    if (NULL == env->ExceptionOccurred())
+    {
+        struct sockaddr_in address;
+
+        memset(&address, 0, sizeof(address));
+        address.sin_family = PF_INET;
+
+        // Get IP address as C string
+        const char* ipAddress = env->GetStringUTFChars(ip, NULL);
+        if (NULL == ipAddress)
+            goto exit;
+
+        // Convert IP address string to Internet address
+        int result = inet_aton(ipAddress, &(address.sin_addr));
+
+        // Release the IP address
+        env->ReleaseStringUTFChars(ip, ipAddress);
+
+        // If conversion is failed
+        if (0 == result)
+        {
+            // Throw an exception with error number
+            ThrowErrnoException(env, "java/io/IOException", errno);
+            goto exit;
+        }
+
+        // Convert port to network byte order
+        address.sin_port = htons(port);
+
+        // Get message as C string
+        const char* messageText = env->GetStringUTFChars(message, NULL);
+        if (NULL == messageText)
+            goto exit;
+
+        // Get the message size
+        jsize messageSize = env->GetStringUTFLength(message);
+
+        // Send message to socket
+        SendDatagramToSocket(env, obj, clientSocket, &address,
+                             messageText, messageSize);
+
+        // Release the message text
+        env->ReleaseStringUTFChars(message, messageText);
+
+        // If send was not successful
+        if (NULL != env->ExceptionOccurred())
+            goto exit;
+
+        char buffer[MAX_BUFFER_SIZE];
+
+        // Clear address
+        memset(&address, 0, sizeof(address));
+
+        // Receive from the socket
+        ReceiveDatagramFromSocket(env, obj, clientSocket, &address,
+                                  buffer, MAX_BUFFER_SIZE);
     }
 
 exit:

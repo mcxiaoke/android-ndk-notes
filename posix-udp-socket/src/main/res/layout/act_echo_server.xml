@@ -37,6 +37,8 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:singleLine="false"
+            android:ellipsize="end"
             style="?android:attr/textAppearanceSmall"
             android:id="@+id/log_view"
             android:layout_width="match_parent"

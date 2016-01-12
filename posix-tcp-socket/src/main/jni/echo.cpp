@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-11 21:04:57
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-12 21:36:03
+* @Last Modified time: 2016-01-12 22:28:46
 */
 
 // JNI
@@ -90,6 +90,16 @@ static int NewTcpSocket(JNIEnv* env, jobject obj) {
         ThrowErrnoException(env, "java/io/IOException", errno);
     }
     return tcpSocket;
+}
+
+// create a udp socket
+static int NewTcpSocket(JNIEnv* env, jobject obj) {
+    LogMessage(env, obj, "Constructing a new UDP socket...");
+    int udpSocket = socket(PF_INET, SOCK_DGRAM, 0);
+    if (-1 == udpSocket) {
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    }
+    return udpSocket;
 }
 
 // bind socket to port
@@ -181,6 +191,48 @@ static ssize_t ReceiveFromSocket(JNIEnv* env, jobject obj, int sd, char* buffer,
     return recvSize;
 }
 
+// receive datagram from udp socket
+static ssize_t ReceiveDatagramFromSocket(
+    JNIEnv* env,
+    jobject obj,
+    int sd,
+    struct sockaddr_in* address,
+    char* buffer,
+    size_t bufferSize)
+{
+    socklen_t addressLength = sizeof(struct sockaddr_in);
+
+    // Receive datagram from socket
+    LogMessage(env, obj, "Receiving datagram from the socket...");
+    ssize_t recvSize = recvfrom(sd, buffer, bufferSize, 0,
+                                (struct sockaddr*) address,
+                                &addressLength);
+
+    // If receive is failed
+    if (−1 == recvSize)
+    {
+        // Throw an exception with error number
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    }
+    else
+    {
+        // Log address
+        LogAddress(env, obj, "Received datagram from", address);
+
+        // NULL terminate the buffer to make it a string
+        buffer[recvSize] = NULL;
+
+        // If data is received
+        if (recvSize > 0)
+        {
+            LogMessage(env, obj, "Received %d bytes: %s",
+                       recvSize, buffer);
+        }
+    }
+
+    return recvSize;
+}
+
 // send data to socket
 static ssize_t SendToSocket(JNIEnv* env, jobject obj, int sd, const char* buffer, size_t bufferSize) {
     LogMessage(env, obj, "Sending to the socket...");
@@ -192,6 +244,27 @@ static ssize_t SendToSocket(JNIEnv* env, jobject obj, int sd, const char* buffer
             LogMessage(env, obj, "Sent %d bytes: %s", sentSize, buffer);
         } else {
             LogMessage(env, obj, "Client disconnected.");
+        }
+    }
+    return sentSize;
+}
+
+// send datagram to socket
+static ssize_t SendDatagramToSocket(
+    JNIEnv* env,
+    jobject obj,
+    int sd,
+    const struct sockaddr_in* address,
+    const char* buffer,
+    size_t bufferSize) {
+    LogMessage(env, obj, "Sending datagram to ", address);
+    ssize_t sentSize = sendto(sd, buffer, bufferSize, 0,
+                              (const sockaddr*)address, sizeof(struct sockaddr_in));
+    if (-1 == sentSize) {
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    } else {
+        if (sentSize > 0) {
+            LogMessage(env, obj, "Sent %d bytes: %s", sentSize, buffer);
         }
     }
     return sentSize;

@@ -31,6 +31,14 @@ JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartTcpClient
 JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartUdpServer
   (JNIEnv *, jobject, jint);
 
+/*
+ * Class:     com_example_hellojni_Native
+ * Method:    nativeStartUdpClient
+ * Signature: (Ljava/lang/String;ILjava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_example_hellojni_Native_nativeStartUdpClient
+  (JNIEnv *, jobject, jstring, jint, jstring);
+
 #ifdef __cplusplus
 }
 #endif

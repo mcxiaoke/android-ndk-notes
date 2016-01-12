@@ -66,7 +66,7 @@ public class EchoServerActivity extends BaseActivity {
         protected void onBackground() {
             logMessage("Starting server.");
             try {
-                mNative.nativeStartTcpServer(port);
+                mNative.nativeStartUdpServer(port);
             } catch (Exception e) {
                 e.printStackTrace();
                 logMessage(e.getMessage());
