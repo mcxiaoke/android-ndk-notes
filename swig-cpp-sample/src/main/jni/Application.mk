@@ -3,6 +3,7 @@
 APP_ABI := armeabi x86
 APP_STL := stlport_static
 APP_CPPFLAGS += -fexceptions
+APP_PLATFORM := android-15
 # http://developer.android.com/ndk/guides/cpp-support.html
 
 # APP_MODULES: By default the Android NDK build system builds all modules that

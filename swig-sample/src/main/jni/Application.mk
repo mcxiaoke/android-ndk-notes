@@ -1,6 +1,7 @@
 #APP_ABI := all
 #APP_ABI := armeabi armeabi-v7a arm64_v8a x86 x86_64 mips mips64
-APP_ABI := armeabi armeabi-v7a x86 x86_64
+APP_ABI := armeabi x86 
+APP_PLATFORM := android-15
 
 # APP_MODULES: By default the Android NDK build system builds all modules that
 # are declared by the Android.mk file. This variable can override this behavior and
