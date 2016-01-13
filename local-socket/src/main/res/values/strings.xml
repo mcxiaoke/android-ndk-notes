@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocalSocket</string>
+    <string name="title_activity_echo_server">Echo Local Server</string>
+    <string name="port_edit">Port Number</string>
+    <string name="start_server_button">Start Local Server</string>
+    <string name="title_activity_echo_client">Echo Local Client</string>
+    <string name="ip_edit">IP Address</string>
+    <string name="start_client_button">Start Local Client</string>
+    <string name="send_button">Send</string>
+    <string name="message_edit">Message</string>
+    <string name="title_activity_local_echo">Local Echo</string>
+    <string name="local_port_edit">Local Port</string>
+</resources>
