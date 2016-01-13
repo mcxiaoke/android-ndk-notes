@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-11 21:04:57
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-12 22:28:46
+* @Last Modified time: 2016-01-13 13:46:01
 */
 
 // JNI
@@ -90,16 +90,6 @@ static int NewTcpSocket(JNIEnv* env, jobject obj) {
         ThrowErrnoException(env, "java/io/IOException", errno);
     }
     return tcpSocket;
-}
-
-// create a udp socket
-static int NewTcpSocket(JNIEnv* env, jobject obj) {
-    LogMessage(env, obj, "Constructing a new UDP socket...");
-    int udpSocket = socket(PF_INET, SOCK_DGRAM, 0);
-    if (-1 == udpSocket) {
-        ThrowErrnoException(env, "java/io/IOException", errno);
-    }
-    return udpSocket;
 }
 
 // bind socket to port
@@ -209,7 +199,7 @@ static ssize_t ReceiveDatagramFromSocket(
                                 &addressLength);
 
     // If receive is failed
-    if (−1 == recvSize)
+    if (-1 == recvSize)
     {
         // Throw an exception with error number
         ThrowErrnoException(env, "java/io/IOException", errno);
@@ -220,7 +210,7 @@ static ssize_t ReceiveDatagramFromSocket(
         LogAddress(env, obj, "Received datagram from", address);
 
         // NULL terminate the buffer to make it a string
-        buffer[recvSize] = NULL;
+        buffer[recvSize] = 0;
 
         // If data is received
         if (recvSize > 0)
