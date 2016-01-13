@@ -1,1 +1,1 @@
-include ':hello-jni', 'hello-debug', 'local-socket', 'swig-sample', 'swig-cpp-sample', 'native-threads', 'posix-tcp-socket', 'posix-udp-socket'
+include ':hello-jni', 'hello-debug','cpp11-support', 'local-socket', 'swig-sample', 'swig-cpp-sample', 'native-threads', 'posix-tcp-socket', 'posix-udp-socket'
