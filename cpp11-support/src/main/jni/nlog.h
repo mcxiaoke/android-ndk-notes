@@ -5,9 +5,10 @@
  * Basic logging framework for NDK.
  */
 
+#include <stdarg.h>
 #include <android/log.h>
 
- /**
+/**
 //CheckJNI
 // for rooted device
 adb shell stop
@@ -32,7 +33,7 @@ $NDK/ndk-stack -sym $PROJECT_PATH/obj/local/armeabi -dump foo.txt
 adb shell ps | grep com.example.hellojni
 adb shell strace –v –p <Process ID>
 
- **/
+**/
 
 /**
 
@@ -132,5 +133,15 @@ adb shell start
 #else
 # define ASSERT(...) NLOG_NOOP
 #endif
+
+// redirect stl debug message to custom logger
+// need LOCAL_CFLAGS += -D_STLP_DEBUG_MESSAGE
+void __stl_debug_message(const char* format_str, ...)
+{
+  va_list ap;
+  va_start(ap, format_str);
+  __android_log_vprint(ANDROID_LOG_FATAL, "STLport", format_str, ap);
+  va_end(ap);
+}
 
 #endif /* NLOG_H__ */

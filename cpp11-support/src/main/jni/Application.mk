@@ -1,8 +1,23 @@
 #APP_ABI := all
 #APP_ABI := armeabi armeabi-v7a arm64_v8a x86 x86_64 mips mips64
 APP_ABI := armeabi x86
-#APP_STL := stlport_static
+APP_STL := gnustl_static
 APP_PLATFORM := android-15
+# APP_CPPFLAGS += -frtti
+# APP_CPPFLAGS += -fexceptions
+# or LOCAL_CPP_FEATURES += exceptions for module
+# developer.android.com/ndk/guides/cpp-support.html
+
+# Name	Explanation>	Features
+# libstdc++ (default)	The default minimal system C++ runtime library.	N/A
+# gabi++_static	The GAbi++ runtime (static).	C++ Exceptions and RTTI
+# gabi++_shared	The GAbi++ runtime (shared).	C++ Exceptions and RTTI
+# stlport_static	The STLport runtime (static).	C++ Exceptions and RTTI; Standard Library
+# stlport_shared	The STLport runtime (shared).	C++ Exceptions and RTTI; Standard Library
+# gnustl_static	The GNU STL (static).	C++ Exceptions and RTTI; Standard Library
+# gnustl_shared	The GNU STL (shared).	C++ Exceptions and RTTI; Standard Library
+# c++_static	The LLVM libc++ runtime (static).	C++ Exceptions and RTTI; Standard Library
+# c++_shared	The LLVM libc++ runtime (shared).	C++ Exceptions and RTTI; Standard Library
 
 # APP_MODULES: By default the Android NDK build system builds all modules that
 # are declared by the Android.mk file. This variable can override this behavior and
