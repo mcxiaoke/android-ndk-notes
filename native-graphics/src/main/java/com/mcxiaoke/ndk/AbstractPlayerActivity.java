@@ -2,6 +2,7 @@ package com.mcxiaoke.ndk;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -30,7 +31,9 @@ public abstract class AbstractPlayerActivity extends Activity {
         // Open the AVI file
         try {
             avi = Native.open(getFileName());
+            Log.d("DEBUG", "File: " + getFileName() + " fd=" + avi);
         } catch (IOException e) {
+            e.printStackTrace();
             new AlertDialog.Builder(this)
                     .setTitle(R.string.error_alert_title)
                     .setMessage(e.getMessage())

@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/bitmap_player_radio" />
+
+        <RadioButton
+            android:id="@+id/opengl_player_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/open_gl_player_radio" />
     </RadioGroup>
 
     <Button

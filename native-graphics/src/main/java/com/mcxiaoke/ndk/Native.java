@@ -60,7 +60,38 @@ public class Native {
      * @param bitmap bitmap instance.
      * @return true if there are more frames, false otherwise.
      */
-    public native static boolean render(long avi, Bitmap bitmap);
+    public native static boolean renderBitmap(long fd, Bitmap bitmap);
+
+    /**
+     * Initializes the native renderer.
+     *
+     * @param avi file descriptor.
+     * @return native instance.
+     */
+    public native static long init(long avi);
+
+    /**
+     * Initializes the OpenGL surface.
+     *
+     * @param instance native instance.
+     */
+    public native static void initSurface(long instance, long avi);
+
+    /**
+     * Renders the frame from given AVI file descriptor.
+     *
+     * @param instance native instance.
+     * @param avi      file descriptor.
+     * @return true if there are more frames, false otherwise.
+     */
+    public native static boolean renderOpenGL(long instance, long avi);
+
+    /**
+     * Free the native renderer.
+     *
+     * @param instance native instance.
+     */
+    public native static void free(long instance);
 
     static {
         System.loadLibrary("player");

@@ -97,7 +97,7 @@ public class BitmapPlayerActivity extends AbstractPlayerActivity {
             while (isPlaying.get()) {
                 long start = SystemClock.elapsedRealtime();
                 // Render the frame to the bitmap
-                Native.render(avi, bitmap);
+                Native.renderBitmap(avi, bitmap);
                 // Lock canvas
                 Canvas canvas = surfaceHolder.lockCanvas();
                 // Draw the bitmap to the canvas

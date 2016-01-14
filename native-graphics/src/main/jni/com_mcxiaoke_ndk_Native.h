@@ -49,11 +49,43 @@ JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_close
 
 /*
  * Class:     com_mcxiaoke_ndk_Native
- * Method:    render
+ * Method:    renderBitmap
  * Signature: (JLandroid/graphics/Bitmap;)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_render
+JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_renderBitmap
   (JNIEnv *, jclass, jlong, jobject);
+
+/*
+ * Class:     com_mcxiaoke_ndk_Native
+ * Method:    init
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_mcxiaoke_ndk_Native_init
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_mcxiaoke_ndk_Native
+ * Method:    initSurface
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_initSurface
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_mcxiaoke_ndk_Native
+ * Method:    renderOpenGL
+ * Signature: (JJ)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_renderOpenGL
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_mcxiaoke_ndk_Native
+ * Method:    free
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_free
+  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }

@@ -10,4 +10,6 @@
     <string name="error_alert_title">Error Occurred</string>
     <string name="bitmap_player_radio">Bitmap Player</string>
     <string name="title_activity_bitmap_player">Bitmap Player</string>
+    <string name="title_activity_open_gl_player">OpenGL Player</string>
+    <string name="open_gl_player_radio">OpenGL Player</string>
 </resources>
