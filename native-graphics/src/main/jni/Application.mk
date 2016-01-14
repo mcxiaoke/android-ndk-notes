@@ -1,6 +1,6 @@
-APP_ABI := all
+#APP_ABI := all
 #APP_ABI := armeabi armeabi-v7a arm64_v8a x86 x86_64 mips mips64
-#APP_ABI := armeabi armeabi-v7a x86
+APP_ABI := armeabi x86
 # bug: Inside libs folder, I create a new folder called armeabi-v7a, and copied the .so file from armeabi to the new folder. It solves the error.
 # http://stackoverflow.com/questions/9037966/android-ndk-java-lang-unsatisfiedlinkerror-findlibrary-returned-null
 APP_STL := gnustl_static

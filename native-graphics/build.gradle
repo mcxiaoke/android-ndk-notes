@@ -53,9 +53,9 @@ task ndkBuild(type: Exec) {
     commandLine getNdkBuildCmd(), '-C', file('src/main').absolutePath // 'NDK_DEBUG=1'
 }
 
-//tasks.withType(JavaCompile) {
-//    compileTask -> compileTask.dependsOn ndkBuild
-//}
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn ndkBuild
+}
 
 task javah(type: Exec) {
     def jniClassName = "com.mcxiaoke.ndk.Native"

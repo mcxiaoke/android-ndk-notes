@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-13 22:46:42
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-13 23:54:58
+* @Last Modified time: 2016-01-14 08:38:50
 */
 
 extern "C" {
@@ -19,7 +19,7 @@ extern "C" {
 
 // http://fossies.org/linux/privat/transcode-1.1.7.tar.gz/
 
-jlong Java_com_apress_aviplayer_AbstractPlayerActivity_open(
+jlong Java_com_mcxiaoke_ndk_Native_open(
     JNIEnv* env,
     jclass clazz,
     jstring fileName)
@@ -49,7 +49,7 @@ exit:
     return (jlong) avi;
 }
 
-jint Java_com_apress_aviplayer_AbstractPlayerActivity_getWidth(
+jint Java_com_mcxiaoke_ndk_Native_getWidth(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -57,7 +57,7 @@ jint Java_com_apress_aviplayer_AbstractPlayerActivity_getWidth(
     return AVI_video_width((avi_t*) avi);
 }
 
-jint Java_com_apress_aviplayer_AbstractPlayerActivity_getHeight(
+jint Java_com_mcxiaoke_ndk_Native_getHeight(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -65,7 +65,7 @@ jint Java_com_apress_aviplayer_AbstractPlayerActivity_getHeight(
     return AVI_video_height((avi_t*) avi);
 }
 
-jdouble Java_com_apress_aviplayer_AbstractPlayerActivity_getFrameRate(
+jdouble Java_com_mcxiaoke_ndk_Native_getFrameRate(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -73,7 +73,7 @@ jdouble Java_com_apress_aviplayer_AbstractPlayerActivity_getFrameRate(
     return AVI_frame_rate((avi_t*) avi);
 }
 
-void Java_com_apress_aviplayer_AbstractPlayerActivity_close(
+void Java_com_mcxiaoke_ndk_Native_close(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -81,7 +81,7 @@ void Java_com_apress_aviplayer_AbstractPlayerActivity_close(
     AVI_close((avi_t*) avi);
 }
 
-jboolean Java_com_apress_aviplayer_BitmapPlayerActivity_render(
+jboolean Java_com_mcxiaoke_ndk_Native_render(
     JNIEnv* env,
     jclass clazz,
     jlong avi,
