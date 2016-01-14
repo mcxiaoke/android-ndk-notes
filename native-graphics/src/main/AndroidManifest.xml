@@ -27,5 +27,8 @@
         <activity
             android:name=".OpenGLPlayerActivity"
             android:label="@string/title_activity_open_gl_player" />
+        <activity
+            android:name=".NativeWindowPlayerActivity"
+            android:label="@string/title_activity_native_window_player" />
     </application>
 </manifest> 

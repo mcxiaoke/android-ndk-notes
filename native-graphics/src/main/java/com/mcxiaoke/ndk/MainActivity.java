@@ -80,6 +80,9 @@ public class MainActivity extends Activity implements OnClickListener {
             case R.id.opengl_player_radio:
                 intent = new Intent(this, OpenGLPlayerActivity.class);
                 break;
+            case R.id.native_window_player_radio:
+                intent = new Intent(this, NativeWindowPlayerActivity.class);
+                break;
             default:
                 throw new UnsupportedOperationException(
                         "radioId=" + radioId);

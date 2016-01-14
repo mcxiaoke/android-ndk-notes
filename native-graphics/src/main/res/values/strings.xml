@@ -12,4 +12,6 @@
     <string name="title_activity_bitmap_player">Bitmap Player</string>
     <string name="title_activity_open_gl_player">OpenGL Player</string>
     <string name="open_gl_player_radio">OpenGL Player</string>
+    <string name="title_activity_native_window_player">Native Window Player</string>
+<string name="native_window_player_radio">Native Window Player</string>
 </resources>

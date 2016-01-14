@@ -87,6 +87,22 @@ JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_renderOpenGL
 JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_free
   (JNIEnv *, jclass, jlong);
 
+/*
+ * Class:     com_mcxiaoke_ndk_Native
+ * Method:    initNW
+ * Signature: (JLandroid/view/Surface;)V
+ */
+JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_initNW
+  (JNIEnv *, jclass, jlong, jobject);
+
+/*
+ * Class:     com_mcxiaoke_ndk_Native
+ * Method:    renderNW
+ * Signature: (JLandroid/view/Surface;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_renderNW
+  (JNIEnv *, jclass, jlong, jobject);
+
 #ifdef __cplusplus
 }
 #endif

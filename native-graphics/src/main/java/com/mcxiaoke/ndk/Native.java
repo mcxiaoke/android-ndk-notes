@@ -1,6 +1,7 @@
 package com.mcxiaoke.ndk;
 
 import android.graphics.Bitmap;
+import android.view.Surface;
 
 import java.io.IOException;
 
@@ -92,6 +93,24 @@ public class Native {
      * @param instance native instance.
      */
     public native static void free(long instance);
+
+    /**
+     * Initializes the native window.
+     *
+     * @param avi     file descriptor.
+     * @param surface surface instance.
+     */
+    public native static void initNW(long avi, Surface surface);
+
+    /**
+     * Renders the frame from given AVI file descriptor to
+     * the given Surface.
+     *
+     * @param avi     file descriptor.
+     * @param surface surface instance.
+     * @return true if there are more frames, false otherwise.
+     */
+    public native static boolean renderNW(long avi, Surface surface);
 
     static {
         System.loadLibrary("player");

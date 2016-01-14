@@ -53,6 +53,8 @@ LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES
 # Link with OpenGL ES v1
 LOCAL_LDLIBS += -lGLESv1_CM
 LOCAL_LDLIBS += -llog -ljnigraphics
+# linke with native window
+LOCAL_LDLIBS += -landroid
 # LOCAL_C_INCLUDES += $(MY_AVILIB_C_INCLUDES)
 LOCAL_STATIC_LIBRARIES += avilib_static
 
