@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-13 22:46:42
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-14 23:49:52
+* @Last Modified time: 2016-01-14 23:08:44
 */
 
 extern "C" {
@@ -16,11 +16,7 @@ extern "C" {
 #include <android/native_window_jni.h>
 #include <malloc.h>
 #include "common.h"
-#include "player.h"
-
-// https://android.googlesource.com/platform/development/+/master/
-// samples/SimpleJNI/jni/native.cpp
-static const char *gClassPathName = "com/mcxiaoke/ndk/Native";
+#include "com_mcxiaoke_ndk_Native.h"
 
 struct Instance
 {
@@ -38,80 +34,9 @@ struct Instance
 extern "C" {
 #endif
 
-static JNINativeMethod gMethods[] = {
-    {"open", "(Ljava/lang/String;)J", (void*)native_open },
-    {"getWidth", "(J)I", (void*)native_getWidth},
-    {"getHeight", "(J)I", (void*)native_getHeight},
-    {"getFrameRate", "(J)D", (void*)native_getFrameRate},
-    {"close", "(J)V", (void*)native_close},
-    {"renderBitmap", "(JLandroid/graphics/Bitmap;)Z", (void*)native_renderBitmap},
-    {"init", "(J)J", (void*)native_init},
-    {"initSurface", "(JJ)V", (void*)native_initSurface},
-    {"renderOpenGL", "(JJ)Z", (void*)native_renderOpenGL},
-    {"free", "(J)V", (void*)native_free},
-    {"initNW", "(JLandroid/view/Surface;)V", (void*)native_initNW},
-    {"renderNW", "(JLandroid/view/Surface;)Z", (void*)native_renderNW},
-    //{"","",(void*)},
-};
-
-/*
- * Register several native methods for one class.
- */
-static int registerNativeMethods(JNIEnv* env, const char* className,
-                                 JNINativeMethod* methods, int numMethods)
-{
-    jclass clazz;
-    clazz = env->FindClass(className);
-    if (clazz == NULL) {
-        ALOGE("Native registration unable to find class '%s'", className);
-        return JNI_FALSE;
-    }
-    if (env->RegisterNatives(clazz, methods, numMethods) < 0) {
-        ALOGE("RegisterNatives failed for '%s'", className);
-        return JNI_FALSE;
-    }
-    return JNI_TRUE;
-}
-
-/*
- * Register native methods for all classes we know about.
- *
- * returns JNI_TRUE on success.
- */
-static int registerNatives(JNIEnv* env)
-{
-    if (!registerNativeMethods(
-                env, gClassPathName,
-                gMethods, sizeof(gMethods) / sizeof(gMethods[0]))) {
-        return JNI_FALSE;
-    }
-    return JNI_TRUE;
-}
-
-// jni onload
-jint JNI_OnLoad(JavaVM* vm, void* reserved)
-{
-    JNIEnv* env;
-    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
-        return -1;
-    }
-
-    // Get jclass with env->FindClass.
-    // Register methods with env->RegisterNatives.
-    if (registerNatives(env) != JNI_TRUE) {
-        LOGE("ERROR: registerNatives failed");
-        return -1;
-    }
-
-    return JNI_VERSION_1_6;
-}
-
-
-
-
 // http://fossies.org/linux/privat/transcode-1.1.7.tar.gz/
 
-jlong native_open(
+jlong Java_com_mcxiaoke_ndk_Native_open(
     JNIEnv* env,
     jclass clazz,
     jstring fileName)
@@ -141,7 +66,7 @@ exit:
     return (jlong) avi;
 }
 
-jint native_getWidth(
+jint Java_com_mcxiaoke_ndk_Native_getWidth(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -149,7 +74,7 @@ jint native_getWidth(
     return AVI_video_width((avi_t*) avi);
 }
 
-jint native_getHeight(
+jint Java_com_mcxiaoke_ndk_Native_getHeight(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -157,7 +82,7 @@ jint native_getHeight(
     return AVI_video_height((avi_t*) avi);
 }
 
-jdouble native_getFrameRate(
+jdouble Java_com_mcxiaoke_ndk_Native_getFrameRate(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -165,7 +90,7 @@ jdouble native_getFrameRate(
     return AVI_frame_rate((avi_t*) avi);
 }
 
-void native_close(
+void Java_com_mcxiaoke_ndk_Native_close(
     JNIEnv* env,
     jclass clazz,
     jlong avi)
@@ -173,7 +98,7 @@ void native_close(
     AVI_close((avi_t*) avi);
 }
 
-jboolean native_renderBitmap(
+jboolean Java_com_mcxiaoke_ndk_Native_renderBitmap(
     JNIEnv* env,
     jclass clazz,
     jlong avi,
@@ -222,7 +147,7 @@ exit:
  * Method:    init
  * Signature: (J)J
  */
-JNIEXPORT jlong JNICALL native_init
+JNIEXPORT jlong JNICALL Java_com_mcxiaoke_ndk_Native_init
 (JNIEnv *env, jclass clazz, jlong avi)
 {
     Instance* instance = 0;
@@ -261,7 +186,7 @@ exit:
  * Method:    initSurface
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL native_initSurface
+JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_initSurface
 (JNIEnv *env, jclass clazz, jlong inst, jlong avi)
 {
     Instance* instance = (Instance*) inst;
@@ -304,7 +229,7 @@ JNIEXPORT void JNICALL native_initSurface
  * Method:    render
  * Signature: (JJ)Z
  */
-JNIEXPORT jboolean JNICALL native_renderOpenGL
+JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_renderOpenGL
 (JNIEnv *env, jclass clazz, jlong inst, jlong avi)
 {
     Instance* instance = (Instance*) inst;
@@ -354,7 +279,7 @@ exit:
  * Method:    free
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL native_free
+JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_free
 (JNIEnv *evn, jclass clazz, jlong inst)
 {
     Instance* instance = (Instance*) inst;
@@ -372,7 +297,7 @@ JNIEXPORT void JNICALL native_free
  * Method:    initNW
  * Signature: (JLandroid/view/Surface;)V
  */
-JNIEXPORT void JNICALL native_initNW
+JNIEXPORT void JNICALL Java_com_mcxiaoke_ndk_Native_initNW
 (JNIEnv *env, jclass clazz, jlong avi, jobject surface)
 {
     // Get the native window from the surface
@@ -410,7 +335,7 @@ exit:
  * Method:    renderNW
  * Signature: (JLandroid/view/Surface;)Z
  */
-JNIEXPORT jboolean JNICALL native_renderNW
+JNIEXPORT jboolean JNICALL Java_com_mcxiaoke_ndk_Native_renderNW
 (JNIEnv *env, jclass clazz, jlong avi, jobject surface)
 {
     jboolean isFrameRead = JNI_FALSE;
