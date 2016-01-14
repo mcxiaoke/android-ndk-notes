@@ -3,6 +3,8 @@ package com.mcxiaoke.ndk;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -19,6 +21,8 @@ public class BitmapPlayerActivity extends AbstractPlayerActivity {
      */
     private final AtomicBoolean isPlaying = new AtomicBoolean();
 
+    private SurfaceView surfaceView;
+
     /**
      * Surface holder.
      */
@@ -33,11 +37,16 @@ public class BitmapPlayerActivity extends AbstractPlayerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitmap_player);
 
-        SurfaceView surfaceView = (SurfaceView)
+        surfaceView = (SurfaceView)
                 findViewById(R.id.surface_view);
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(surfaceHolderCallback);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     /**
@@ -68,33 +77,42 @@ public class BitmapPlayerActivity extends AbstractPlayerActivity {
      */
     private final Runnable renderer = new Runnable() {
         public void run() {
+            int w = Native.getWidth(avi);
+            int h = Native.getHeight(avi);
             // Create a new bitmap to hold the frames
-            Bitmap bitmap = Bitmap.createBitmap(
-                    Native.getWidth(avi),
-                    Native.getHeight(avi),
-                    Bitmap.Config.RGB_565);
+            Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
 
             // Calculate the delay using the frame rate
             long frameDelay = (long) (1000 / Native.getFrameRate(avi));
 
+            int cw;
+            int ch;
+            int left;
+            int top;
+            cw = surfaceView.getWidth();
+            ch = surfaceView.getHeight();
+            left = (cw - w) >> 1;
+            top = (ch - h) >> 1;
             // Start rendering while playing
             while (isPlaying.get()) {
+                long start = SystemClock.elapsedRealtime();
                 // Render the frame to the bitmap
                 Native.render(avi, bitmap);
-
                 // Lock canvas
                 Canvas canvas = surfaceHolder.lockCanvas();
-
                 // Draw the bitmap to the canvas
-                canvas.drawBitmap(bitmap, 0, 0, null);
-
+                start = SystemClock.elapsedRealtime();
+                canvas.drawBitmap(bitmap, left, top, null);
                 // Post the canvas for displaying
+                start = SystemClock.elapsedRealtime();
                 surfaceHolder.unlockCanvasAndPost(canvas);
-
+                long ms = SystemClock.elapsedRealtime() - start;
+                Log.v("DEBUG", "renderer time: " + ms + "ms" + " -> " + frameDelay);
                 // Wait for the next frame
                 try {
-                    Thread.sleep(frameDelay);
-                } catch (InterruptedException e) {
+                    Thread.sleep(Math.max(0, frameDelay - ms));
+                } catch (Exception e) {
+                    e.printStackTrace();
                     break;
                 }
             }
