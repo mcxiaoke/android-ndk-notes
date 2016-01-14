@@ -14,6 +14,25 @@
 #
 LOCAL_PATH := $(call my-dir)
 
+# Transcode AVILib
+MY_AVILIB_SRC_FILES := avilib/avilib.c avilib/platform_posix.c
+MY_AVILIB_C_INCLUDES := $(LOCAL_PATH)/avilib
+
+# AVILib static
+include $(CLEAR_VARS)
+LOCAL_MODULE := avilib_static
+LOCAL_SRC_FILES := $(MY_AVILIB_SRC_FILES)
+LOCAL_EXPORT_C_INCLUDES := $(MY_AVILIB_C_INCLUDES)
+include $(BUILD_STATIC_LIBRARY)
+
+# AVILib shared
+include $(CLEAR_VARS)
+LOCAL_MODULE := avilib_shared
+LOCAL_SRC_FILES := $(MY_AVILIB_SRC_FILES)
+LOCAL_EXPORT_C_INCLUDES := $(MY_AVILIB_C_INCLUDES)
+include $(BUILD_SHARED_LIBRARY)
+
+# player shared
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := player
@@ -29,11 +48,11 @@ endif
 
 LOCAL_CFLAGS += -DNLOG_LEVEL=$(MY_LOG_LEVEL)
 LOCAL_CFLAGS += -DNLOG_TAG=$(MY_LOG_TAG)
-LOCAL_LDFLAGS := -llog
-
-LOCAL_STATIC_LIBRARIES += avilib_static
+LOCAL_LDFLAGS += -llog
 LOCAL_LDLIBS += -ljnigraphics
+# LOCAL_C_INCLUDES += $(MY_AVILIB_C_INCLUDES)
+LOCAL_STATIC_LIBRARIES += avilib_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module, transcode/avilib)
+# $(call import-module, transcode/avilib)
