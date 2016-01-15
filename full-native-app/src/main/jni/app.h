@@ -3,6 +3,8 @@
 
 #include "activity_handler.h"
 #include "event_loop.h"
+#include "graphics_manager.h"
+#include "ship.h"
 #include "types.h"
 
 
@@ -31,7 +33,9 @@ protected:
     void onGainFocus();
     void onLostFocus();
 private:
+    GraphicsManager mGraphicsManager;
     EventLoop mEventLoop;
+    Ship mShip;
 };
 
 #endif

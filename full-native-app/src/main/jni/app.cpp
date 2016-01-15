@@ -2,16 +2,22 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-15 22:14:37
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-15 22:20:34
+* @Last Modified time: 2016-01-15 23:21:06
 */
 
 #include "app.h"
 #include "log.h"
 #include <unistd.h>
 
+static const int32_t SHIP_SIZE = 64;
+
 MainApp::MainApp(android_app* app):
-    mEventLoop(app, *this) {
+    mGraphicsManager(app),
+    mEventLoop(app, *this),
+    mShip(app, mGraphicsManager) {
     Log::info("Creating MainApp");
+    GraphicsElement* shipGraphics = mGraphicsManager.registerElement(SHIP_SIZE, SHIP_SIZE);
+    mShip.registerShip(shipGraphics);
 }
 
 void MainApp::run() {
@@ -20,6 +26,10 @@ void MainApp::run() {
 
 status MainApp::onActivate() {
     Log::info("Activating MainApp");
+    if (mGraphicsManager.start() != STATUS_OK) {
+        return STATUS_KO;
+    }
+    mShip.initialize();
     return STATUS_OK;
 }
 
@@ -28,10 +38,11 @@ void MainApp::onDeactivate() {
 }
 
 status MainApp::onStep() {
-    Log::info("Starting step");
-    usleep(300000);
-    Log::info("Stepping done");
-    return STATUS_OK;
+    // Log::info("Starting step");
+    // usleep(300000);
+    // Log::info("Stepping done");
+    // return STATUS_OK;
+    return mGraphicsManager.update();
 }
 
 void MainApp::onStart() {
