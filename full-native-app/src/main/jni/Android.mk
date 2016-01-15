@@ -13,31 +13,15 @@
 # limitations under the License.
 #
 LOCAL_PATH := $(call my-dir)
-
-# Transcode AVILib
-MY_AVILIB_SRC_FILES := avilib/avilib.c avilib/platform_posix.c
-MY_AVILIB_C_INCLUDES := $(LOCAL_PATH)/avilib
-
-# AVILib static
-include $(CLEAR_VARS)
-LOCAL_MODULE := avilib_static
-LOCAL_SRC_FILES := $(MY_AVILIB_SRC_FILES)
-LOCAL_EXPORT_C_INCLUDES := $(MY_AVILIB_C_INCLUDES)
-include $(BUILD_STATIC_LIBRARY)
-
-# AVILib shared
-include $(CLEAR_VARS)
-LOCAL_MODULE := avilib_shared
-LOCAL_SRC_FILES := $(MY_AVILIB_SRC_FILES)
-LOCAL_EXPORT_C_INCLUDES := $(MY_AVILIB_C_INCLUDES)
-include $(BUILD_SHARED_LIBRARY)
-
-# player shared
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := player
-LOCAL_SRC_FILES := common.cpp player.cpp
+LS_CPP=$(subst $(1)/,,$(wildcard $(1)/*.cpp))
+LOCAL_MODULE    := native
+LOCAL_SRC_FILES := $(call LS_CPP,$(LOCAL_PATH))
+LOCAL_LDLIBS := -landroid -llog
+LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
+### LOG START
 MY_LOG_TAG := \"NativeApp\"
 # ndk-build NDK_DEBUG=1
 ifeq ($(APP_OPTIM),release)
@@ -45,19 +29,9 @@ ifeq ($(APP_OPTIM),release)
 else
   MY_LOG_LEVEL := NLOG_LEVEL_VERBOSE
 endif
-
 LOCAL_CFLAGS += -DNLOG_LEVEL=$(MY_LOG_LEVEL)
 LOCAL_CFLAGS += -DNLOG_TAG=$(MY_LOG_TAG)
-# Enable GL ext prototypes
-LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES
-# Link with OpenGL ES v1
-LOCAL_LDLIBS += -lGLESv1_CM
-LOCAL_LDLIBS += -llog -ljnigraphics
-# linke with native window
-LOCAL_LDLIBS += -landroid
-# LOCAL_C_INCLUDES += $(MY_AVILIB_C_INCLUDES)
-LOCAL_STATIC_LIBRARIES += avilib_static
+### LOG END
 
 include $(BUILD_SHARED_LIBRARY)
-
-# $(call import-module, transcode/avilib)
+$(call import-module,android/native_app_glue)

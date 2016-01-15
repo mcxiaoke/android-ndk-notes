@@ -6,7 +6,6 @@
 #include <jni.h>
 #include <string.h>
 #include <errno.h>
-#include "nlog.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -22,7 +22,7 @@ android {
         versionName "0.1.0"
         minSdkVersion 15
         targetSdkVersion 23
-        applicationId "com.mcxiaoke.ndk.register"
+        applicationId "com.mcxiaoke.ndk.nativeapp"
     }
 
     buildTypes {
@@ -50,7 +50,7 @@ def getNdkBuildCmd() {
 }
 
 task ndkBuild(type: Exec) {
-    commandLine getNdkBuildCmd(), '-C', file('src/main').absolutePath // 'NDK_DEBUG=1'
+    commandLine getNdkBuildCmd(), 'NDK_DEBUG=1', '-C', file('src/main').absolutePath //
 }
 
 tasks.withType(JavaCompile) {
