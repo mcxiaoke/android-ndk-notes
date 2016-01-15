@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NativeGraphics</string>
+    <string name="app_name">RegisterNatives</string>
     <string name="main_activity_title">MainActivity</string>
     <string name="file_name_hint">AVI Video File Name</string>
     <string name="file_name_text">galleon.avi</string>
