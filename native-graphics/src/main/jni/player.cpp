@@ -2,7 +2,7 @@
 * @Author: mcxiaoke
 * @Date:   2016-01-13 22:46:42
 * @Last Modified by:   mcxiaoke
-* @Last Modified time: 2016-01-14 23:49:52
+* @Last Modified time: 2016-01-15 09:07:14
 */
 
 extern "C" {
@@ -63,11 +63,11 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
     jclass clazz;
     clazz = env->FindClass(className);
     if (clazz == NULL) {
-        ALOGE("Native registration unable to find class '%s'", className);
+        LOGE("Native registration unable to find class '%s'", className);
         return JNI_FALSE;
     }
     if (env->RegisterNatives(clazz, methods, numMethods) < 0) {
-        ALOGE("RegisterNatives failed for '%s'", className);
+        LOGE("RegisterNatives failed for '%s'", className);
         return JNI_FALSE;
     }
     return JNI_TRUE;
